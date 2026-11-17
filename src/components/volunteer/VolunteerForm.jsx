@@ -19,12 +19,12 @@ const REGION_OPTIONS = [
   { value: 'karangasem', label: 'Karangasem', manager: 'Pengelola Tim Daerah Karangasem' }
 ]
 
-export function VolunteerForm({ onStepChange }) {
+export function VolunteerForm({ onStepChange, selectedRegion, onRegionChange }) {
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
     phone: '',
-    region: 'denpasar',
+    region: selectedRegion || 'denpasar',
     district: '',
     skills: [], // Bersih tanpa auto centang
     availability: '', // Bersih tanpa default
@@ -34,10 +34,20 @@ export function VolunteerForm({ onStepChange }) {
   const [errors, setErrors] = useState({})
   const [submitted, setSubmitted] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [prevRegion, setPrevRegion] = useState(selectedRegion)
+
+  // Mengikuti pola resmi React: state adjustment during render saat prop berubah
+  if (selectedRegion && selectedRegion !== prevRegion) {
+    setPrevRegion(selectedRegion)
+    setFormData((prev) => ({ ...prev, region: selectedRegion }))
+  }
 
   const handleTextChange = (e) => {
     const { name, value } = e.target
     setFormData((prev) => ({ ...prev, [name]: value }))
+    if (name === 'region' && onRegionChange) {
+      onRegionChange(value)
+    }
     if (errors[name]) {
       setErrors((prev) => {
         const next = { ...prev }
@@ -320,8 +330,8 @@ export function VolunteerForm({ onStepChange }) {
                   <label
                     key={skill.id}
                     className={`flex items-center gap-2.5 p-2.5 rounded-xl border transition-colors cursor-pointer text-xs font-medium ${isChecked
-                        ? 'border-teal-base bg-teal-50/50 text-teal-base'
-                        : 'border-ink-200 hover:bg-ink-50 text-ink-800'
+                      ? 'border-teal-base bg-teal-50/50 text-teal-base'
+                      : 'border-ink-200 hover:bg-ink-50 text-ink-800'
                       }`}
                   >
                     <input
@@ -332,8 +342,8 @@ export function VolunteerForm({ onStepChange }) {
                     />
                     <div
                       className={`flex h-4 w-4 shrink-0 items-center justify-center rounded-sm border transition-colors ${isChecked
-                          ? 'border-teal-base bg-teal-base text-white'
-                          : 'border-ink-300 bg-white'
+                        ? 'border-teal-base bg-teal-base text-white'
+                        : 'border-ink-300 bg-white'
                         }`}
                     >
                       {isChecked && <LuCheck className="h-3 w-3 stroke-[3]" />}
@@ -421,8 +431,8 @@ export function VolunteerForm({ onStepChange }) {
               />
               <div
                 className={`mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-sm border transition-colors ${formData.agreeConsent
-                    ? 'border-teal-base bg-teal-base text-white'
-                    : 'border-ink-300 bg-white'
+                  ? 'border-teal-base bg-teal-base text-white'
+                  : 'border-ink-300 bg-white'
                   }`}
               >
                 {formData.agreeConsent && <LuCheck className="h-3 w-3 stroke-[3]" />}
@@ -440,14 +450,14 @@ export function VolunteerForm({ onStepChange }) {
           </div>
 
           {/* 8. Bottom Action Row */}
-          <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 border-t border-ink-100">
+          <div className="pt-3 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 border-t border-ink-100">
             <p className="text-xs text-ink-500">
               Kamu akan menerima email setelah ditinjau.
             </p>
             <button
               type="submit"
               disabled={loading}
-              className="inline-flex items-center justify-center gap-2 rounded-full bg-teal-500 hover:bg-teal-400 px-6 py-2.5 text-sm font-semibold text-white shadow-2xs transition-colors outline-hidden focus-visible:ring-2 focus-visible:ring-teal-base disabled:opacity-70 cursor-pointer"
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-teal-500 hover:bg-teal-300 px-6 py-2.5 text-sm font-semibold text-white shadow-2xs transition-colors outline-hidden focus-visible:ring-2 focus-visible:ring-teal-base disabled:opacity-70 cursor-pointer"
             >
               <span>{loading ? 'Mengirim...' : 'Kirim Pendaftaran'}</span>
               <LuSend className="h-4 w-4" />

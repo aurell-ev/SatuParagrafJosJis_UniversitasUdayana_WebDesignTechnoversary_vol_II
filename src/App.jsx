@@ -4,6 +4,7 @@ import { AuthProvider } from './context/AuthContext'
 import { Navbar } from './components/layout/Navbar'
 import { Footer } from './components/layout/Footer'
 import { HomePage } from './pages/public/HomePage'
+import { AboutPage } from './pages/public/AboutPage'
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
             <main className="flex-1">
               <Routes>
                 <Route path="/" element={<HomePage />} />
+                <Route path="/about" element={<AboutPage />} />
               </Routes>
             </main>
 

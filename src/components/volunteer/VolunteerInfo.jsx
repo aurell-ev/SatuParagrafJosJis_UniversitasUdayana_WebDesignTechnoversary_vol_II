@@ -1,4 +1,4 @@
-import { LuWaves, LuChartLine, LuUsers, LuCircleCheck, LuClock, LuUserCheck } from 'react-icons/lu'
+import { LuWaves, LuChartLine, LuUsers, LuCircleCheck, LuMapPin, LuClock, LuCircleUserRound } from 'react-icons/lu'
 
 const PERKS = [
   {
@@ -23,23 +23,26 @@ const STEPS = [
     number: '01',
     title: 'Pilih daerah & isi formulir',
     time: '±3 menit',
-    desc: 'Pilih daerah tempat kamu ingin bergabung.'
+    desc: 'Pilih daerah tempat kamu ingin bergabung.',
+    icon: LuMapPin
   },
   {
     number: '02',
     title: 'Ditinjau pengelola daerah',
     time: '1–5 hari kerja',
-    desc: 'Pengelola menyetujui atau menolak pendaftaran.'
+    desc: 'Pengelola menyetujui atau menolak pendaftaran.',
+    icon: LuClock
   },
   {
     number: '03',
     title: 'Masuk sebagai relawan',
     time: 'Setelah disetujui',
-    desc: 'Kamu menerima email untuk masuk dan mulai mencatat kegiatan.'
+    desc: 'Kamu menerima email untuk masuk dan mulai mencatat kegiatan.',
+    icon: LuCircleUserRound
   }
 ]
 
-export function VolunteerInfo() {
+export function VolunteerInfo({ currentStep = 1 }) {
   return (
     <div className="space-y-8">
       {/* 1. Yang Dikerjakan Relawan */}
@@ -51,7 +54,7 @@ export function VolunteerInfo() {
           </span>
         </div>
 
-        <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-ink-900">
+        <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-teal-500">
           Yang dikerjakan relawan
         </h2>
 
@@ -83,30 +86,58 @@ export function VolunteerInfo() {
         <h3 className="text-base font-bold text-ink-900 mb-5">Alur pendaftaran</h3>
 
         <div className="relative space-y-6 before:absolute before:left-[15px] before:top-2 before:bottom-3 before:w-[2px] before:bg-ink-200">
-          {STEPS.map((step, idx) => (
-            <div key={idx} className="relative flex items-start gap-4 pl-1">
-              <div className="relative z-10 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-white border-2 border-teal-base text-teal-base">
-                {idx === 0 ? (
-                  <LuCircleCheck className="h-3.5 w-3.5 fill-teal-base text-white" />
-                ) : idx === 1 ? (
-                  <LuClock className="h-3.5 w-3.5" />
-                ) : (
-                  <LuUserCheck className="h-3.5 w-3.5" />
-                )}
-              </div>
-              <div className="flex-1 min-w-0 pt-0.5">
-                <div className="flex flex-wrap items-center justify-between gap-1">
-                  <h4 className="text-sm font-bold text-ink-900">{step.title}</h4>
-                  <span className="text-[11px] font-medium text-ink-500 bg-ink-100 px-2 py-0.5 rounded-full">
-                    {step.time}
-                  </span>
+          {STEPS.map((step, idx) => {
+            const stepNum = idx + 1
+            const isCompleted = stepNum < currentStep
+            const isCurrent = stepNum === currentStep
+            const StepIcon = step.icon
+
+            return (
+              <div key={idx} className="relative flex items-start gap-4 pl-1">
+                {/* Status Indicator Icon */}
+                <div
+                  className={`relative z-10 flex h-7 w-7 shrink-0 items-center justify-center rounded-full transition-colors ${isCurrent
+                      ? 'bg-teal-800 text-white border-2 border-teal-800'
+                      : isCompleted
+                        ? 'bg-white border-2 border-teal-800 text-teal-800'
+                        : 'bg-white border-2 border-slate-300 text-slate-400'
+                    }`}
+                >
+                  {isCompleted ? (
+                    <LuCircleCheck className="h-4 w-4 fill-teal-800 text-white" />
+                  ) : (
+                    <StepIcon className="h-3.5 w-3.5" />
+                  )}
                 </div>
-                <p className="mt-1 text-xs text-ink-600 leading-relaxed">
-                  {step.desc}
-                </p>
+
+                {/* Step Details */}
+                <div className="flex-1 min-w-0 pt-0.5">
+                  <div className="flex flex-wrap items-center justify-between gap-1">
+                    <h4
+                      className={`text-sm font-bold transition-colors ${isCurrent || isCompleted ? 'text-ink-900' : 'text-slate-400'
+                        }`}
+                    >
+                      {step.title}
+                    </h4>
+                    <span
+                      className={`text-[11px] font-medium px-2 py-0.5 rounded-full ${isCurrent || isCompleted
+                          ? 'text-ink-600 bg-ink-100'
+                          : 'text-slate-400 bg-slate-100'
+                        }`}
+                    >
+                      {step.time}
+                    </span>
+                  </div>
+                  <p
+                    className={`mt-1 text-xs leading-relaxed transition-colors ${isCurrent || isCompleted ? 'text-ink-600' : 'text-slate-400'
+                      }`}
+                  >
+                    {step.desc}
+                  </p>
+                </div>
               </div>
-            </div>
-          ))}
+            )
+          })}
         </div>
       </div>
     </div>

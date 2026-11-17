@@ -7,6 +7,7 @@ import { HomePage } from './pages/public/HomePage'
 import { ArticleListPage } from './pages/public/ArticleListPage'
 import { ArticleDetailPage } from './pages/public/ArticleDetailPage'
 import { AboutPage } from './pages/public/AboutPage'
+import { GalleryPage } from './pages/public/GalleryPage'
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
                 <Route path="/artikel" element={<ArticleListPage />} />
                 <Route path="/artikel/:slug" element={<ArticleDetailPage />} />
                 <Route path="/about" element={<AboutPage />} />
+                <Route path="/galeri" element={<GalleryPage />} />
               </Routes>
             </main>
 

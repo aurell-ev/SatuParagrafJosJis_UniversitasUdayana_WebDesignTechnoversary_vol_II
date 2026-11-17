@@ -1,8 +1,8 @@
 export function VolunteerHero() {
   return (
-    <section className="relative overflow-hidden bg-teal-800 py-16 sm:py-20 text-white">
+    <section className="relative overflow-hidden bg-teal-800 py-10 sm:py-16 lg:py-20 text-white">
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col items-start gap-3.5 max-w-3xl">
+        <div className="flex flex-col items-start gap-2.5 sm:gap-3.5 max-w-3xl">
           {/* Eyebrow */}
           <div className="inline-flex items-center gap-2">
             <span className="h-[2px] w-6 rounded-full bg-teal-200" />
@@ -17,7 +17,7 @@ export function VolunteerHero() {
           </h1>
 
           {/* Subheading */}
-          <p className="text-base sm:text-lg leading-relaxed text-teal-100 max-w-2xl pt-1">
+          <p className="text-base sm:text-lg leading-relaxed text-teal-100 max-w-2xl pt-0.5 sm:pt-1">
             Pengelola daerah meninjau pendaftaranmu dalam 1–5 hari kerja. Setelah disetujui, kamu bisa masuk dan mencatat kegiatan.
           </p>
         </div>

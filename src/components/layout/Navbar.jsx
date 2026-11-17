@@ -51,13 +51,22 @@ export function Navbar() {
 
         {/* Action Buttons (Desktop only) */}
         <div className="hidden lg:flex items-center gap-3">
-          <Link
-            to="/gabung"
-            className="inline-flex items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold text-teal-base hover:bg-teal-50 transition-colors duration-150 outline-hidden focus-visible:ring-2 focus-visible:ring-teal-base"
-          >
-            <FiUsers className="h-4 w-4 text-teal-base" />
-            <span>Gabung Tim</span>
-          </Link>
+          {(() => {
+            const isGabungActive = isLinkActive(location.pathname, '/gabung')
+            return (
+              <Link
+                to="/gabung"
+                className={`inline-flex items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition-colors duration-150 outline-hidden focus-visible:ring-2 focus-visible:ring-teal-base ${
+                  isGabungActive
+                    ? 'bg-teal-50 text-teal-base'
+                    : 'text-teal-base hover:bg-teal-50'
+                }`}
+              >
+                <FiUsers className="h-4 w-4 text-teal-base" />
+                <span>Gabung Tim</span>
+              </Link>
+            )
+          })()}
           <Link
             to="/lapor"
             className="inline-flex items-center gap-2 rounded-xl bg-coral-base hover:bg-coral-hover px-4 py-2.5 text-sm font-bold text-white shadow-xs transition-colors duration-150 outline-hidden focus-visible:ring-2 focus-visible:ring-coral-hover"
@@ -110,14 +119,23 @@ export function Navbar() {
               )
             })}
             <div className="pt-3 mt-2 border-t border-ink-200 flex flex-col gap-2.5">
-              <Link
-                to="/gabung"
-                onClick={() => setIsOpen(false)}
-                className="inline-flex items-center justify-center gap-2 rounded-xl border border-teal-base px-4 py-2.5 text-sm font-semibold text-teal-base hover:bg-teal-50 transition-colors"
-              >
-                <FiUsers className="h-4 w-4" />
-                <span>Gabung Tim Relawan</span>
-              </Link>
+              {(() => {
+                const isGabungActive = isLinkActive(location.pathname, '/gabung')
+                return (
+                  <Link
+                    to="/gabung"
+                    onClick={() => setIsOpen(false)}
+                    className={`inline-flex items-center justify-center gap-2 rounded-xl border px-4 py-2.5 text-sm font-semibold transition-colors ${
+                      isGabungActive
+                        ? 'bg-teal-50 text-teal-base border-teal-base'
+                        : 'border-teal-base text-teal-base hover:bg-teal-50'
+                    }`}
+                  >
+                    <FiUsers className="h-4 w-4" />
+                    <span>Gabung Tim Relawan</span>
+                  </Link>
+                )
+              })()}
             </div>
           </nav>
         </div>

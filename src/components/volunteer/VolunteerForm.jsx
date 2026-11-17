@@ -139,12 +139,12 @@ export function VolunteerForm({ onStepChange, selectedRegion, onRegionChange }) 
   const currentRegion = REGION_OPTIONS.find((r) => r.value === formData.region)
 
   return (
-    <div className="rounded-2xl border border-ink-200/80 bg-surface-card p-6 sm:p-8 shadow-2xs">
+    <div className="rounded-2xl border border-ink-200/80 bg-surface-card p-4 sm:p-7 lg:p-8 shadow-2xs">
       <div>
-        <h2 className="text-xl sm:text-2xl font-extrabold text-teal-base tracking-tight">
+        <h2 className="text-lg sm:text-xl lg:text-2xl font-extrabold text-teal-base tracking-tight">
           Formulir pendaftaran relawan
         </h2>
-        <p className="mt-1 text-xs sm:text-sm text-ink-600">
+        <p className="mt-0.5 sm:mt-1 text-xs sm:text-sm text-ink-600">
           Semua data hanya dilihat pengelola daerah yang kamu pilih.
         </p>
       </div>
@@ -450,14 +450,14 @@ export function VolunteerForm({ onStepChange, selectedRegion, onRegionChange }) 
           </div>
 
           {/* 8. Bottom Action Row */}
-          <div className="pt-3 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 border-t border-ink-100">
+          <div className="pt-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between border-t border-ink-100">
             <p className="text-xs text-ink-500">
               Kamu akan menerima email setelah ditinjau.
             </p>
             <button
               type="submit"
               disabled={loading}
-              className="inline-flex items-center justify-center gap-2 rounded-full bg-teal-500 hover:bg-teal-300 px-6 py-2.5 text-sm font-semibold text-white shadow-2xs transition-colors outline-hidden focus-visible:ring-2 focus-visible:ring-teal-base disabled:opacity-70 cursor-pointer"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full bg-teal-500 hover:bg-teal-600 px-6 py-3 sm:py-2.5 text-sm font-semibold text-white shadow-2xs transition-colors outline-hidden focus-visible:ring-2 focus-visible:ring-teal-base disabled:opacity-70 cursor-pointer"
             >
               <span>{loading ? 'Mengirim...' : 'Kirim Pendaftaran'}</span>
               <LuSend className="h-4 w-4" />

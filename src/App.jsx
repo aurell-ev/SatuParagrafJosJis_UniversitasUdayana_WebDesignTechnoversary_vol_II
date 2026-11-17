@@ -9,6 +9,7 @@ import { ArticleDetailPage } from './pages/public/ArticleDetailPage'
 import { AboutPage } from './pages/public/AboutPage'
 import { ContactPage } from './pages/public/ContactPage'
 import { VolunteerPage } from './pages/public/VolunteerPage'
+import { GalleryPage } from './pages/public/GalleryPage'
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
                 <Route path="/about" element={<AboutPage />} />
                 <Route path="/contact" element={<ContactPage />} />
                 <Route path="/gabung" element={<VolunteerPage />} />
+                <Route path="/galeri" element={<GalleryPage />} />
               </Routes>
             </main>
 

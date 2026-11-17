@@ -4,6 +4,8 @@ import { AuthProvider } from './context/AuthContext'
 import { Navbar } from './components/layout/Navbar'
 import { Footer } from './components/layout/Footer'
 import { HomePage } from './pages/public/HomePage'
+import { ArticleListPage } from './pages/public/ArticleListPage'
+import { ArticleDetailPage } from './pages/public/ArticleDetailPage'
 import { AboutPage } from './pages/public/AboutPage'
 
 function App() {
@@ -19,6 +21,8 @@ function App() {
             <main className="flex-1">
               <Routes>
                 <Route path="/" element={<HomePage />} />
+                <Route path="/artikel" element={<ArticleListPage />} />
+                <Route path="/artikel/:slug" element={<ArticleDetailPage />} />
                 <Route path="/about" element={<AboutPage />} />
               </Routes>
             </main>

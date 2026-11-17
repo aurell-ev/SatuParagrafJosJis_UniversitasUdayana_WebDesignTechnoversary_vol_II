@@ -12,6 +12,11 @@ const NAV_LINKS = [
   { label: 'Kontak', path: '/contact' }
 ]
 
+function isLinkActive(currentPath, targetPath) {
+  if (targetPath === '/') return currentPath === '/'
+  return currentPath === targetPath || currentPath.startsWith(`${targetPath}/`)
+}
+
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
   const location = useLocation()
@@ -27,7 +32,7 @@ export function Navbar() {
         {/* Desktop Navigation Links */}
         <nav className="hidden lg:flex items-center gap-1.5" aria-label="Main Navigation">
           {NAV_LINKS.map((item) => {
-            const isActive = location.pathname === item.path
+            const isActive = isLinkActive(location.pathname, item.path)
             return (
               <Link
                 key={item.path}
@@ -88,7 +93,7 @@ export function Navbar() {
         <div className="lg:hidden border-b border-ink-200 bg-white/98 backdrop-blur-md px-4 sm:px-6 pt-3 pb-6 shadow-lg animate-in fade-in duration-150">
           <nav className="flex flex-col space-y-1">
             {NAV_LINKS.map((item) => {
-              const isActive = location.pathname === item.path
+              const isActive = isLinkActive(location.pathname, item.path)
               return (
                 <Link
                   key={item.path}

@@ -14,7 +14,12 @@ const STORAGE_KEYS = {
 function loadInitial(key, fallback) {
   try {
     const saved = localStorage.getItem(key)
-    return saved ? JSON.parse(saved) : fallback
+    if (!saved) return fallback
+    const parsed = JSON.parse(saved)
+    if (Array.isArray(fallback) && Array.isArray(parsed) && parsed.length < fallback.length) {
+      return fallback
+    }
+    return parsed
   } catch {
     return fallback
   }

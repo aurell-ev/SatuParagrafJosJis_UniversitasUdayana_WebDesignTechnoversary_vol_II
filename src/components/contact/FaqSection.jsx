@@ -58,7 +58,7 @@ export function FaqSection() {
       </div>
 
       {/* Accordion List */}
-      <div className="max-w-4xl mx-auto space-y-3.5">
+      <div className="max-w-4xl mx-auto space-y-3.5 px-5">
         {FAQ_ITEMS.map((item, idx) => {
           const isOpen = openIdx === idx
           return (
@@ -87,7 +87,7 @@ export function FaqSection() {
 
               {isOpen && (
                 <div className="px-4 pb-4 sm:px-5 sm:pb-5 pt-0 animate-in fade-in duration-150">
-                  <p className="text-base leading-relaxed text-ink-600">
+                  <p className="text-xs sm:text-sm leading-relaxed text-ink-600">
                     {item.answer}
                   </p>
                 </div>
@@ -98,9 +98,9 @@ export function FaqSection() {
       </div>
 
       {/* Bottom Help Banner */}
-      <div className="max-w-4xl mx-auto pb-20">
+      <div className="max-w-4xl mx-auto pb-12 sm:pb-20 px-5">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 rounded-2xl bg-teal-50 border border-teal-100/80 p-4 sm:px-6 sm:py-4">
-          <div className="flex items-center gap-3 text-sm text-teal-900">
+          <div className="flex items-center gap-3 text-sm text-teal-900 w-full sm:w-auto">
             <FiHelpCircle className="h-5 w-5 shrink-0 text-teal-base" />
             <span className="font-medium text-xs sm:text-sm">
               Pertanyaanmu belum terjawab? Kirim pesan lewat formulir di atas.
@@ -108,7 +108,7 @@ export function FaqSection() {
           </div>
           <Link
             to="/artikel"
-            className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-xs sm:text-sm font-semibold text-teal-900 hover:bg-teal-100/60 transition-colors shadow-2xs shrink-0"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full bg-white px-5 py-2.5 sm:py-2 text-xs sm:text-sm font-semibold text-teal-900 hover:bg-teal-100/60 transition-colors shadow-2xs shrink-0"
           >
             <span>Baca artikel panduan</span>
             <FiArrowRight className="h-4 w-4" />

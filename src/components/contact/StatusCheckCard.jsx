@@ -100,7 +100,7 @@ export function StatusCheckCard() {
 
           <button
             type="submit"
-            className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-white text-teal-900 hover:bg-teal-100 p-4 text-sm font-bold shadow-xs transition-colors outline-hidden focus-visible:ring-2 focus-visible:ring-white cursor-pointer"
+            className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-white text-teal-900 hover:bg-teal-100 py-3 sm:py-3.5 px-4 text-sm font-bold shadow-xs transition-colors outline-hidden focus-visible:ring-2 focus-visible:ring-white cursor-pointer"
           >
             <span>Cek Status</span>
             <FiArrowRight className="h-5 w-5" />
@@ -117,10 +117,10 @@ export function StatusCheckCard() {
                   {getStatusBadge(result.status)}
                 </div>
                 <p className="text-teal-100 line-clamp-1">
-                  <span className="text-teal-300">Lokasi:</span> {result.locationName}
+                  <span className="text-white font-bold">Lokasi:</span> {result.locationName}
                 </p>
                 <p className="text-teal-100">
-                  <span className="text-teal-300">Jenis:</span> {result.damageType}
+                  <span className="text-white font-bold">Jenis:</span> {result.damageType}
                 </p>
                 {result.verificationNotes && (
                   <p className="text-teal-200/90 italic pt-1 border-t border-white/5">

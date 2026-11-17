@@ -5,7 +5,7 @@ export function ContactHero() {
         <div className="flex flex-col items-start gap-3.5 max-w-3xl">
           {/* Eyebrow */}
           <div className="inline-flex items-center gap-2">
-            <span className="h-[2px] w-6 rounded-full bg-secondary-500" />
+            <span className="h-[2px] w-6 rounded-full bg-teal-200" />
             <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-teal-200">
               KONTAK &amp; FAQ
             </span>

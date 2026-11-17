@@ -149,14 +149,14 @@ export function ContactForm() {
           </div>
 
           {/* Bottom row: disclaimer & submit button */}
-          <div className="pt-2 flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-4">
+          <div className="pt-2 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <p className="text-xs text-ink-500">
               Dengan mengirim, kamu menyetujui kebijakan privasi.
             </p>
             <button
               type="submit"
               disabled={loading}
-              className="inline-flex items-center justify-center gap-2 rounded-full bg-teal-500 hover:bg-teal-600 px-6 py-2.5 text-sm font-semibold text-white shadow-2xs transition-colors outline-hidden focus-visible:ring-2 focus-visible:ring-teal-base disabled:opacity-70 cursor-pointer"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full bg-teal-500 hover:bg-teal-600 px-6 py-3 sm:py-2.5 text-sm font-semibold text-white shadow-2xs transition-colors outline-hidden focus-visible:ring-2 focus-visible:ring-teal-base disabled:opacity-70 cursor-pointer"
             >
               <span>{loading ? 'Mengirim...' : 'Kirim Pesan'}</span>
               <FiSend className="h-4 w-4" />

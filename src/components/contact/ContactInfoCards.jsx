@@ -1,4 +1,4 @@
-import { FiMail, FiMessageCircle, FiMapPin, FiInfo } from 'react-icons/fi'
+import { FiMail, FiMessageCircle, FiMapPin } from 'react-icons/fi'
 
 const CONTACT_INFO = [
   {

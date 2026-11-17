@@ -20,6 +20,11 @@
   --color-teal-base: #0f5c6e;
   --color-teal-hover: #0a4352;
   --color-teal-light: #ecfeff;
+  --color-teal-accent: #167990;
+
+  /* Secondary Cyan (Badge, Line Eyebrow, Wordmark) */
+  --color-secondary: #0891b2;
+  --color-secondary-500: #06b6d4;
 
   /* Accent / Coral (CTA Lapor, Peringatan Bahaya) */
   --color-coral-50: #fff5f3;

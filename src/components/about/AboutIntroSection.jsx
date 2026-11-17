@@ -2,7 +2,7 @@ import { LuUsers, LuBuilding2, LuEye } from 'react-icons/lu'
 
 export function AboutIntroSection() {
   const photoUrl =
-    'https://res.cloudinary.com/gjrghchd/image/upload/f_auto,q_auto/v1794892005/satu-paragraf-josjis/about-foto-survey.jpg'
+    'https://res.cloudinary.com/gjrghchd/image/upload/f_auto,q_auto/v1794892005/satu-paragraf-josjis/edu-survey.jpg'
 
   const userRoles = [
     {

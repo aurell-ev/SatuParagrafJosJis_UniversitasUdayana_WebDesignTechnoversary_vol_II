@@ -6,6 +6,7 @@ import { Footer } from './components/layout/Footer'
 import { HomePage } from './pages/public/HomePage'
 import { ArticleListPage } from './pages/public/ArticleListPage'
 import { ArticleDetailPage } from './pages/public/ArticleDetailPage'
+import { AboutPage } from './pages/public/AboutPage'
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
                 <Route path="/" element={<HomePage />} />
                 <Route path="/artikel" element={<ArticleListPage />} />
                 <Route path="/artikel/:slug" element={<ArticleDetailPage />} />
+                <Route path="/about" element={<AboutPage />} />
               </Routes>
             </main>
 

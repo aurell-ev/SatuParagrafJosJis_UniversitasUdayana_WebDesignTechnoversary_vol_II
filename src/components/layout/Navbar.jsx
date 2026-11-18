@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { Logo } from '../common/Logo'
+import { useAuth } from '../../context/useAppContext'
 
 /* --- Exact Figma SVG Icons with currentColor for token styling --- */
 
@@ -276,6 +277,7 @@ const TENTANG_SUBMENU = [
 ]
 
 export function Navbar() {
+  const { user, isAuthenticated } = useAuth()
   const [isMobileOpen, setIsMobileOpen] = useState(false)
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const dropdownRef = useRef(null)
@@ -354,11 +356,10 @@ export function Navbar() {
           {/* Beranda */}
           <Link
             to="/"
-            className={`content-stretch flex items-center px-4 py-2 rounded-full text-base font-medium transition-colors duration-150 outline-hidden focus-visible:ring-2 focus-visible:ring-teal-base ${
-              isLinkActive(location.pathname, '/')
+            className={`content-stretch flex items-center px-4 py-2 rounded-full text-base font-medium transition-colors duration-150 outline-hidden focus-visible:ring-2 focus-visible:ring-teal-base ${isLinkActive(location.pathname, '/')
                 ? 'bg-teal-50 text-teal-base font-semibold'
                 : 'text-ink-600 hover:text-ink-900 hover:bg-ink-100'
-            }`}
+              }`}
           >
             Beranda
           </Link>
@@ -375,24 +376,21 @@ export function Navbar() {
               onClick={() => setIsDropdownOpen((prev) => !prev)}
               aria-expanded={isDropdownOpen}
               aria-haspopup="true"
-              className={`content-stretch flex items-center gap-1 px-4 py-2 rounded-full text-base transition-colors duration-150 outline-hidden focus-visible:ring-2 focus-visible:ring-teal-base cursor-pointer ${
-                isTentangActive
+              className={`content-stretch flex items-center gap-1 px-4 py-2 rounded-full text-base transition-colors duration-150 outline-hidden focus-visible:ring-2 focus-visible:ring-teal-base cursor-pointer ${isTentangActive
                   ? 'bg-teal-50 text-teal-base font-semibold'
                   : isDropdownOpen
-                  ? 'bg-ink-100 text-ink-900 font-medium'
-                  : 'text-ink-600 hover:text-ink-900 hover:bg-ink-100 font-medium'
-              }`}
+                    ? 'bg-ink-100 text-ink-900 font-medium'
+                    : 'text-ink-600 hover:text-ink-900 hover:bg-ink-100 font-medium'
+                }`}
             >
               <span>Tentang</span>
               <div
-                className={`transition-transform duration-200 ${
-                  isDropdownOpen ? 'rotate-180' : ''
-                }`}
+                className={`transition-transform duration-200 ${isDropdownOpen ? 'rotate-180' : ''
+                  }`}
               >
                 <ChevronDownIcon
-                  className={`size-4 ${
-                    isTentangActive ? 'text-teal-base' : 'text-ink-600'
-                  }`}
+                  className={`size-4 ${isTentangActive ? 'text-teal-base' : 'text-ink-600'
+                    }`}
                 />
               </div>
             </button>
@@ -413,26 +411,23 @@ export function Navbar() {
                       to={item.path}
                       role="menuitem"
                       onClick={() => setIsDropdownOpen(false)}
-                      className={`group flex items-start gap-3 p-3 rounded-lg transition-colors outline-hidden focus-visible:ring-2 focus-visible:ring-teal-base ${
-                        isActive
+                      className={`group flex items-start gap-3 p-3 rounded-lg transition-colors outline-hidden focus-visible:ring-2 focus-visible:ring-teal-base ${isActive
                           ? 'bg-teal-50'
                           : 'hover:bg-ink-50'
-                      }`}
+                        }`}
                     >
                       <div
-                        className={`size-10 rounded-lg flex items-center justify-center shrink-0 transition-colors ${
-                          isActive
+                        className={`size-10 rounded-lg flex items-center justify-center shrink-0 transition-colors ${isActive
                             ? 'bg-surface-card text-teal-base shadow-xs'
                             : 'bg-teal-50 text-teal-base group-hover:bg-teal-100'
-                        }`}
+                          }`}
                       >
                         <IconComponent className="size-5" />
                       </div>
                       <div className="flex flex-col gap-0.5 leading-normal">
                         <p
-                          className={`text-base font-semibold transition-colors ${
-                            isActive ? 'text-teal-base' : 'text-ink-900 group-hover:text-teal-base'
-                          }`}
+                          className={`text-base font-semibold transition-colors ${isActive ? 'text-teal-base' : 'text-ink-900 group-hover:text-teal-base'
+                            }`}
                         >
                           {item.title}
                         </p>
@@ -450,11 +445,10 @@ export function Navbar() {
           {/* Artikel */}
           <Link
             to="/artikel"
-            className={`content-stretch flex items-center px-4 py-2 rounded-full text-base font-medium transition-colors duration-150 outline-hidden focus-visible:ring-2 focus-visible:ring-teal-base ${
-              isLinkActive(location.pathname, '/artikel')
+            className={`content-stretch flex items-center px-4 py-2 rounded-full text-base font-medium transition-colors duration-150 outline-hidden focus-visible:ring-2 focus-visible:ring-teal-base ${isLinkActive(location.pathname, '/artikel')
                 ? 'bg-teal-50 text-teal-base font-semibold'
                 : 'text-ink-600 hover:text-ink-900 hover:bg-ink-100'
-            }`}
+              }`}
           >
             Artikel
           </Link>
@@ -462,11 +456,10 @@ export function Navbar() {
           {/* Galeri */}
           <Link
             to="/galeri"
-            className={`content-stretch flex items-center px-4 py-2 rounded-full text-base font-medium transition-colors duration-150 outline-hidden focus-visible:ring-2 focus-visible:ring-teal-base ${
-              isLinkActive(location.pathname, '/galeri')
+            className={`content-stretch flex items-center px-4 py-2 rounded-full text-base font-medium transition-colors duration-150 outline-hidden focus-visible:ring-2 focus-visible:ring-teal-base ${isLinkActive(location.pathname, '/galeri')
                 ? 'bg-teal-50 text-teal-base font-semibold'
                 : 'text-ink-600 hover:text-ink-900 hover:bg-ink-100'
-            }`}
+              }`}
           >
             Galeri
           </Link>
@@ -474,30 +467,58 @@ export function Navbar() {
           {/* Perkembangan */}
           <Link
             to="/perkembangan"
-            className={`content-stretch flex items-center px-4 py-2 rounded-full text-base font-medium transition-colors duration-150 outline-hidden focus-visible:ring-2 focus-visible:ring-teal-base ${
-              isLinkActive(location.pathname, '/perkembangan')
+            className={`content-stretch flex items-center px-4 py-2 rounded-full text-base font-medium transition-colors duration-150 outline-hidden focus-visible:ring-2 focus-visible:ring-teal-base ${isLinkActive(location.pathname, '/perkembangan')
                 ? 'bg-teal-50 text-teal-base font-semibold'
                 : 'text-ink-600 hover:text-ink-900 hover:bg-ink-100'
-            }`}
+              }`}
           >
             Perkembangan
           </Link>
+
+          {/* Portal Pengelola (Khusus Pengelola Daerah) */}
+          {isAuthenticated && user?.role === 'manager' && (
+            <Link
+              to="/pengelola"
+              className={`content-stretch flex items-center gap-1.5 px-4 py-2 rounded-full text-base font-medium transition-colors duration-150 outline-hidden focus-visible:ring-2 focus-visible:ring-teal-base ${isLinkActive(location.pathname, '/pengelola')
+                  ? 'bg-teal-50 text-teal-base font-semibold'
+                  : 'text-ink-600 hover:text-ink-900 hover:bg-ink-100'
+                }`}
+            >
+              <span>Portal Pengelola</span>
+            </Link>
+          )}
         </nav>
 
         {/* Desktop Action Buttons */}
         <div className="hidden lg:flex items-center gap-2">
-          {/* Masuk Tim (Ghost Button) */}
-          <Link
-            to="/login"
-            className={`inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-semibold transition-colors duration-150 outline-hidden focus-visible:ring-2 focus-visible:ring-teal-base ${
-              isLinkActive(location.pathname, '/login')
-                ? 'bg-teal-50 text-teal-base'
-                : 'text-teal-base hover:bg-teal-50'
-            }`}
-          >
-            <LoginIcon className="size-[18px] text-teal-base" />
-            <span>Masuk Tim</span>
-          </Link>
+          {/* Masuk / Logout Link */}
+          {isAuthenticated ? (
+            <div className="flex items-center gap-2">
+              <Link
+                to={user?.role === 'manager' ? '/pengelola' : '/perkembangan'}
+                className={`inline-flex items-center gap-2 rounded-full px-4 py-2.5 text-sm font-semibold transition-colors duration-150 outline-hidden focus-visible:ring-2 focus-visible:ring-teal-base ${
+                  isLinkActive(location.pathname, '/pengelola')
+                    ? 'bg-teal-50 text-teal-base'
+                    : 'text-teal-base hover:bg-teal-50'
+                }`}
+              >
+                <LoginIcon className="size-[18px] text-teal-base" />
+                <span>{user?.name || (user?.role === 'manager' ? 'Dr. Made Suartana' : 'Tim Wilayah')}</span>
+              </Link>
+            </div>
+          ) : (
+            <Link
+              to="/masuk"
+              className={`inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-semibold transition-colors duration-150 outline-hidden focus-visible:ring-2 focus-visible:ring-teal-base ${
+                isLinkActive(location.pathname, '/masuk')
+                  ? 'bg-teal-50 text-teal-base'
+                  : 'text-teal-base hover:bg-teal-50'
+              }`}
+            >
+              <LoginIcon className="size-[18px] text-teal-base" />
+              <span>Masuk</span>
+            </Link>
+          )}
 
           {/* Laporkan Kerusakan (Primary Accent Button) */}
           <Link
@@ -536,17 +557,15 @@ export function Navbar() {
             <Link
               to="/"
               onClick={() => setIsMobileOpen(false)}
-              className={`flex h-12 items-center justify-between px-4 py-3 rounded-lg text-base transition-colors ${
-                isLinkActive(location.pathname, '/')
+              className={`flex h-12 items-center justify-between px-4 py-3 rounded-lg text-base transition-colors ${isLinkActive(location.pathname, '/')
                   ? 'bg-teal-50 text-teal-base font-semibold'
                   : 'text-ink-900 font-medium hover:bg-ink-100'
-              }`}
+                }`}
             >
               <span>Beranda</span>
               <ChevronRightIcon
-                className={`size-5 ${
-                  isLinkActive(location.pathname, '/') ? 'text-teal-base' : 'text-ink-400'
-                }`}
+                className={`size-5 ${isLinkActive(location.pathname, '/') ? 'text-teal-base' : 'text-ink-400'
+                  }`}
               />
             </Link>
 
@@ -554,19 +573,17 @@ export function Navbar() {
             <Link
               to="/artikel"
               onClick={() => setIsMobileOpen(false)}
-              className={`flex h-12 items-center justify-between px-4 py-3 rounded-lg text-base transition-colors ${
-                isLinkActive(location.pathname, '/artikel')
+              className={`flex h-12 items-center justify-between px-4 py-3 rounded-lg text-base transition-colors ${isLinkActive(location.pathname, '/artikel')
                   ? 'bg-teal-50 text-teal-base font-semibold'
                   : 'text-ink-900 font-medium hover:bg-ink-100'
-              }`}
+                }`}
             >
               <span>Artikel</span>
               <ChevronRightIcon
-                className={`size-5 ${
-                  isLinkActive(location.pathname, '/artikel')
+                className={`size-5 ${isLinkActive(location.pathname, '/artikel')
                     ? 'text-teal-base'
                     : 'text-ink-400'
-                }`}
+                  }`}
               />
             </Link>
 
@@ -574,19 +591,17 @@ export function Navbar() {
             <Link
               to="/galeri"
               onClick={() => setIsMobileOpen(false)}
-              className={`flex h-12 items-center justify-between px-4 py-3 rounded-lg text-base transition-colors ${
-                isLinkActive(location.pathname, '/galeri')
+              className={`flex h-12 items-center justify-between px-4 py-3 rounded-lg text-base transition-colors ${isLinkActive(location.pathname, '/galeri')
                   ? 'bg-teal-50 text-teal-base font-semibold'
                   : 'text-ink-900 font-medium hover:bg-ink-100'
-              }`}
+                }`}
             >
               <span>Galeri</span>
               <ChevronRightIcon
-                className={`size-5 ${
-                  isLinkActive(location.pathname, '/galeri')
+                className={`size-5 ${isLinkActive(location.pathname, '/galeri')
                     ? 'text-teal-base'
                     : 'text-ink-400'
-                }`}
+                  }`}
               />
             </Link>
 
@@ -594,21 +609,34 @@ export function Navbar() {
             <Link
               to="/perkembangan"
               onClick={() => setIsMobileOpen(false)}
-              className={`flex h-12 items-center justify-between px-4 py-3 rounded-lg text-base transition-colors ${
-                isLinkActive(location.pathname, '/perkembangan')
+              className={`flex h-12 items-center justify-between px-4 py-3 rounded-lg text-base transition-colors ${isLinkActive(location.pathname, '/perkembangan')
                   ? 'bg-teal-50 text-teal-base font-semibold'
                   : 'text-ink-900 font-medium hover:bg-ink-100'
-              }`}
+                }`}
             >
               <span>Perkembangan</span>
               <ChevronRightIcon
-                className={`size-5 ${
-                  isLinkActive(location.pathname, '/perkembangan')
+                className={`size-5 ${isLinkActive(location.pathname, '/perkembangan')
                     ? 'text-teal-base'
                     : 'text-ink-400'
-                }`}
+                  }`}
               />
             </Link>
+
+            {/* Portal Pengelola Mobile Link (Khusus Manager) */}
+            {isAuthenticated && user?.role === 'manager' && (
+              <Link
+                to="/pengelola"
+                onClick={() => setIsMobileOpen(false)}
+                className={`flex h-12 items-center justify-between px-4 py-3 rounded-lg text-base transition-colors ${isLinkActive(location.pathname, '/pengelola')
+                    ? 'bg-teal-50 text-teal-base font-semibold'
+                    : 'text-ink-900 font-medium hover:bg-ink-100'
+                  }`}
+              >
+                <span className="font-semibold text-teal-base">Portal Pengelola Daerah</span>
+                <ChevronRightIcon className="size-5 text-teal-base" />
+              </Link>
+            )}
 
             {/* Group Header: Tentang */}
             <div className="pt-4 pb-1 px-4">
@@ -625,11 +653,10 @@ export function Navbar() {
                   key={item.path}
                   to={item.path}
                   onClick={() => setIsMobileOpen(false)}
-                  className={`flex h-12 items-center justify-between px-4 py-3 rounded-lg text-base transition-colors ${
-                    isActive
+                  className={`flex h-12 items-center justify-between px-4 py-3 rounded-lg text-base transition-colors ${isActive
                       ? 'bg-teal-50 text-teal-base font-semibold'
                       : 'text-ink-900 font-medium hover:bg-ink-100'
-                  }`}
+                    }`}
                 >
                   <span>{item.title}</span>
                   <ChevronRightIcon
@@ -652,15 +679,26 @@ export function Navbar() {
               <span>Laporkan Kerusakan</span>
             </Link>
 
-            {/* Masuk Tim */}
-            <Link
-              to="/login"
-              onClick={() => setIsMobileOpen(false)}
-              className="w-full flex items-center justify-center gap-2 rounded-full bg-surface-card border border-secondary text-secondary hover:bg-teal-50 py-4 px-7 font-semibold text-base transition-colors"
-            >
-              <LoginIcon className="size-5 text-secondary" />
-              <span>Masuk Tim</span>
-            </Link>
+            {/* Masuk Tim / Portal */}
+            {isAuthenticated ? (
+              <Link
+                to={user?.role === 'manager' ? '/pengelola' : '/perkembangan'}
+                onClick={() => setIsMobileOpen(false)}
+                className="w-full flex items-center justify-center gap-2 rounded-full bg-teal-50 border border-teal-200 text-teal-base hover:bg-teal-100 py-4 px-7 font-semibold text-base transition-colors"
+              >
+                <LoginIcon className="size-5 text-teal-base" />
+                <span>{user?.role === 'manager' ? 'Buka Portal Pengelola' : 'Area Tim Wilayah'}</span>
+              </Link>
+            ) : (
+              <Link
+                to="/masuk"
+                onClick={() => setIsMobileOpen(false)}
+                className="w-full flex items-center justify-center gap-2 rounded-full bg-surface-card border border-secondary text-secondary hover:bg-teal-50 py-4 px-7 font-semibold text-base transition-colors"
+              >
+                <LoginIcon className="size-5 text-secondary" />
+                <span>Masuk Tim</span>
+              </Link>
+            )}
 
             {/* Microcopy note */}
             <p className="text-xs font-normal text-ink-400 text-center leading-relaxed">

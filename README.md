@@ -52,11 +52,11 @@ Seluruh library yang digunakan gratis dan open-source. Tidak menggunakan templat
 ### Langkah Instalasi
 1. Clone repository ini:
    ```bash
-   git clone https://github.com/USERNAME/webdesign_namaTim_technoversary_vol.II.git
+   git clone https://github.com/USERNAME/webdesign_SatuParagrafJosJis_technoversary_vol.II.git
    ```
 2. Masuk ke folder project:
    ```bash
-   cd webdesign_namaTim_technoversary_vol.II
+   cd webdesign_SatuParagrafJosJis_technoversary_vol.II
    ```
 3. Install dependencies:
    ```bash
@@ -102,8 +102,7 @@ webdesign_namaTim_technoversary_vol.II/
 
 ## Nama Tim dan Anggota
 
-**Nama Tim:** _NamaTim_
-
+**Nama Tim:** Satu Paragraf JosJis
 | No | Nama | Peran |
 |---|---|---|
 | 1 | _Aurell Evangeline Taolin_ | Ketua |

@@ -1,23 +1,4 @@
 import { useState } from 'react'
-<<<<<<< HEAD
-import { useNavigate } from 'react-router-dom'
-import { useAuth } from '../../context/useAppContext'
-import { Logo } from '../../components/common/Logo'
-import { LuShieldCheck, LuUsers, LuArrowRight, LuLock, LuInfo } from 'react-icons/lu'
-
-export function LoginPage() {
-  const navigate = useNavigate()
-  const { loginAs, isAuthenticated, user } = useAuth()
-  const [selectedRole, setSelectedRole] = useState('MANAGER') // 'MANAGER' | 'FIELD_TEAM'
-
-  const handleLogin = (e) => {
-    e.preventDefault()
-    loginAs(selectedRole)
-    if (selectedRole === 'MANAGER') {
-      navigate('/pengelola', { replace: true })
-    } else {
-      navigate('/perkembangan', { replace: true })
-=======
 import { Link, useNavigate } from 'react-router-dom'
 import { Logo } from '../../components/common/Logo'
 import { useAuth } from '../../context/useAppContext'
@@ -192,151 +173,29 @@ export function LoginPage() {
     setIsLoading(true)
     setNotification(null)
 
-    // Simulate authenticating against seed accounts
+    // Log in as MANAGER
     setTimeout(() => {
       setIsLoading(false)
-      const normalizedEmail = email.toLowerCase().trim()
-
-      if (normalizedEmail.includes('pengelola') || normalizedEmail.includes('manager')) {
-        loginAs('MANAGER')
-      } else {
-        loginAs('FIELD_TEAM')
-      }
+      loginAs('MANAGER')
 
       setNotification({
         type: 'success',
-        message: 'Berhasil masuk! Mengalihkan ke halaman pemantauan...',
+        message: 'Berhasil masuk! Mengalihkan ke Portal Pengelola Daerah...',
       })
 
       setTimeout(() => {
-        navigate('/perkembangan')
-      }, 1000)
-    }, 600)
+        navigate('/pengelola')
+      }, 800)
+    }, 500)
   }
 
   // Quick helper to fill demo credentials for competition judges
-  const handleFillDemo = (type) => {
-    if (type === 'FIELD_TEAM') {
-      setEmail('tim.bali@pulihkarang.id')
-      setPassword('konservasi2026')
-    } else {
-      setEmail('pengelola.bali@pulihkarang.id')
-      setPassword('karanglestari')
->>>>>>> 7d3cc0c6fa87b0d157b7d7a4bd99497c0f54041c
-    }
+  const handleFillDemo = () => {
+    setEmail('pengelola.bali@pulihkarang.id')
+    setPassword('karanglestari')
   }
 
   return (
-<<<<<<< HEAD
-    <div className="min-h-screen bg-surface flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-      <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
-        <div className="inline-block mb-4">
-          <Logo variant="light" />
-        </div>
-        <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-ink-900">
-          Masuk Portal Wilayah
-        </h2>
-        <p className="mt-2 text-xs sm:text-sm text-ink-600 max-w-sm mx-auto">
-          Pusat kendali tim konservasi dan pengelola daerah PulihKarang.
-        </p>
-      </div>
-
-      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md px-4 sm:px-0">
-        <div className="bg-surface-card rounded-2xl border border-ink-200/90 p-6 sm:p-8 shadow-xs">
-          {isAuthenticated && (
-            <div className="mb-6 rounded-xl bg-teal-50 border border-teal-200/80 p-3.5 flex items-center justify-between text-xs">
-              <div className="flex items-center gap-2 text-teal-900">
-                <LuShieldCheck className="h-4 w-4 text-teal-base shrink-0" />
-                <span>Masuk sebagai <strong>{user?.name}</strong></span>
-              </div>
-              <button
-                type="button"
-                onClick={() => navigate(user?.role === 'manager' ? '/pengelola' : '/perkembangan')}
-                className="font-bold text-teal-base hover:underline"
-              >
-                Buka Portal →
-              </button>
-            </div>
-          )}
-
-          <form onSubmit={handleLogin} className="space-y-5">
-            <div>
-              <label className="block text-xs font-semibold text-ink-700 mb-2">
-                Pilih Peran Demo untuk Pengujian:
-              </label>
-              <div className="grid grid-cols-2 gap-3">
-                <button
-                  type="button"
-                  onClick={() => setSelectedRole('MANAGER')}
-                  className={`flex flex-col items-center justify-center p-3.5 rounded-xl border text-center transition-all cursor-pointer ${
-                    selectedRole === 'MANAGER'
-                      ? 'border-teal-base bg-teal-50/70 text-teal-900 ring-2 ring-teal-base/20 font-bold'
-                      : 'border-ink-200 bg-white text-ink-600 hover:bg-slate-50'
-                  }`}
-                >
-                  <LuShieldCheck className={`h-6 w-6 mb-1.5 ${selectedRole === 'MANAGER' ? 'text-teal-base' : 'text-ink-400'}`} />
-                  <span className="text-xs">Pengelola Daerah</span>
-                  <span className="text-[10px] text-ink-500 font-normal mt-0.5">Admin &amp; Relawan</span>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => setSelectedRole('FIELD_TEAM')}
-                  className={`flex flex-col items-center justify-center p-3.5 rounded-xl border text-center transition-all cursor-pointer ${
-                    selectedRole === 'FIELD_TEAM'
-                      ? 'border-teal-base bg-teal-50/70 text-teal-900 ring-2 ring-teal-base/20 font-bold'
-                      : 'border-ink-200 bg-white text-ink-600 hover:bg-slate-50'
-                  }`}
-                >
-                  <LuUsers className={`h-6 w-6 mb-1.5 ${selectedRole === 'FIELD_TEAM' ? 'text-teal-base' : 'text-ink-400'}`} />
-                  <span className="text-xs">Tim Konservator</span>
-                  <span className="text-[10px] text-ink-500 font-normal mt-0.5">Lapangan Bali</span>
-                </button>
-              </div>
-            </div>
-
-            <div className="space-y-3 pt-1">
-              <div>
-                <label className="block text-xs font-medium text-ink-600 mb-1">Email Akun</label>
-                <input
-                  type="email"
-                  readOnly
-                  value={selectedRole === 'MANAGER' ? 'pengelola.bali@pulihkarang.id' : 'tim.bali@pulihkarang.id'}
-                  className="w-full rounded-xl border border-ink-200 bg-ink-50 px-3.5 py-2 text-xs text-ink-700 cursor-not-allowed select-none"
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-medium text-ink-600 mb-1">Kata Sandi</label>
-                <div className="relative">
-                  <input
-                    type="password"
-                    readOnly
-                    value="••••••••••••"
-                    className="w-full rounded-xl border border-ink-200 bg-ink-50 px-3.5 py-2 text-xs text-ink-700 cursor-not-allowed select-none"
-                  />
-                  <LuLock className="absolute right-3.5 top-2.5 h-3.5 w-3.5 text-ink-400" />
-                </div>
-              </div>
-            </div>
-
-            <div className="rounded-xl border border-teal-100 bg-teal-50/50 p-3 text-xs text-teal-900 flex items-start gap-2">
-              <LuInfo className="h-4 w-4 text-teal-base shrink-0 mt-0.5" />
-              <p className="text-[11px] leading-relaxed">
-                Frontend-only mode untuk juri: klik <strong>Masuk Sekarang</strong> untuk menguji alur verifikasi data tanpa perlu backend.
-              </p>
-            </div>
-
-            <button
-              type="submit"
-              className="w-full flex items-center justify-center gap-2 rounded-full bg-teal-base hover:bg-teal-hover py-2.5 px-4 text-xs sm:text-sm font-bold text-white shadow-xs transition-colors cursor-pointer"
-            >
-              <span>Masuk Sebagai {selectedRole === 'MANAGER' ? 'Pengelola Daerah' : 'Tim Konservator'}</span>
-              <LuArrowRight className="h-4 w-4" />
-            </button>
-          </form>
-        </div>
-=======
     <div className="min-h-screen w-full bg-surface-card flex items-stretch">
       {/* Left Column: Form Section */}
       <div className="flex-1 flex flex-col justify-between min-h-screen px-6 sm:px-12 lg:px-20 py-8 bg-surface-card">
@@ -365,21 +224,20 @@ export function LoginPage() {
             {/* Title & Subtitle */}
             <div className="flex flex-col gap-2">
               <h1 className="text-3xl sm:text-4xl font-bold text-ink-900 leading-tight">
-                Masuk Tim
+                Masuk Pengelola
               </h1>
               <p className="text-base font-normal text-ink-600 leading-normal">
-                Untuk anggota dan pengelola tim restorasi daerah.
+                Portal autentikasi khusus pengelola daerah terumbu karang.
               </p>
             </div>
 
             {/* Notification alert if any */}
             {notification && (
               <div
-                className={`p-3.5 rounded-xl text-sm font-medium transition-all ${
-                  notification.type === 'success'
+                className={`p-3.5 rounded-xl text-sm font-medium transition-all ${notification.type === 'success'
                     ? 'bg-state-success-bg text-state-success-text border border-state-success-border'
                     : 'bg-state-error-bg text-state-error-text border border-state-error-border'
-                }`}
+                  }`}
               >
                 {notification.message}
               </div>
@@ -482,22 +340,13 @@ export function LoginPage() {
                 <span className="text-xs text-ink-400">
                   Uji Coba Demo Akun Cepat:
                 </span>
-                <div className="flex gap-2">
-                  <button
-                    type="button"
-                    onClick={() => handleFillDemo('FIELD_TEAM')}
-                    className="text-xs px-2.5 py-1 rounded-full bg-teal-50 text-teal-base hover:bg-teal-100 transition-colors font-medium cursor-pointer"
-                  >
-                    Tim Lapangan
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => handleFillDemo('MANAGER')}
-                    className="text-xs px-2.5 py-1 rounded-full bg-ink-100 text-ink-600 hover:bg-ink-200 transition-colors font-medium cursor-pointer"
-                  >
-                    Pengelola
-                  </button>
-                </div>
+                <button
+                  type="button"
+                  onClick={handleFillDemo}
+                  className="text-xs px-3.5 py-1.5 rounded-full bg-teal-50 text-teal-base hover:bg-teal-100 transition-colors font-semibold cursor-pointer border border-teal-200"
+                >
+                  Isi Akun Pengelola Daerah
+                </button>
               </div>
 
               {/* Footer Form: Belum Terdaftar */}
@@ -533,12 +382,8 @@ export function LoginPage() {
         />
         {/* Subtle gradient overlay to enhance visual depth */}
         <div className="absolute inset-0 bg-linear-to-t from-teal-950/40 via-transparent to-transparent pointer-events-none" />
->>>>>>> 7d3cc0c6fa87b0d157b7d7a4bd99497c0f54041c
       </div>
     </div>
   )
 }
-<<<<<<< HEAD
-=======
 export default LoginPage
->>>>>>> 7d3cc0c6fa87b0d157b7d7a4bd99497c0f54041c

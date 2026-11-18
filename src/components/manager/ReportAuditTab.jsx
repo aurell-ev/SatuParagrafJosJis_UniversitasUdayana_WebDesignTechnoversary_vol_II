@@ -4,7 +4,9 @@ import {
   LuCircleCheck,
   LuCircleX,
   LuTriangleAlert,
-  LuCheck
+  LuCheck,
+  LuClock,
+  LuBadgeCheck
 } from 'react-icons/lu'
 
 export function ReportAuditTab({ reports = [], onVerifyReport }) {
@@ -53,25 +55,36 @@ export function ReportAuditTab({ reports = [], onVerifyReport }) {
       case 'baru':
         return (
           <span className="inline-flex items-center gap-1 rounded-full bg-amber-50 px-2.5 py-0.5 text-xs font-semibold text-amber-700 border border-amber-200">
+            <LuClock className="h-3 w-3" />
             Menunggu Verifikasi
           </span>
         )
       case 'diverifikasi':
         return (
           <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-semibold text-emerald-700 border border-emerald-200">
+            <LuCircleCheck className="h-3 w-3" />
             Diverifikasi
           </span>
         )
       case 'dipulihkan':
         return (
           <span className="inline-flex items-center gap-1 rounded-full bg-teal-50 px-2.5 py-0.5 text-xs font-semibold text-teal-base border border-teal-200">
+            <LuBadgeCheck className="h-3 w-3" />
             Dalam Pemulihan
           </span>
         )
       case 'duplikat':
         return (
           <span className="inline-flex items-center gap-1 rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-semibold text-slate-700 border border-slate-200">
+            <LuTriangleAlert className="h-3 w-3 text-slate-500" />
             Duplikat
+          </span>
+        )
+      case 'tidak_valid':
+        return (
+          <span className="inline-flex items-center gap-1 rounded-full bg-rose-50 px-2.5 py-0.5 text-xs font-semibold text-rose-700 border border-rose-200">
+            <LuCircleX className="h-3 w-3" />
+            Tidak Valid
           </span>
         )
       default:
@@ -212,17 +225,32 @@ export function ReportAuditTab({ reports = [], onVerifyReport }) {
                   </>
                 )}
                 {report.status === 'diverifikasi' && (
-                  <button
-                    type="button"
-                    onClick={() => handleVerify(report.id, 'dipulihkan', 'Dimasukkan ke program penanaman aktif daerah.')}
-                    className="inline-flex items-center gap-1.5 rounded-xl bg-teal-50 hover:bg-teal-100 border border-teal-200 px-3.5 py-2 text-xs font-bold text-teal-base transition-colors cursor-pointer"
-                  >
-                    <span>Alihkan ke Pemulihan</span>
-                  </button>
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2">
+                    <span className="text-[11px] font-medium text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-200">
+                      Telah diverifikasi valid oleh tim
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => handleVerify(report.id, 'dipulihkan', 'Dimasukkan ke program penanaman aktif daerah.')}
+                      className="inline-flex items-center gap-1.5 rounded-xl bg-teal-base hover:bg-teal-hover px-3.5 py-2 text-xs font-bold text-white shadow-2xs transition-colors cursor-pointer"
+                    >
+                      <span>Alihkan ke Pemulihan</span>
+                    </button>
+                  </div>
                 )}
-                {report.status !== 'baru' && (
-                  <span className="text-[11px] text-ink-400 italic">
-                    {report.verificationNotes || 'Telah diproses'}
+                {report.status === 'dipulihkan' && (
+                  <div className="flex flex-col items-start gap-1">
+                    <span className="text-[11px] font-bold text-teal-900 bg-teal-50 px-2.5 py-1 rounded-lg border border-teal-200">
+                      Masuk Agenda Pemulihan Aktif
+                    </span>
+                    <span className="text-[10px] text-ink-500">
+                      Tercatat pada jadwal konservasi & pemantauan
+                    </span>
+                  </div>
+                )}
+                {report.status === 'tidak_valid' && (
+                  <span className="text-[11px] font-medium text-rose-700 bg-rose-50 px-2.5 py-1 rounded-lg border border-rose-200">
+                    Laporan ditolak / tidak memenuhi kriteria
                   </span>
                 )}
               </div>

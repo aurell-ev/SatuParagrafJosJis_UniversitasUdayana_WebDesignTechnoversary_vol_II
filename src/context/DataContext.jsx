@@ -2,13 +2,15 @@ import { useState, useEffect } from 'react'
 import { INITIAL_REPORTS } from '../data/reportsSeed'
 import { INITIAL_RESTORATION } from '../data/restorationSeed'
 import { INITIAL_ARTICLES } from '../data/articlesSeed'
+import { INITIAL_VOLUNTEERS } from '../data/volunteersSeed'
 import { findNearbyDuplicates, generateTrackingCode } from '../utils/duplicateDetector'
 import { DataContext } from './contexts'
 
 const STORAGE_KEYS = {
   REPORTS: 'pulihkarang_reports',
   RESTORATION: 'pulihkarang_restoration',
-  ARTICLES: 'pulihkarang_articles'
+  ARTICLES: 'pulihkarang_articles',
+  VOLUNTEERS: 'pulihkarang_volunteers'
 }
 
 function loadInitial(key, fallback) {
@@ -31,6 +33,7 @@ export function DataProvider({ children }) {
     loadInitial(STORAGE_KEYS.RESTORATION, INITIAL_RESTORATION)
   )
   const [articles] = useState(() => loadInitial(STORAGE_KEYS.ARTICLES, INITIAL_ARTICLES))
+  const [volunteers, setVolunteers] = useState(() => loadInitial(STORAGE_KEYS.VOLUNTEERS, INITIAL_VOLUNTEERS))
 
   // Persist on change
   useEffect(() => {
@@ -48,6 +51,14 @@ export function DataProvider({ children }) {
       // ignore storage errors
     }
   }, [restorationSites])
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(STORAGE_KEYS.VOLUNTEERS, JSON.stringify(volunteers))
+    } catch {
+      // ignore storage errors
+    }
+  }, [volunteers])
 
   /**
    * Submit a new citizen report
@@ -94,11 +105,11 @@ export function DataProvider({ children }) {
       prev.map((r) =>
         r.id === reportId
           ? {
-              ...r,
-              status,
-              verificationNotes: verificationNotes ?? r.verificationNotes,
-              duplicateOfId: duplicateOfId ?? r.duplicateOfId
-            }
+            ...r,
+            status,
+            verificationNotes: verificationNotes ?? r.verificationNotes,
+            duplicateOfId: duplicateOfId ?? r.duplicateOfId
+          }
           : r
       )
     )
@@ -134,15 +145,20 @@ export function DataProvider({ children }) {
   }
 
   /**
-   * Add inspection record to a restoration site
+   * Add inspection or update progress record to a restoration site
    */
   const addInspection = (siteId, inspectionData) => {
     setRestorationSites((prev) =>
       prev.map((site) => {
         if (site.id !== siteId) return site
 
+        const total = Number(inspectionData.totalPlanted) || site.totalPlanted || 1
         const alive = Number(inspectionData.aliveCount) || 0
-        const total = site.totalPlanted || 1
+        const dead = Number(inspectionData.deadCount) || 0
+        const lost = Number(inspectionData.lostCount) || 0
+        const unobserved = Math.max(0, total - (alive + dead + lost))
+
+        // Rumus Survival Rate Karang Hidup: (Alive / Total Planted) * 100
         const rate = Math.round((alive / total) * 1000) / 10
 
         let status = 'Tumbuh Baik'
@@ -151,22 +167,112 @@ export function DataProvider({ children }) {
 
         const record = {
           date: inspectionData.date || new Date().toISOString().split('T')[0],
-          ageDays: Number(inspectionData.ageDays) || 30,
+          ageDays: Number(inspectionData.ageDays) || (site.ageDays ? site.ageDays + 30 : 30),
           aliveCount: alive,
-          deadCount: Number(inspectionData.deadCount) || 0,
-          lostCount: Number(inspectionData.lostCount) || 0,
+          deadCount: dead,
+          lostCount: lost,
+          unobservedCount: unobserved,
           survivalRate: rate,
           notes: inspectionData.notes || '',
           auditedBy: inspectionData.auditedBy || 'Data Tim Pelaksana'
         }
 
+        // Timeline activity entry
+        const newActivity = {
+          id: `act-${Date.now().toString().slice(-4)}`,
+          title: inspectionData.activityTitle || `Pemeriksaan (${record.ageDays} hari)`,
+          date: inspectionData.date || 'Hari ini',
+          description: `${alive} hidup, ${dead} mati, ${lost} hilang, ${unobserved} belum diamati. ${inspectionData.notes || ''}`.trim(),
+          type: inspectionData.activityType || 'inspection',
+          status: rate >= 70 ? 'success' : rate >= 40 ? 'warning' : 'danger'
+        }
+
+        const ageDaysNum = Number(inspectionData.ageDays) || (site.ageDays ? site.ageDays + 30 : 30)
+        const updatedHistory = [
+          ...(site.growthHistory || []),
+          {
+            day: ageDaysNum,
+            label: `${ageDaysNum} hr`,
+            rate
+          }
+        ]
+
         return {
           ...site,
           currentSurvivalRate: rate,
-          currentStatus: status,
-          inspections: [...(site.inspections || []), record]
+          currentStatus: inspectionData.currentStatus || status,
+          status: inspectionData.currentStatus || status,
+          ageDays: ageDaysNum,
+          aliveCount: alive,
+          deadCount: dead,
+          lostCount: lost,
+          unobservedCount: unobserved,
+          auditStatus: inspectionData.auditedBy || site.auditStatus || 'Data Tim Pelaksana',
+          lastInspectionLabel: `Pemeriksaan · ${inspectionData.date || 'Hari ini'}`,
+          updatedAtLabel: 'Baru saja diperbarui',
+          inspectionCount: (site.inspectionCount || site.inspections?.length || 0) + 1,
+          inspections: [...(site.inspections || []), record],
+          activityTimeline: [newActivity, ...(site.activityTimeline || [])],
+          growthHistory: updatedHistory
         }
       })
+    )
+  }
+
+  /**
+   * Update restoration site metadata (Method, Coral Genera, Status, Transparency Audit)
+   */
+  const updateRestorationSite = (siteId, updateData) => {
+    setRestorationSites((prev) =>
+      prev.map((site) => {
+        if (site.id !== siteId) return site
+        return {
+          ...site,
+          ...updateData,
+          updatedAtLabel: 'Baru saja diperbarui'
+        }
+      })
+    )
+  }
+
+  /**
+   * Submit a new volunteer application from public form
+   */
+  const submitVolunteer = (volunteerData) => {
+    const newVol = {
+      id: `VOL-${Date.now().toString().slice(-4)}`,
+      fullName: volunteerData.fullName,
+      email: volunteerData.email,
+      phone: volunteerData.phone,
+      region: volunteerData.region || 'denpasar',
+      regionName: volunteerData.regionName || 'Denpasar',
+      district: volunteerData.district || '',
+      skills: volunteerData.skills || [],
+      availability: volunteerData.availability || 'Fleksibel',
+      motivation: volunteerData.motivation || '',
+      status: 'menunggu',
+      submittedAt: new Date().toISOString(),
+      reviewNotes: ''
+    }
+    setVolunteers((prev) => [newVol, ...prev])
+    return newVol
+  }
+
+  /**
+   * Review volunteer application (Manager action: approve or reject)
+   */
+  const reviewVolunteer = (volunteerId, { status, reviewNotes = '' }) => {
+    setVolunteers((prev) =>
+      prev.map((v) =>
+        v.id === volunteerId
+          ? {
+            ...v,
+            status,
+            reviewNotes: reviewNotes ?? v.reviewNotes,
+            reviewedAt: new Date().toISOString()
+          }
+          : v
+      )
     )
   }
 
@@ -177,10 +283,10 @@ export function DataProvider({ children }) {
     totalPlanted: restorationSites.reduce((sum, s) => sum + (s.totalPlanted || 0), 0),
     avgSurvivalRate: restorationSites.length
       ? Math.round(
-          (restorationSites.reduce((sum, s) => sum + (s.currentSurvivalRate || 0), 0) /
-            restorationSites.length) *
-            10
-        ) / 10
+        (restorationSites.reduce((sum, s) => sum + (s.currentSurvivalRate || 0), 0) /
+          restorationSites.length) *
+        10
+      ) / 10
       : 0
   }
 
@@ -190,11 +296,15 @@ export function DataProvider({ children }) {
         reports,
         restorationSites,
         articles,
+        volunteers,
         stats,
-        submitReport,
+        submitReport, 
         verifyReport,
         createRestorationSite,
-        addInspection
+        addInspection,
+        updateRestorationSite,
+        submitVolunteer,
+        reviewVolunteer
       }}
     >
       {children}

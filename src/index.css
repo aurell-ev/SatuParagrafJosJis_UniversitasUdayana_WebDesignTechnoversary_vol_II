@@ -99,7 +99,9 @@
   --font-family: var(--font-sans);
 }
 
+html,
 body {
+  overflow-x: clip;
   font-family: var(--font-sans);
   background-color: var(--color-surface);
   color: var(--color-ink-900);

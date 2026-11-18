@@ -1,6 +1,6 @@
 export function GalleryHero() {
   const heroBg =
-    'https://res.cloudinary.com/gjrghchd/image/upload/f_auto,q_auto/v1794892029/satu-paragraf-josjis/about-page-hero.jpg'
+    'https://res.cloudinary.com/gjrghchd/image/upload/f_auto,q_auto/v1794819287/satu-paragraf-josjis/hero-coral.png'
 
   return (
     <section className="relative overflow-hidden py-16 sm:py-20 lg:py-24">

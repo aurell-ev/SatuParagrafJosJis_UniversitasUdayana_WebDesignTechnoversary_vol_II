@@ -7,7 +7,7 @@ export function ArticleHeroSection() {
     <section className="relative overflow-hidden bg-teal-950 py-16 sm:py-20 lg:py-24">
       {/* Background Image dengan Cloudinary f_auto,q_auto */}
       <img
-        src="https://res.cloudinary.com/gjrghchd/image/upload/f_auto,q_auto/v1794892029/satu-paragraf-josjis/about-page-hero.jpg"
+        src="https://res.cloudinary.com/gjrghchd/image/upload/f_auto,q_auto/v1794819287/satu-paragraf-josjis/hero-coral.png"
         alt="Latar Belakang Terumbu Karang"
         className="absolute inset-0 h-full w-full object-cover object-center"
       />

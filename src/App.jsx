@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import { DataProvider } from './context/DataContext'
 import { AuthProvider } from './context/AuthContext'
 import { Navbar } from './components/layout/Navbar'
@@ -13,45 +13,49 @@ import { ProgressDetailPage } from './pages/public/ProgressDetailPage'
 import { ContactPage } from './pages/public/ContactPage'
 import { VolunteerPage } from './pages/public/VolunteerPage'
 import { GalleryPage } from './pages/public/GalleryPage'
+import { ReportPage } from './pages/public/ReportPage'
+import { ReportSuccessPage } from './pages/public/ReportSuccessPage'
+import { LoginPage } from './pages/public/LoginPage'
+
+function AppContent() {
+  const location = useLocation()
+  const isAuthPage = location.pathname === '/login'
+
+  return (
+    <div className="flex min-h-screen flex-col bg-surface text-ink-900">
+      {/* Global Navbar (Hidden on Auth standalone page) */}
+      {!isAuthPage && <Navbar />}
+
+      {/* Main Content Area */}
+      <main className="flex-1">
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/artikel" element={<ArticleListPage />} />
+          <Route path="/artikel/:slug" element={<ArticleDetailPage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/perkembangan" element={<ProgressPage />} />
+          <Route path="/perkembangan/:id" element={<ProgressDetailPage />} />
+          <Route path="/contact" element={<ContactPage />} />
+          <Route path="/gabung" element={<VolunteerPage />} />
+          <Route path="/galeri" element={<GalleryPage />} />
+          <Route path="/lapor" element={<ReportPage />} />
+          <Route path="/lapor/terkirim" element={<ReportSuccessPage />} />
+          <Route path="/login" element={<LoginPage />} />
+        </Routes>
+      </main>
+
+      {/* Global Footer (Hidden on Auth standalone page) */}
+      {!isAuthPage && <Footer />}
+    </div>
+  )
+}
 
 function App() {
   return (
     <BrowserRouter>
       <DataProvider>
         <AuthProvider>
-          <div className="flex min-h-screen flex-col bg-surface text-ink-900">
-            {/* Skip to Content for Accessibility (WCAG 2.4.1) */}
-            <a
-              href="#main-content"
-              className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:rounded-xl focus:bg-teal-base focus:px-4 focus:py-2.5 focus:text-sm focus:font-bold focus:text-white focus:shadow-lg focus:outline-hidden focus:ring-2 focus:ring-teal-light"
-            >
-              Lewati ke konten utama
-            </a>
-
-            {/* Global Navbar */}
-            <Navbar />
-
-            {/* Main Content Area */}
-            <main id="main-content" tabIndex={-1} className="flex-1 outline-hidden">
-              <Routes>
-                <Route path="/" element={<HomePage />} />
-                <Route path="/artikel" element={<ArticleListPage />} />
-                <Route path="/artikel/:slug" element={<ArticleDetailPage />} />
-                <Route path="/about" element={<AboutPage />} />
-                <Route path="/perkembangan" element={<ProgressPage />} />
-                <Route path="/perkembangan/:id" element={<ProgressDetailPage />} />
-                <Route path="/contact" element={<ContactPage />} />
-                <Route path="/gabung" element={<VolunteerPage />} />
-                <Route path="/galeri" element={<GalleryPage />} />
-              </Routes>
-            </main>
-
-            {/* Global Footer */}
-            <Footer />
-
-            {/* Global Floating Scroll-To-Top Button */}
-            <ScrollToTopButton />
-          </div>
+          <AppContent />
         </AuthProvider>
       </DataProvider>
     </BrowserRouter>

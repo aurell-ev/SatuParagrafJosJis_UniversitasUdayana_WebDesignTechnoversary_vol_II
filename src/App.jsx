@@ -12,6 +12,8 @@ import { ProgressDetailPage } from './pages/public/ProgressDetailPage'
 import { ContactPage } from './pages/public/ContactPage'
 import { VolunteerPage } from './pages/public/VolunteerPage'
 import { GalleryPage } from './pages/public/GalleryPage'
+import { ReportPage } from './pages/public/ReportPage'
+import { ReportSuccessPage } from './pages/public/ReportSuccessPage'
 import { LoginPage } from './pages/public/LoginPage'
 
 function AppContent() {
@@ -35,6 +37,8 @@ function AppContent() {
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/gabung" element={<VolunteerPage />} />
           <Route path="/galeri" element={<GalleryPage />} />
+          <Route path="/lapor" element={<ReportPage />} />
+          <Route path="/lapor/terkirim" element={<ReportSuccessPage />} />
           <Route path="/login" element={<LoginPage />} />
         </Routes>
       </main>

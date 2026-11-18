@@ -1,25 +1,9 @@
 import { useState, useRef } from 'react'
-import { LuCloudUpload, LuX, LuInfo, LuPlus, LuImage } from 'react-icons/lu'
+import { LuCloudUpload, LuX, LuInfo, LuPlus } from 'react-icons/lu'
 
 export function PhotoUploader({ photos, onPhotosChange }) {
   const [isDragging, setIsDragging] = useState(false)
   const fileInputRef = useRef(null)
-
-  // Demo stock underwater photos for quick testing when user doesn't have coral photos locally
-  const stockOptions = [
-    {
-      name: 'Bleaching Karang',
-      url: 'https://res.cloudinary.com/gjrghchd/image/upload/f_auto,q_auto/v1794819579/satu-paragraf-josjis/coral-bleaching.png'
-    },
-    {
-      name: 'Karang Patah',
-      url: 'https://res.cloudinary.com/gjrghchd/image/upload/f_auto,q_auto/v1794893779/satu-paragraf-josjis/article-damaged.jpg'
-    },
-    {
-      name: 'Survey Karang',
-      url: 'https://res.cloudinary.com/gjrghchd/image/upload/f_auto,q_auto/v1794821834/satu-paragraf-josjis/edu-bleach.png'
-    }
-  ]
 
   const handleFiles = (files) => {
     const fileList = Array.from(files)
@@ -54,12 +38,6 @@ export function PhotoUploader({ photos, onPhotosChange }) {
     onPhotosChange((prev) => prev.filter((_, idx) => idx !== index))
   }
 
-  const addStockPhoto = (url) => {
-    if (photos.length < 3) {
-      onPhotosChange((prev) => [...prev, url])
-    }
-  }
-
   return (
     <div className="space-y-4">
       {/* Dropzone Box */}
@@ -75,7 +53,7 @@ export function PhotoUploader({ photos, onPhotosChange }) {
             fileInputRef.current.click()
           }
         }}
-        className={`relative flex flex-col items-center justify-center rounded-2xl border-2 border-dashed p-7 text-center transition-all cursor-pointer ${
+        className={`relative flex flex-col items-center justify-center rounded-2xl border-2 border-dashed p-5 sm:p-7 text-center transition-all cursor-pointer ${
           isDragging
             ? 'border-teal-base bg-teal-50/70'
             : 'border-teal-300/80 bg-teal-50/40 hover:bg-teal-50/70 hover:border-teal-base'
@@ -92,14 +70,14 @@ export function PhotoUploader({ photos, onPhotosChange }) {
           }}
         />
 
-        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-white shadow-xs text-teal-base mb-3">
-          <LuCloudUpload className="h-6 w-6" />
+        <div className="flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full bg-white shadow-xs text-teal-base mb-2.5 sm:mb-3">
+          <LuCloudUpload className="h-5 w-5 sm:h-6 sm:w-6" />
         </div>
 
-        <p className="text-sm font-bold text-ink-900">
+        <p className="text-xs sm:text-sm font-bold text-ink-900 leading-snug">
           Seret foto ke sini atau <span className="text-teal-base underline">pilih dari perangkat</span>
         </p>
-        <p className="mt-1 text-xs text-ink-500">
+        <p className="mt-1 text-[11px] sm:text-xs text-ink-500">
           JPG/PNG maks. 3 foto, masing-masing ≤5MB
         </p>
       </div>
@@ -142,24 +120,6 @@ export function PhotoUploader({ photos, onPhotosChange }) {
           </button>
         )}
       </div>
-
-      {/* Quick sample photo selector for easy demo testing */}
-      {photos.length === 0 && (
-        <div className="flex flex-wrap items-center gap-2 pt-1 text-xs text-ink-600">
-          <span className="text-[11px] font-medium text-ink-500">Atau pilih contoh cepat:</span>
-          {stockOptions.map((stock, idx) => (
-            <button
-              key={idx}
-              type="button"
-              onClick={() => addStockPhoto(stock.url)}
-              className="inline-flex items-center gap-1.5 rounded-lg border border-teal-200 bg-teal-50/60 px-2.5 py-1 text-[11px] font-medium text-teal-base hover:bg-teal-100 transition-colors"
-            >
-              <LuImage className="h-3 w-3" />
-              <span>{stock.name}</span>
-            </button>
-          ))}
-        </div>
-      )}
 
       {/* Panduan Memotret Callout */}
       <div className="rounded-xl border border-teal-100/90 bg-teal-50/50 p-3.5 text-xs text-teal-900 flex items-start gap-2.5">

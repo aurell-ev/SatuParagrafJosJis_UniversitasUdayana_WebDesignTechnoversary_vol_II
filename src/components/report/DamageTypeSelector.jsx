@@ -93,9 +93,9 @@ export function DamageTypeSelector({ selectedType, onSelectType }) {
             </div>
 
             {/* Label & Description */}
-            <div className="mt-3">
-              <h4 className="text-sm font-bold text-ink-900">{type.name}</h4>
-              <p className="mt-0.5 text-xs text-ink-500">{type.desc}</p>
+            <div className="mt-2.5 sm:mt-3">
+              <h4 className="text-xs sm:text-sm font-bold text-ink-900 leading-snug">{type.name}</h4>
+              <p className="mt-0.5 text-[11px] sm:text-xs text-ink-500 leading-normal">{type.desc}</p>
             </div>
           </div>
         )

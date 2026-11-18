@@ -105,7 +105,7 @@ export function ReportSuccessPage() {
             <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-ink-900">
               Laporan terkirim. Terima kasih.
             </h1>
-            <p className="text-sm sm:text-base text-ink-600 max-w-xl mx-auto leading-relaxed">
+            <p className="text-xs sm:text-sm text-ink-600 max-w-xl mx-auto leading-relaxed pt-2">
               Laporanmu sudah kami terima dan akan dicek tim daerah Denpasar. Simpan kode lacak di bawah untuk memantau statusnya.
             </p>
           </div>
@@ -115,14 +115,14 @@ export function ReportSuccessPage() {
             <span className="block text-[11px] font-bold uppercase tracking-wider text-teal-800">
               KODE LACAK
             </span>
-            <div className="mt-2 flex items-center justify-center gap-3">
-              <span className="text-2xl sm:text-3xl font-extrabold font-mono text-teal-900 tracking-wider">
+            <div className="mt-2 flex items-center justify-between gap-3">
+              <span className="text-xl sm:text-3xl font-extrabold text-teal-900 tracking-wider">
                 {activeReport.id}
               </span>
               <button
                 type="button"
                 onClick={handleCopyCode}
-                className="inline-flex items-center gap-1.5 rounded-xl border border-teal-200 bg-white px-3.5 py-1.5 text-xs font-semibold text-teal-base hover:bg-teal-50 transition-colors shadow-2xs cursor-pointer"
+                className="inline-flex items-center gap-1.5 rounded-xl border border-teal-200 bg-white px-3.5 py-1.5 text-[10px] sm:text-xs font-semibold text-teal-base hover:bg-teal-50 transition-colors shadow-2xs cursor-pointer"
               >
                 {copied ? (
                   <>
@@ -142,20 +142,6 @@ export function ReportSuccessPage() {
                 ⓘ Kamu mengirim secara anonim, jadi kode ini tidak bisa dipulihkan jika hilang.
               </p>
             )}
-          </div>
-
-          {/* Quick Check Button - Di Luar Kotak Kode Lacak */}
-          <div className="mt-4 flex flex-col items-center gap-1.5">
-            <Link
-              to="/contact"
-              className="inline-flex items-center justify-center gap-2 rounded-full border border-teal-300 bg-white hover:bg-teal-50 px-5 py-2.5 text-xs sm:text-sm font-semibold text-teal-base shadow-2xs transition-colors"
-            >
-              <LuSearch className="h-4 w-4 text-teal-base" />
-              <span>Cek Status Laporan Ini Sekarang</span>
-            </Link>
-            <p className="text-[11px] text-ink-500">
-              Kamu bisa mengecek status laporan kapan saja menggunakan kode lacak di halaman Kontak &amp; FAQ.
-            </p>
           </div>
         </div>
 
@@ -229,68 +215,68 @@ export function ReportSuccessPage() {
               </span>
             </div>
 
-            <div className="relative space-y-5 pl-2 before:absolute before:left-[17px] before:top-2 before:bottom-3 before:w-[2px] before:bg-ink-200">
+            <div className="relative space-y-6 before:absolute before:left-3.5 before:top-3 before:bottom-3 before:w-0.5 before:-translate-x-1/2 before:bg-ink-200">
               {/* Step 1: Laporan Terkirim (Done) */}
-              <div className="relative flex items-start gap-3 pl-1">
-                <div className="relative z-10 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-emerald-600 text-white">
-                  <LuCheck className="h-3.5 w-3.5 stroke-[3]" />
+              <div className="relative flex items-start gap-3">
+                <div className="relative z-10 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-emerald-600 text-white shadow-2xs">
+                  <LuCheck className="h-4 w-4 stroke-[3]" />
                 </div>
-                <div className="flex-1 min-w-0">
+                <div className="flex-1 min-w-0 pt-0.5">
                   <div className="flex items-center justify-between gap-1">
-                    <h4 className="text-xs font-bold text-ink-900">Laporan terkirim</h4>
-                    <span className="text-[10px] text-ink-500">
+                    <h4 className="text-xs sm:text-sm font-bold text-ink-900">Laporan terkirim</h4>
+                    <span className="text-[10px] sm:text-[11px] text-ink-500">
                       {formatSubmittedTime(activeReport.reportedAt)}
                     </span>
                   </div>
-                  <p className="text-[11px] text-ink-500">
+                  <p className="text-[11px] sm:text-xs text-ink-500 mt-0.5">
                     Kode lacak {activeReport.id} dibuat.
                   </p>
                 </div>
               </div>
 
               {/* Step 2: Menunggu Verifikasi (Current) */}
-              <div className="relative flex items-start gap-3 pl-1">
-                <div className="relative z-10 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-teal-800 text-white">
-                  <LuClock className="h-3.5 w-3.5" />
+              <div className="relative flex items-start gap-3">
+                <div className="relative z-10 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-teal-800 text-white shadow-2xs">
+                  <LuClock className="h-4 w-4" />
                 </div>
-                <div className="flex-1 min-w-0">
+                <div className="flex-1 min-w-0 pt-0.5">
                   <div className="flex items-center justify-between gap-1">
-                    <h4 className="text-xs font-bold text-ink-900">Menunggu verifikasi</h4>
-                    <span className="text-[10px] text-teal-800 font-medium">Biasanya 1–3 hari kerja</span>
+                    <h4 className="text-xs sm:text-sm font-bold text-ink-900">Menunggu verifikasi</h4>
+                    <span className="text-[10px] sm:text-[11px] text-teal-800 font-medium">Biasanya 1–3 hari kerja</span>
                   </div>
-                  <p className="text-[11px] text-ink-600">
+                  <p className="text-[11px] sm:text-xs text-ink-600 mt-0.5">
                     Tim daerah akan mengecek foto dan lokasi.
                   </p>
                 </div>
               </div>
 
               {/* Step 3: Diverifikasi (Pending) */}
-              <div className="relative flex items-start gap-3 pl-1">
-                <div className="relative z-10 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-white border-2 border-slate-300 text-slate-400">
+              <div className="relative flex items-start gap-3">
+                <div className="relative z-10 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-white border-2 border-slate-300 text-slate-400">
                   <LuShieldCheck className="h-3.5 w-3.5" />
                 </div>
-                <div className="flex-1 min-w-0">
+                <div className="flex-1 min-w-0 pt-0.5">
                   <div className="flex items-center justify-between gap-1">
-                    <h4 className="text-xs font-bold text-slate-400">Diverifikasi</h4>
-                    <span className="text-[10px] text-slate-400">Belum dimulai</span>
+                    <h4 className="text-xs sm:text-sm font-bold text-slate-400">Diverifikasi</h4>
+                    <span className="text-[10px] sm:text-[11px] text-slate-400">Belum dimulai</span>
                   </div>
-                  <p className="text-[11px] text-slate-400">
+                  <p className="text-[11px] sm:text-xs text-slate-400 mt-0.5">
                     Laporan valid akan tampil di peta publik (area, bukan titik).
                   </p>
                 </div>
               </div>
 
               {/* Step 4: Dipulihkan (Pending) */}
-              <div className="relative flex items-start gap-3 pl-1">
-                <div className="relative z-10 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-white border-2 border-slate-300 text-slate-400">
+              <div className="relative flex items-start gap-3">
+                <div className="relative z-10 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-white border-2 border-slate-300 text-slate-400">
                   <LuHammer className="h-3.5 w-3.5" />
                 </div>
-                <div className="flex-1 min-w-0">
+                <div className="flex-1 min-w-0 pt-0.5">
                   <div className="flex items-center justify-between gap-1">
-                    <h4 className="text-xs font-bold text-slate-400">Ditindaklanjuti</h4>
-                    <span className="text-[10px] text-slate-400">Belum dimulai</span>
+                    <h4 className="text-xs sm:text-sm font-bold text-slate-400">Ditindaklanjuti</h4>
+                    <span className="text-[10px] sm:text-[11px] text-slate-400">Belum dimulai</span>
                   </div>
-                  <p className="text-[11px] text-slate-400">
+                  <p className="text-[11px] sm:text-xs text-slate-400 mt-0.5">
                     Menjadi lokasi pemulihan yang bisa dipantau.
                   </p>
                 </div>
@@ -321,10 +307,11 @@ export function ReportSuccessPage() {
           </Link>
 
           <Link
-            to="/perkembangan"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full bg-teal-500 px-6 py-2.5 text-xs sm:text-sm font-bold text-white hover:bg-teal-700 transition-colors shadow-2xs"
+            to="/contact"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full bg-teal-500 hover:bg-teal-700 px-6 py-2.5 text-xs sm:text-sm font-bold text-white transition-colors shadow-2xs"
           >
-            <span>Lihat Perkembangan</span>
+            <LuSearch className="h-4 w-4" />
+            <span>Lacak Status Laporan</span>
             <LuArrowRight className="h-4 w-4" />
           </Link>
         </div>

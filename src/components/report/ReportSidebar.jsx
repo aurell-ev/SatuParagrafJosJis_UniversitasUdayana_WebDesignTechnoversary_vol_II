@@ -37,11 +37,11 @@ export function ReportSidebar() {
           Setelah kamu mengirim
         </h3>
 
-        <div className="relative space-y-6 before:absolute before:left-[15px] before:top-2 before:bottom-3 before:w-[2px] before:bg-ink-200">
+        <div className="relative space-y-6 before:absolute before:left-3.5 before:top-3 before:bottom-3 before:w-0.5 before:-translate-x-1/2 before:bg-ink-200">
           {steps.map((step, idx) => (
-            <div key={idx} className="relative flex items-start gap-4 pl-1">
-              <div className="relative z-10 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-teal-50 border border-teal-200 text-teal-base font-bold text-xs">
-                {step.num}
+            <div key={idx} className="relative flex items-start gap-4">
+              <div className="relative z-10 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-teal-50 border border-teal-200 text-teal-base font-bold text-xs leading-none">
+                <span className="flex items-center justify-center translate-y-[-0.5px]">{step.num}</span>
               </div>
               <div className="flex-1 min-w-0 pt-0.5">
                 <div className="flex flex-wrap items-center justify-between gap-1">

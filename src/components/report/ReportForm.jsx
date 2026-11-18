@@ -5,7 +5,7 @@ import { findNearbyDuplicates } from '../../utils/duplicateDetector'
 import { PhotoUploader } from './PhotoUploader'
 import { LocationPicker } from './LocationPicker'
 import { DamageTypeSelector } from './DamageTypeSelector'
-import { LuSend, LuCircleAlert, LuLock, LuCheck } from 'react-icons/lu'
+import { LuSend, LuCircleAlert, LuLock, LuCheck, LuShieldCheck } from 'react-icons/lu'
 
 export function ReportForm() {
   const navigate = useNavigate()
@@ -122,18 +122,18 @@ export function ReportForm() {
     (isAnonymous || Boolean(reporterName.trim()))
 
   return (
-    <form onSubmit={handleSubmit} noValidate className="space-y-8">
+    <form onSubmit={handleSubmit} noValidate className="space-y-6 sm:space-y-8">
       {/* Step 1: Foto Kerusakan */}
-      <div className="rounded-2xl border border-ink-200/90 bg-surface-card p-6 sm:p-7 shadow-2xs">
-        <div className="flex items-center gap-3 mb-1">
-          <span className="flex h-7 w-7 items-center justify-center rounded-full bg-teal-base text-white text-xs font-bold">
+      <div className="rounded-2xl border border-ink-200/90 bg-surface-card p-4 sm:p-7 shadow-2xs">
+        <div className="flex items-center gap-2.5 sm:gap-3 mb-1">
+          <span className="flex h-6 w-6 sm:h-7 sm:w-7 items-center justify-center rounded-full bg-teal-base text-white text-[11px] sm:text-xs font-bold">
             1
           </span>
-          <h3 className="text-base sm:text-lg font-bold text-ink-900">
+          <h3 className="text-sm sm:text-lg font-bold text-ink-900">
             Foto kerusakan
           </h3>
         </div>
-        <p className="text-xs text-ink-500 ml-10 mb-5">
+        <p className="text-[11px] sm:text-xs text-ink-500 ml-8.5 sm:ml-10 mb-4 sm:mb-5">
           Minimal 1 foto. Foto dekat dan jauh lebih baik.
         </p>
 
@@ -148,16 +148,16 @@ export function ReportForm() {
       </div>
 
       {/* Step 2: Lokasi */}
-      <div className="rounded-2xl border border-ink-200/90 bg-surface-card p-6 sm:p-7 shadow-2xs">
-        <div className="flex items-center gap-3 mb-1">
-          <span className="flex h-7 w-7 items-center justify-center rounded-full bg-teal-base text-white text-xs font-bold">
+      <div className="rounded-2xl border border-ink-200/90 bg-surface-card p-4 sm:p-7 shadow-2xs">
+        <div className="flex items-center gap-2.5 sm:gap-3 mb-1">
+          <span className="flex h-6 w-6 sm:h-7 sm:w-7 items-center justify-center rounded-full bg-teal-base text-white text-[11px] sm:text-xs font-bold">
             2
           </span>
-          <h3 className="text-base sm:text-lg font-bold text-ink-900">
+          <h3 className="text-sm sm:text-lg font-bold text-ink-900">
             Lokasi
           </h3>
         </div>
-        <p className="text-xs text-ink-500 ml-10 mb-5">
+        <p className="text-[11px] sm:text-xs text-ink-500 ml-8.5 sm:ml-10 mb-4 sm:mb-5">
           Geser penanda ke titik kerusakan. Titik ini tidak ditampilkan persis ke publik.
         </p>
 
@@ -172,16 +172,16 @@ export function ReportForm() {
       </div>
 
       {/* Step 3: Jenis Kerusakan */}
-      <div className="rounded-2xl border border-ink-200/90 bg-surface-card p-6 sm:p-7 shadow-2xs">
-        <div className="flex items-center gap-3 mb-1">
-          <span className="flex h-7 w-7 items-center justify-center rounded-full bg-teal-base text-white text-xs font-bold">
+      <div className="rounded-2xl border border-ink-200/90 bg-surface-card p-4 sm:p-7 shadow-2xs">
+        <div className="flex items-center gap-2.5 sm:gap-3 mb-1">
+          <span className="flex h-6 w-6 sm:h-7 sm:w-7 items-center justify-center rounded-full bg-teal-base text-white text-[11px] sm:text-xs font-bold">
             3
           </span>
-          <h3 className="text-base sm:text-lg font-bold text-ink-900">
+          <h3 className="text-sm sm:text-lg font-bold text-ink-900">
             Jenis kerusakan
           </h3>
         </div>
-        <p className="text-xs text-ink-500 ml-10 mb-5">
+        <p className="text-[11px] sm:text-xs text-ink-500 ml-8.5 sm:ml-10 mb-4 sm:mb-5">
           Pilih yang paling mendekati. Ini dugaan awal, bukan diagnosis.
         </p>
 
@@ -208,16 +208,16 @@ export function ReportForm() {
       </div>
 
       {/* Step 4: Detail Tambahan */}
-      <div className="rounded-2xl border border-ink-200/90 bg-surface-card p-6 sm:p-7 shadow-2xs">
-        <div className="flex items-center gap-3 mb-1">
-          <span className="flex h-7 w-7 items-center justify-center rounded-full bg-teal-base text-white text-xs font-bold">
+      <div className="rounded-2xl border border-ink-200/90 bg-surface-card p-4 sm:p-7 shadow-2xs">
+        <div className="flex items-center gap-2.5 sm:gap-3 mb-1">
+          <span className="flex h-6 w-6 sm:h-7 sm:w-7 items-center justify-center rounded-full bg-teal-base text-white text-[11px] sm:text-xs font-bold">
             4
           </span>
-          <h3 className="text-base sm:text-lg font-bold text-ink-900">
+          <h3 className="text-sm sm:text-lg font-bold text-ink-900">
             Detail tambahan
           </h3>
         </div>
-        <p className="text-xs text-ink-500 ml-10 mb-5">
+        <p className="text-[11px] sm:text-xs text-ink-500 ml-8.5 sm:ml-10 mb-4 sm:mb-5">
           Opsional, membantu tim restorasi saat datang ke lokasi.
         </p>
 
@@ -293,16 +293,16 @@ export function ReportForm() {
       </div>
 
       {/* Step 5: Identitas & Kirim */}
-      <div className="rounded-2xl border border-ink-200/90 bg-surface-card p-6 sm:p-7 shadow-2xs">
-        <div className="flex items-center gap-3 mb-1">
-          <span className="flex h-7 w-7 items-center justify-center rounded-full bg-teal-base text-white text-xs font-bold">
+      <div className="rounded-2xl border border-ink-200/90 bg-surface-card p-4 sm:p-7 shadow-2xs">
+        <div className="flex items-center gap-2.5 sm:gap-3 mb-1">
+          <span className="flex h-6 w-6 sm:h-7 sm:w-7 items-center justify-center rounded-full bg-teal-base text-white text-[11px] sm:text-xs font-bold">
             5
           </span>
-          <h3 className="text-base sm:text-lg font-bold text-ink-900">
+          <h3 className="text-sm sm:text-lg font-bold text-ink-900">
             Identitas &amp; kirim
           </h3>
         </div>
-        <p className="text-xs text-ink-500 ml-10 mb-5">
+        <p className="text-[11px] sm:text-xs text-ink-500 ml-8.5 sm:ml-10 mb-4 sm:mb-5">
           Laporan anonim tetap diterima, tidak mempengaruhi kecepatan tindak lanjut.
         </p>
 
@@ -399,10 +399,10 @@ export function ReportForm() {
           {/* Mock Captcha Box */}
           <div>
             <div
-              className={`rounded-xl border p-3.5 sm:p-4 flex items-center justify-between max-w-sm transition-colors cursor-pointer bg-white ${
+              className={`w-full rounded-2xl border px-5 py-4 flex items-center justify-between transition-all cursor-pointer bg-white ${
                 errors.captcha
                   ? 'border-coral-400 bg-coral-50/20'
-                  : 'border-ink-200 hover:border-teal-base'
+                  : 'border-ink-200/90 hover:border-ink-300'
               }`}
               onClick={() => {
                 const nextVal = !isCaptchaChecked
@@ -416,25 +416,23 @@ export function ReportForm() {
                 }
               }}
             >
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-3.5">
                 <div
-                  className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-sm border-2 transition-colors ${
+                  className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-md border-2 transition-colors ${
                     isCaptchaChecked
                       ? 'border-teal-base bg-teal-base text-white'
-                      : 'border-ink-300 bg-white'
+                      : 'border-slate-300 bg-white'
                   }`}
                 >
                   {isCaptchaChecked && <LuCheck className="h-4 w-4 stroke-[3]" />}
                 </div>
-                <span className="text-xs sm:text-sm font-medium text-ink-800 select-none">
+                <span className="text-sm font-medium text-ink-900 select-none">
                   Saya bukan robot
                 </span>
               </div>
-              <div className="flex flex-col items-center">
-                <svg className="h-6 w-6 text-teal-base" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M12 2A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2Zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8Z" />
-                </svg>
-                <span className="text-[9px] text-ink-400">reCAPTCHA</span>
+              <div className="flex flex-col items-center select-none text-slate-400">
+                <LuShieldCheck className="h-6 w-6 text-slate-400 stroke-[1.75]" />
+                <span className="text-[11px] font-medium text-slate-400 tracking-tight mt-0.5">Captcha</span>
               </div>
             </div>
             {errors.captcha && (

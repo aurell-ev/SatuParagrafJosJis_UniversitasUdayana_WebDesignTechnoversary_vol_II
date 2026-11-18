@@ -1,0 +1,77 @@
+export const INITIAL_VOLUNTEERS = [
+  {
+    id: 'VOL-2611-001',
+    fullName: 'Ketut Arya Wijaya',
+    email: 'ketut.arya@gmail.com',
+    phone: '081239847112',
+    region: 'denpasar',
+    regionName: 'Denpasar',
+    district: 'Sanur Kauh',
+    skills: ['menyelam', 'dokumentasi'],
+    availability: 'Akhir pekan',
+    motivation: 'Memiliki lisensi AOWD PADI dan ingin mendedikasikan waktu libur untuk konservasi terumbu karang lokal di pesisir Sanur.',
+    status: 'menunggu', // menunggu | disetujui | ditolak
+    submittedAt: '2026-11-16T14:20:00Z',
+    reviewNotes: ''
+  },
+  {
+    id: 'VOL-2611-002',
+    fullName: 'Ni Putu Ayu Saraswati',
+    email: 'ayu.saraswati@unud.ac.id',
+    phone: '081338765421',
+    region: 'denpasar',
+    regionName: 'Denpasar',
+    district: 'Serangan',
+    skills: ['pencatatan', 'edukasi'],
+    availability: 'Fleksibel',
+    motivation: 'Mahasiswa Biologi Kelautan semester 7, ingin membantu analisis data survival rate karang dan edukasi nelayan pesisir.',
+    status: 'menunggu',
+    submittedAt: '2026-11-17T09:10:00Z',
+    reviewNotes: ''
+  },
+  {
+    id: 'VOL-2611-003',
+    fullName: 'Made Budi Santosa',
+    email: 'budi.santosa@divecenterbali.com',
+    phone: '081999234876',
+    region: 'klungkung',
+    regionName: 'Klungkung (Nusa Penida)',
+    district: 'Toyapakeh',
+    skills: ['menyelam', 'logistik'],
+    availability: 'Hari kerja',
+    motivation: 'Dive master lokal di Nusa Penida, siap membantu penyediaan perahu operasional dan pengawasan jangkar liar.',
+    status: 'disetujui',
+    submittedAt: '2026-11-14T11:45:00Z',
+    reviewNotes: 'Lisensi Divemaster terverifikasi. Masuk tim monitoring lapangan Nusa Penida.'
+  },
+  {
+    id: 'VOL-2611-004',
+    fullName: 'Gede Hendra Pratama',
+    email: 'hendra.pratama@yahoo.com',
+    phone: '087861543290',
+    region: 'buleleng',
+    regionName: 'Buleleng (Lovina)',
+    district: 'Kalibukbuk',
+    skills: ['snorkeling', 'edukasi'],
+    availability: 'Akhir pekan',
+    motivation: 'Pemandu dolphin tour Lovina, ingin mengedukasi wisatawan agar tidak menginjak karang saat snorkeling.',
+    status: 'disetujui',
+    submittedAt: '2026-11-13T16:00:00Z',
+    reviewNotes: 'Disetujui untuk koordinator edukasi wisatawan pesisir Lovina.'
+  },
+  {
+    id: 'VOL-2611-005',
+    fullName: 'I Wayan Darmayasa',
+    email: 'darmayasa99@gmail.com',
+    phone: '085739182746',
+    region: 'karangasem',
+    regionName: 'Karangasem (Amed)',
+    district: 'Abang',
+    skills: ['menyelam', 'pencatatan'],
+    availability: 'Akhir pekan',
+    motivation: 'Penyelam rescue, ingin membantu pengawasan transplantasi karang biorock di Teluk Jemeluk.',
+    status: 'menunggu',
+    submittedAt: '2026-11-18T08:15:00Z',
+    reviewNotes: ''
+  }
+]

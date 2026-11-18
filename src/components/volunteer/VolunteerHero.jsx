@@ -5,7 +5,7 @@ export function VolunteerHero() {
       <div 
         className="absolute inset-0 bg-cover bg-center"
         style={{
-          backgroundImage: `url('https://res.cloudinary.com/gjrghchd/image/upload/f_auto,q_auto/v1794892029/satu-paragraf-josjis/about-page-hero.jpg')`
+          backgroundImage: `url('https://res.cloudinary.com/gjrghchd/image/upload/f_auto,q_auto/v1794819287/satu-paragraf-josjis/hero-coral.png')`
         }}
         aria-hidden="true"
       />

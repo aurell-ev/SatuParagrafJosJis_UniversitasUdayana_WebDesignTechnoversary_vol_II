@@ -5,6 +5,7 @@ import { GalleryFeaturedCard } from '../../components/gallery/GalleryFeaturedCar
 import { GalleryGrid } from '../../components/gallery/GalleryGrid'
 import { GalleryModal } from '../../components/gallery/GalleryModal'
 import { CallToAction } from '../../components/common/CallToAction'
+import { ScrollReveal } from '../../components/common/ScrollReveal'
 import {
   FEATURED_GALLERY_ITEM,
   INITIAL_GALLERY_ITEMS
@@ -70,21 +71,25 @@ export function GalleryPage() {
       <section className="bg-surface py-12 sm:py-16 lg:py-24">
         <div className="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-8 flex flex-col gap-10">
           {/* Toolbar: Filter Daerah & Pengurutan */}
-          <GalleryToolbar
-            selectedDaerah={selectedDaerah}
-            onSelectDaerah={handleDaerahChange}
-            selectedSort={selectedSort}
-            onSelectSort={handleSortChange}
-          />
+          <ScrollReveal>
+            <GalleryToolbar
+              selectedDaerah={selectedDaerah}
+              onSelectDaerah={handleDaerahChange}
+              selectedSort={selectedSort}
+              onSelectSort={handleSortChange}
+            />
+          </ScrollReveal>
 
           {/* Kartu Unggulan (Hanya tampil saat filter "Semua daerah" atau "Klungkung") */}
           {(selectedDaerah === 'Semua daerah' ||
             selectedDaerah.toLowerCase() ===
               FEATURED_GALLERY_ITEM.daerah.toLowerCase()) && (
-            <GalleryFeaturedCard
-              item={FEATURED_GALLERY_ITEM}
-              onOpenModal={setActiveModalItem}
-            />
+            <ScrollReveal>
+              <GalleryFeaturedCard
+                item={FEATURED_GALLERY_ITEM}
+                onOpenModal={setActiveModalItem}
+              />
+            </ScrollReveal>
           )}
 
           {/* Grid Daftar Semua Lokasi */}

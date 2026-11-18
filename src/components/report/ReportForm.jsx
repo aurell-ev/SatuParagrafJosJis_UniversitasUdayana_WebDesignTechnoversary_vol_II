@@ -5,7 +5,16 @@ import { findNearbyDuplicates } from '../../utils/duplicateDetector'
 import { PhotoUploader } from './PhotoUploader'
 import { LocationPicker } from './LocationPicker'
 import { DamageTypeSelector } from './DamageTypeSelector'
-import { LuSend, LuCircleAlert, LuLock, LuCheck, LuShieldCheck } from 'react-icons/lu'
+import { CustomSelect } from '../common/CustomSelect'
+import { LuSend, LuCircleAlert, LuLock, LuCheck, LuShieldCheck, LuWaves } from 'react-icons/lu'
+
+const DEPTH_OPTIONS = [
+  { value: '', label: 'Pilih kedalaman (opsional)', description: null },
+  { value: '< 3 meter', label: '< 3 meter', description: 'Dangkal / Snorkeling' },
+  { value: '3-5 meter', label: '3–5 meter', description: 'Batas tubir karang' },
+  { value: '6-10 meter', label: '6–10 meter', description: 'Diving dangkal' },
+  { value: '> 10 meter', label: '> 10 meter', description: 'Diving dalam' }
+]
 
 export function ReportForm() {
   const navigate = useNavigate()
@@ -259,18 +268,16 @@ export function ReportForm() {
               <label htmlFor="depthEstimate" className="block text-xs font-semibold text-ink-700 mb-1.5">
                 Perkiraan kedalaman
               </label>
-              <select
+              <CustomSelect
                 id="depthEstimate"
+                name="depthEstimate"
                 value={depthEstimate}
                 onChange={(e) => setDepthEstimate(e.target.value)}
-                className="w-full rounded-xl border border-ink-200 bg-white px-3.5 py-2.5 text-xs sm:text-sm text-ink-900 focus:border-teal-base focus:outline-hidden focus:ring-2 focus:ring-teal-base/20 transition-all cursor-pointer"
-              >
-                <option value="">Pilih kedalaman (opsional)</option>
-                <option value="< 3 meter">&lt; 3 meter (Dangkal / Snorkeling)</option>
-                <option value="3-5 meter">3–5 meter</option>
-                <option value="6-10 meter">6–10 meter (Diving dangkal)</option>
-                <option value="> 10 meter">&gt; 10 meter (Diving dalam)</option>
-              </select>
+                options={DEPTH_OPTIONS}
+                placeholder="Pilih kedalaman (opsional)"
+                icon={LuWaves}
+                size="md"
+              />
             </div>
           </div>
 

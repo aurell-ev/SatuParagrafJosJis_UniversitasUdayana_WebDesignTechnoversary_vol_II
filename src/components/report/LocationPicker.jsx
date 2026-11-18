@@ -14,6 +14,11 @@ export function LocationPicker({
   const mapInstanceRef = useRef(null)
   const markerRef = useRef(null)
   const circleRef = useRef(null)
+  const onCoordinatesChangeRef = useRef(onCoordinatesChange)
+
+  useEffect(() => {
+    onCoordinatesChangeRef.current = onCoordinatesChange
+  }, [onCoordinatesChange])
 
   useEffect(() => {
     if (!mapContainerRef.current) return
@@ -80,7 +85,7 @@ export function LocationPicker({
       }
       marker.setLatLng([lat, lng])
       circle.setLatLng([lat, lng])
-      onCoordinatesChange(newCoords)
+      onCoordinatesChangeRef.current?.(newCoords)
     })
 
     mapInstanceRef.current = map
@@ -91,6 +96,7 @@ export function LocationPicker({
       map.remove()
       mapInstanceRef.current = null
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   // Sync marker position when coordinates change from outside

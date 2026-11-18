@@ -1,6 +1,8 @@
+import { motion, useReducedMotion } from 'motion/react'
 import { LuBadgeCheck, LuCircleCheck, LuClock, LuFileText, LuHammer, LuSprout } from 'react-icons/lu'
 
 export function ProgressDetailSidebar({ location }) {
+  const shouldReduceMotion = useReducedMotion()
   // Timeline riwayat kegiatan (default sesuai Figma node 1155:4290)
   const defaultTimeline = [
     {
@@ -105,7 +107,18 @@ export function ProgressDetailSidebar({ location }) {
             const Icon = step.icon || LuCircleCheck
             const isLast = idx === timeline.length - 1
             return (
-              <div key={step.id || idx} className="relative flex items-start gap-4 pb-6 last:pb-1 group">
+              <motion.div
+                key={step.id || idx}
+                initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, x: -12 }}
+                whileInView={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: '-20px' }}
+                transition={{
+                  duration: 0.35,
+                  delay: shouldReduceMotion ? 0 : idx * 0.08,
+                  ease: [0.21, 0.47, 0.32, 0.98]
+                }}
+                className="relative flex items-start gap-4 pb-6 last:pb-1 group"
+              >
                 {/* Garis vertikal penghubung */}
                 {!isLast && (
                   <div className="absolute left-[13px] top-[26px] bottom-0 w-[2px] bg-slate-200" />
@@ -130,7 +143,7 @@ export function ProgressDetailSidebar({ location }) {
                     {step.description}
                   </p>
                 </div>
-              </div>
+              </motion.div>
             )
           })}
         </div>

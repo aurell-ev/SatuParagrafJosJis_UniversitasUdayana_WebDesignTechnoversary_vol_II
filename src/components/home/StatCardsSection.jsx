@@ -1,3 +1,4 @@
+import { motion, useReducedMotion } from 'motion/react'
 import { LuFileText, LuMapPin, LuSprout, LuActivity, LuInfo } from 'react-icons/lu'
 import { useData } from '../../context/useAppContext'
 
@@ -7,6 +8,7 @@ import { useData } from '../../context/useAppContext'
  */
 export function StatCardsSection() {
   const { stats } = useData()
+  const shouldReduceMotion = useReducedMotion()
 
   // Sesuai desain Figma 1150:1553: angka prototipe + sinkronisasi dinamis dari state
   const totalReportsCount = 245 + (stats?.totalReports || 0)
@@ -50,11 +52,19 @@ export function StatCardsSection() {
       <div className="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-8">
         {/* 4 Stat Cards (282x210px di desktop) */}
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {statItems.map((item) => {
+          {statItems.map((item, idx) => {
             const Icon = item.icon
             return (
-              <div
+              <motion.div
                 key={item.id}
+                initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 20 }}
+                whileInView={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-30px' }}
+                transition={{
+                  duration: 0.45,
+                  delay: shouldReduceMotion ? 0 : idx * 0.1,
+                  ease: [0.21, 0.47, 0.32, 0.98]
+                }}
                 className="flex flex-col justify-between rounded-2xl border border-slate-200/90 bg-white p-6 shadow-2xs transition-shadow hover:shadow-md"
               >
                 <div>
@@ -78,7 +88,7 @@ export function StatCardsSection() {
                     {item.subtext}
                   </p>
                 </div>
-              </div>
+              </motion.div>
             )
           })}
         </div>

@@ -1,6 +1,9 @@
+import { motion, useReducedMotion } from 'motion/react'
 import { LuSprout, LuActivity, LuCalendar, LuClipboardCheck } from 'react-icons/lu'
 
 export function ProgressDetailKPI({ location }) {
+  const shouldReduceMotion = useReducedMotion()
+
   const cards = [
     {
       icon: LuSprout,
@@ -36,8 +39,16 @@ export function ProgressDetailKPI({ location }) {
       {cards.map((c, i) => {
         const Icon = c.icon
         return (
-          <div
+          <motion.div
             key={i}
+            initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 16 }}
+            whileInView={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-20px' }}
+            transition={{
+              duration: 0.4,
+              delay: shouldReduceMotion ? 0 : i * 0.1,
+              ease: [0.21, 0.47, 0.32, 0.98]
+            }}
             className="bg-white border border-slate-200/90 rounded-2xl p-6 flex flex-col gap-4 shadow-2xs hover:shadow-xs transition-shadow"
             data-node-id="1155:4054"
           >
@@ -58,7 +69,7 @@ export function ProgressDetailKPI({ location }) {
                 {c.sublabel}
               </span>
             </div>
-          </div>
+          </motion.div>
         )
       })}
     </div>

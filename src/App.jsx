@@ -3,6 +3,7 @@ import { DataProvider } from './context/DataContext'
 import { AuthProvider } from './context/AuthContext'
 import { Navbar } from './components/layout/Navbar'
 import { Footer } from './components/layout/Footer'
+import { ScrollToTopButton } from './components/common/ScrollToTopButton'
 import { HomePage } from './pages/public/HomePage'
 import { ArticleListPage } from './pages/public/ArticleListPage'
 import { ArticleDetailPage } from './pages/public/ArticleDetailPage'
@@ -49,6 +50,9 @@ function AppContent() {
 
       {/* Global Footer (Hidden on Auth standalone page) */}
       {!isAuthPage && <Footer />}
+
+      {/* Global Floating Scroll To Top Button */}
+      <ScrollToTopButton />
     </div>
   )
 }

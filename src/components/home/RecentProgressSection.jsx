@@ -1,11 +1,15 @@
 import { Link } from 'react-router-dom'
+import { motion, useReducedMotion } from 'motion/react'
 import { LuArrowRight, LuMapPin, LuActivity, LuChartLine, LuClipboardCheck } from 'react-icons/lu'
+import { ScrollReveal } from '../common/ScrollReveal'
 
 /**
  * Section 6: Perkembangan Terbaru
  * Sesuai desain Figma node 1150:1936 (Perkembangan Terbaru)
  */
 export function RecentProgressSection() {
+  const shouldReduceMotion = useReducedMotion()
+
   const sites = [
     {
       id: 'sanur-kaja',
@@ -52,7 +56,7 @@ export function RecentProgressSection() {
     <section className="bg-white py-16 sm:py-20 lg:py-24">
       <div className="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-8">
         {/* Header Section (Align: Kiri) */}
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+        <ScrollReveal className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
           <div className="max-w-2xl">
             <div className="inline-flex items-center gap-2">
               <span className="h-0.5 w-6 rounded-full bg-teal-base" />
@@ -80,15 +84,23 @@ export function RecentProgressSection() {
               <LuArrowRight className="h-4 w-4" />
             </Link>
           </div>
-        </div>
+        </ScrollReveal>
 
         {/* Grid 3 Kartu Lokasi (384x436px, r=16) */}
         <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {sites.map((site) => {
+          {sites.map((site, idx) => {
             const StatusIcon = site.statusIcon
             return (
-              <div
+              <motion.div
                 key={site.id}
+                initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 20 }}
+                whileInView={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-30px' }}
+                transition={{
+                  duration: 0.45,
+                  delay: shouldReduceMotion ? 0 : idx * 0.1,
+                  ease: [0.21, 0.47, 0.32, 0.98]
+                }}
                 className="flex flex-col overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-2xs transition-shadow hover:shadow-md"
               >
                 {/* Foto Lokasi & Badge Status */}
@@ -158,7 +170,7 @@ export function RecentProgressSection() {
                     <span>{site.updatedAt}</span>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             )
           })}
         </div>

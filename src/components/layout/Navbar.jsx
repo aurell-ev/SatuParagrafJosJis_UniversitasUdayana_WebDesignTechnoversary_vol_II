@@ -337,7 +337,7 @@ export function Navbar() {
     isLinkActive(location.pathname, '/contact')
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-surface-card/95 backdrop-blur-md border-b border-ink-200">
+    <header className="sticky top-0 z-[1100] w-full bg-surface-card/95 backdrop-blur-md border-b border-ink-200 shadow-xs">
       <div className="mx-auto flex h-[76px] max-w-[1200px] items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Brand Logo */}
         <Link

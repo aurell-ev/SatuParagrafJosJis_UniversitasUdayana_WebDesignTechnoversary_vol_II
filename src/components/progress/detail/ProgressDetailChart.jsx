@@ -1,6 +1,9 @@
 import { useState } from 'react'
+import { motion, useReducedMotion } from 'motion/react'
+import { CustomSelect } from '../../common/CustomSelect'
 
 export function ProgressDetailChart({ location }) {
+  const shouldReduceMotion = useReducedMotion()
   const [activeGenus, setActiveGenus] = useState('all')
   const [activePoint, setActivePoint] = useState(null)
 
@@ -78,19 +81,18 @@ export function ProgressDetailChart({ location }) {
         </div>
 
         {/* Filter Genus Dropdown (Figma node 1155:4200) */}
-        <div className="shrink-0">
-          <label htmlFor="genus-filter" className="sr-only">Filter Genus</label>
-          <select
+        <div className="shrink-0 min-w-[210px]">
+          <CustomSelect
             id="genus-filter"
+            size="sm"
             value={activeGenus}
             onChange={(e) => setActiveGenus(e.target.value)}
-            className="px-3.5 py-2 rounded-xl border border-slate-200 bg-white text-xs font-semibold text-ink-800 focus:outline-hidden focus:border-teal-400 focus:ring-2 focus:ring-teal-100 shadow-2xs cursor-pointer"
-          >
-            <option value="all">Semua fragmen (Agregat)</option>
-            {location?.coralGenera?.map((g, idx) => (
-              <option key={idx} value={g}>{g}</option>
-            ))}
-          </select>
+            options={[
+              { value: 'all', label: 'Semua fragmen (Agregat)' },
+              ...(location?.coralGenera || []).map((g) => ({ value: g, label: g }))
+            ]}
+            aria-label="Filter Genus Karang"
+          />
         </div>
       </div>
 
@@ -136,16 +138,27 @@ export function ProgressDetailChart({ location }) {
             })}
 
             {/* Area Gradient di bawah kurva */}
-            <path d={areaPath} fill="url(#chartGradient)" />
+            <motion.path
+              d={areaPath}
+              fill="url(#chartGradient)"
+              initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: shouldReduceMotion ? 0 : 0.4 }}
+            />
 
             {/* Garis Tren Utama */}
-            <path
+            <motion.path
               d={linePath}
               fill="none"
               stroke="#0d9488"
               strokeWidth="3.5"
               strokeLinecap="round"
               strokeLinejoin="round"
+              initial={shouldReduceMotion ? { pathLength: 1 } : { pathLength: 0 }}
+              whileInView={{ pathLength: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1, ease: [0.21, 0.47, 0.32, 0.98] }}
             />
 
             {/* Titik-Titik Data & X-Axis Labels */}

@@ -3,11 +3,11 @@ import { useLocation, Link } from 'react-router-dom'
 import {
   LuCheck,
   LuCopy,
-  LuArrowLeft,
   LuPlus,
   LuArrowRight,
   LuClock,
   LuCircleCheck,
+  LuShieldCheck,
   LuHammer,
   LuSearch
 } from 'react-icons/lu'
@@ -143,6 +143,20 @@ export function ReportSuccessPage() {
               </p>
             )}
           </div>
+
+          {/* Quick Check Button - Di Luar Kotak Kode Lacak */}
+          <div className="mt-4 flex flex-col items-center gap-1.5">
+            <Link
+              to="/contact"
+              className="inline-flex items-center justify-center gap-2 rounded-full border border-teal-300 bg-white hover:bg-teal-50 px-5 py-2.5 text-xs sm:text-sm font-semibold text-teal-base shadow-2xs transition-colors"
+            >
+              <LuSearch className="h-4 w-4 text-teal-base" />
+              <span>Cek Status Laporan Ini Sekarang</span>
+            </Link>
+            <p className="text-[11px] text-ink-500">
+              Kamu bisa mengecek status laporan kapan saja menggunakan kode lacak di halaman Kontak &amp; FAQ.
+            </p>
+          </div>
         </div>
 
         {/* 2-Column Summary Card */}
@@ -253,7 +267,7 @@ export function ReportSuccessPage() {
               {/* Step 3: Diverifikasi (Pending) */}
               <div className="relative flex items-start gap-3 pl-1">
                 <div className="relative z-10 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-white border-2 border-slate-300 text-slate-400">
-                  <LuClock className="h-3.5 w-3.5" />
+                  <LuShieldCheck className="h-3.5 w-3.5" />
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center justify-between gap-1">
@@ -299,24 +313,8 @@ export function ReportSuccessPage() {
         {/* Action Navigation Buttons */}
         <div className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-3 pt-4">
           <Link
-            to="/"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full border border-ink-300 bg-white px-5 py-2.5 text-xs sm:text-sm font-semibold text-ink-700 hover:bg-slate-50 transition-colors shadow-2xs"
-          >
-            <LuArrowLeft className="h-4 w-4" />
-            <span>Kembali ke Beranda</span>
-          </Link>
-
-          <Link
-            to="/contact"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full border border-teal-300 bg-teal-50/70 px-5 py-2.5 text-xs sm:text-sm font-semibold text-teal-base hover:bg-teal-100 transition-colors shadow-2xs"
-          >
-            <LuSearch className="h-4 w-4" />
-            <span>Cek Status Laporan</span>
-          </Link>
-
-          <Link
             to="/lapor"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full border border-ink-200 bg-white px-5 py-2.5 text-xs sm:text-sm font-semibold text-ink-700 hover:bg-slate-50 transition-colors shadow-2xs"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full border border-ink-200 bg-white px-5 py-2.5 text-xs sm:text-sm font-semibold text-ink-700 hover:shadow-xl transition-colors shadow-2xs"
           >
             <LuPlus className="h-4 w-4" />
             <span>Kirim laporan lain</span>
@@ -324,7 +322,7 @@ export function ReportSuccessPage() {
 
           <Link
             to="/perkembangan"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full bg-teal-800 px-6 py-2.5 text-xs sm:text-sm font-bold text-white hover:bg-teal-900 transition-colors shadow-2xs"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full bg-teal-500 px-6 py-2.5 text-xs sm:text-sm font-bold text-white hover:bg-teal-700 transition-colors shadow-2xs"
           >
             <span>Lihat Perkembangan</span>
             <LuArrowRight className="h-4 w-4" />

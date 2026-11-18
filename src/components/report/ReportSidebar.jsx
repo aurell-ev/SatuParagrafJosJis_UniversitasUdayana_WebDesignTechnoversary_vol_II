@@ -1,35 +1,31 @@
 import { Link } from 'react-router-dom'
-import { LuClock, LuShieldCheck, LuCircleHelp, LuArrowRight, LuCheck, LuHammer } from 'react-icons/lu'
+import { LuShieldCheck, LuCircleHelp, LuArrowRight, LuCheck } from 'react-icons/lu'
 
 export function ReportSidebar() {
   const steps = [
     {
+      num: 1,
       title: 'Kamu menerima kode lacak',
-      time: '1 detik lalu',
-      desc: 'Gunakan untuk memantau status laporan.',
-      icon: LuCheck,
-      iconDone: true
+      time: 'Langsung',
+      desc: 'Simpan kode unik untuk memantau status laporan secara berkala.'
     },
     {
-      title: 'Dicek tim daerah',
+      num: 2,
+      title: 'Menunggu verifikasi',
       time: '1–3 hari kerja',
-      desc: 'Status diverifikasi, duplikat, atau tidak valid.',
-      icon: LuClock,
-      iconActive: true
+      desc: 'Tim restorasi daerah memeriksa foto dan kesesuaian lokasi.'
     },
     {
+      num: 3,
       title: 'Diverifikasi',
-      time: 'Belum dimulai',
-      desc: 'Laporan valid akan tampil di peta publik (area, bukan titik).',
-      icon: LuClock,
-      iconPending: true
+      time: 'Setelah dicek',
+      desc: 'Laporan valid akan tampil di peta publik level area (bukan titik presisi).'
     },
     {
+      num: 4,
       title: 'Ditindaklanjuti',
-      time: 'Belum dimulai',
-      desc: 'Menjadi lokasi pemulihan yang bisa dipantau.',
-      icon: LuHammer,
-      iconPending: true
+      time: 'Tahap pemulihan',
+      desc: 'Lokasi masuk agenda pemulihan terhubung ke pemantauan perkembangan.'
     }
   ]
 
@@ -42,47 +38,26 @@ export function ReportSidebar() {
         </h3>
 
         <div className="relative space-y-6 before:absolute before:left-[15px] before:top-2 before:bottom-3 before:w-[2px] before:bg-ink-200">
-          {steps.map((step, idx) => {
-            const Icon = step.icon
-            return (
-              <div key={idx} className="relative flex items-start gap-4 pl-1">
-                <div
-                  className={`relative z-10 flex h-7 w-7 shrink-0 items-center justify-center rounded-full ${
-                    step.iconDone
-                      ? 'bg-emerald-600 text-white'
-                      : step.iconActive
-                      ? 'bg-teal-800 text-white'
-                      : 'bg-white border-2 border-slate-300 text-slate-400'
-                  }`}
-                >
-                  <Icon className="h-3.5 w-3.5 stroke-[2.5]" />
-                </div>
-                <div className="flex-1 min-w-0 pt-0.5">
-                  <div className="flex flex-wrap items-center justify-between gap-1">
-                    <h4
-                      className={`text-sm font-bold ${
-                        step.iconPending ? 'text-slate-500' : 'text-ink-900'
-                      }`}
-                    >
-                      {step.title}
-                    </h4>
-                    <span
-                      className={`text-[11px] font-medium px-2 py-0.5 rounded-full ${
-                        step.iconActive
-                          ? 'bg-teal-50 text-teal-800 font-semibold'
-                          : 'bg-ink-100 text-ink-500'
-                      }`}
-                    >
-                      {step.time}
-                    </span>
-                  </div>
-                  <p className="mt-1 text-xs text-ink-600 leading-relaxed">
-                    {step.desc}
-                  </p>
-                </div>
+          {steps.map((step, idx) => (
+            <div key={idx} className="relative flex items-start gap-4 pl-1">
+              <div className="relative z-10 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-teal-50 border border-teal-200 text-teal-base font-bold text-xs">
+                {step.num}
               </div>
-            )
-          })}
+              <div className="flex-1 min-w-0 pt-0.5">
+                <div className="flex flex-wrap items-center justify-between gap-1">
+                  <h4 className="text-sm font-bold text-ink-900">
+                    {step.title}
+                  </h4>
+                  <span className="text-[11px] font-medium px-2 py-0.5 rounded-full bg-ink-100 text-ink-600">
+                    {step.time}
+                  </span>
+                </div>
+                <p className="mt-1 text-xs text-ink-600 leading-relaxed">
+                  {step.desc}
+                </p>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
 

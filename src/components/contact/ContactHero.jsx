@@ -1,6 +1,19 @@
 export function ContactHero() {
   return (
-    <section className="relative overflow-hidden bg-teal-800 py-16 sm:py-20 text-white">
+    <section className="relative overflow-hidden bg-teal-900 py-16 sm:py-20 text-white">
+      {/* Background Image Cloudinary f_auto,q_auto & Dark Ocean Overlay */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center"
+        style={{
+          backgroundImage: `url('https://res.cloudinary.com/gjrghchd/image/upload/f_auto,q_auto/v1794892029/satu-paragraf-josjis/about-page-hero.jpg')`
+        }}
+        aria-hidden="true"
+      />
+      <div 
+        className="absolute inset-0 bg-teal-950/75" 
+        aria-hidden="true"
+      />
+
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col items-start gap-3.5 max-w-3xl">
           {/* Eyebrow */}

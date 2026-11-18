@@ -173,37 +173,26 @@ export function LoginPage() {
     setIsLoading(true)
     setNotification(null)
 
-    // Simulate authenticating against seed accounts
+    // Log in as MANAGER
     setTimeout(() => {
       setIsLoading(false)
-      const normalizedEmail = email.toLowerCase().trim()
-
-      if (normalizedEmail.includes('pengelola') || normalizedEmail.includes('manager')) {
-        loginAs('MANAGER')
-      } else {
-        loginAs('FIELD_TEAM')
-      }
+      loginAs('MANAGER')
 
       setNotification({
         type: 'success',
-        message: 'Berhasil masuk! Mengalihkan ke halaman pemantauan...',
+        message: 'Berhasil masuk! Mengalihkan ke Portal Pengelola Daerah...',
       })
 
       setTimeout(() => {
-        navigate('/perkembangan')
-      }, 1000)
-    }, 600)
+        navigate('/pengelola')
+      }, 800)
+    }, 500)
   }
 
   // Quick helper to fill demo credentials for competition judges
-  const handleFillDemo = (type) => {
-    if (type === 'FIELD_TEAM') {
-      setEmail('tim.bali@pulihkarang.id')
-      setPassword('konservasi2026')
-    } else {
-      setEmail('pengelola.bali@pulihkarang.id')
-      setPassword('karanglestari')
-    }
+  const handleFillDemo = () => {
+    setEmail('pengelola.bali@pulihkarang.id')
+    setPassword('karanglestari')
   }
 
   return (
@@ -235,21 +224,20 @@ export function LoginPage() {
             {/* Title & Subtitle */}
             <div className="flex flex-col gap-2">
               <h1 className="text-3xl sm:text-4xl font-bold text-ink-900 leading-tight">
-                Masuk Tim
+                Masuk Pengelola
               </h1>
               <p className="text-base font-normal text-ink-600 leading-normal">
-                Untuk anggota dan pengelola tim restorasi daerah.
+                Portal autentikasi khusus pengelola daerah terumbu karang.
               </p>
             </div>
 
             {/* Notification alert if any */}
             {notification && (
               <div
-                className={`p-3.5 rounded-xl text-sm font-medium transition-all ${
-                  notification.type === 'success'
+                className={`p-3.5 rounded-xl text-sm font-medium transition-all ${notification.type === 'success'
                     ? 'bg-state-success-bg text-state-success-text border border-state-success-border'
                     : 'bg-state-error-bg text-state-error-text border border-state-error-border'
-                }`}
+                  }`}
               >
                 {notification.message}
               </div>
@@ -352,22 +340,13 @@ export function LoginPage() {
                 <span className="text-xs text-ink-400">
                   Uji Coba Demo Akun Cepat:
                 </span>
-                <div className="flex gap-2">
-                  <button
-                    type="button"
-                    onClick={() => handleFillDemo('FIELD_TEAM')}
-                    className="text-xs px-2.5 py-1 rounded-full bg-teal-50 text-teal-base hover:bg-teal-100 transition-colors font-medium cursor-pointer"
-                  >
-                    Tim Lapangan
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => handleFillDemo('MANAGER')}
-                    className="text-xs px-2.5 py-1 rounded-full bg-ink-100 text-ink-600 hover:bg-ink-200 transition-colors font-medium cursor-pointer"
-                  >
-                    Pengelola
-                  </button>
-                </div>
+                <button
+                  type="button"
+                  onClick={handleFillDemo}
+                  className="text-xs px-3.5 py-1.5 rounded-full bg-teal-50 text-teal-base hover:bg-teal-100 transition-colors font-semibold cursor-pointer border border-teal-200"
+                >
+                  Isi Akun Pengelola Daerah
+                </button>
               </div>
 
               {/* Footer Form: Belum Terdaftar */}

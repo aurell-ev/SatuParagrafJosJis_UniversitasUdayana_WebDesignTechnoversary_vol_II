@@ -2,13 +2,6 @@ import { useState } from 'react'
 import { AuthContext } from './contexts'
 
 const DEMO_ACCOUNTS = {
-  FIELD_TEAM: {
-    id: 'user-tim-bali',
-    name: 'Wayan Konservasi',
-    role: 'team_member', // team_member | manager
-    region: 'Bali',
-    email: 'tim.bali@pulihkarang.id'
-  },
   MANAGER: {
     id: 'user-manager-bali',
     name: 'Dr. Made Suartana',
@@ -28,8 +21,8 @@ export function AuthProvider({ children }) {
     }
   })
 
-  const loginAs = (type) => {
-    const selected = DEMO_ACCOUNTS[type] || DEMO_ACCOUNTS.FIELD_TEAM
+  const loginAs = (type = 'MANAGER') => {
+    const selected = DEMO_ACCOUNTS[type] || DEMO_ACCOUNTS.MANAGER
     setUser(selected)
     try {
       localStorage.setItem('pulihkarang_auth_user', JSON.stringify(selected))

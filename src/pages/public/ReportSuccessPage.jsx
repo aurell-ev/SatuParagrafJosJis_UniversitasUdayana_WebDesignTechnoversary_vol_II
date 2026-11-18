@@ -215,7 +215,7 @@ export function ReportSuccessPage() {
               </span>
             </div>
 
-            <div className="relative space-y-6 before:absolute before:left-3.5 before:top-3 before:bottom-3 before:w-0.5 before:-translate-x-1/2 before:bg-ink-200">
+            <div className="relative space-y-6 before:absolute before:left-3.5 before:top-3.5 before:bottom-3.5 before:w-0.5 before:-translate-x-1/2 before:bg-ink-200">
               {/* Step 1: Laporan Terkirim (Done) */}
               <div className="relative flex items-start gap-3">
                 <div className="relative z-10 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-emerald-600 text-white shadow-2xs">

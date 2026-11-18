@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, useLocation, Navigate } from 'react-router-dom'
 import { DataProvider } from './context/DataContext'
 import { AuthProvider } from './context/AuthContext'
 import { Navbar } from './components/layout/Navbar'
@@ -16,15 +16,17 @@ import { GalleryPage } from './pages/public/GalleryPage'
 import { ReportPage } from './pages/public/ReportPage'
 import { ReportSuccessPage } from './pages/public/ReportSuccessPage'
 import { LoginPage } from './pages/public/LoginPage'
+import { ManagerPortalPage } from './pages/manager/ManagerPortalPage'
 
 function AppContent() {
   const location = useLocation()
   const isAuthPage = location.pathname === '/login' || location.pathname === '/masuk'
+  const isManagerPage = location.pathname.startsWith('/pengelola')
 
   return (
     <div className="flex min-h-screen flex-col bg-surface text-ink-900">
-      {/* Global Navbar (Hidden on Auth standalone page) */}
-      {!isAuthPage && <Navbar />}
+      {/* Global Navbar (Hidden on Auth standalone page & Manager Portal) */}
+      {!isAuthPage && !isManagerPage && <Navbar />}
 
       {/* Main Content Area */}
       <main className="flex-1">
@@ -40,8 +42,9 @@ function AppContent() {
           <Route path="/galeri" element={<GalleryPage />} />
           <Route path="/lapor" element={<ReportPage />} />
           <Route path="/lapor/terkirim" element={<ReportSuccessPage />} />
-          <Route path="/login" element={<LoginPage />} />
           <Route path="/masuk" element={<LoginPage />} />
+          <Route path="/login" element={<Navigate to="/masuk" replace />} />
+          <Route path="/pengelola" element={<ManagerPortalPage />} />
         </Routes>
       </main>
 

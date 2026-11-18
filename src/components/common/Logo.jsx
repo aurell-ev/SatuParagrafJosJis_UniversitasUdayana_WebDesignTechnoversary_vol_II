@@ -34,7 +34,7 @@ export function Logo({ variant = 'light', className = '' }) {
       {/* Brand Name Text */}
       <div className="flex items-baseline font-extrabold tracking-tight text-xl">
         <span className={isDark ? 'text-white' : 'text-ink-900'}>Pulih</span>
-        <span className={isDark ? 'text-cyan-400' : 'text-teal-400'}>Karang</span>
+        <span className={isDark ? 'text-cyan-400' : 'text-secondary'}>Karang</span>
       </div>
     </div>
   )

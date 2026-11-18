@@ -1,10 +1,14 @@
+import { motion, useReducedMotion } from 'motion/react'
 import { LuRuler, LuSprout, LuTriangleAlert, LuLayers } from 'react-icons/lu'
+import { ScrollReveal } from '../common/ScrollReveal'
 
 /**
  * Section 3: Masalah
  * Sesuai desain Figma node 1150:1669 (Masalah)
  */
 export function ProblemSection() {
+  const shouldReduceMotion = useReducedMotion()
+
   const problemCards = [
     {
       id: 'ruler',
@@ -47,7 +51,7 @@ export function ProblemSection() {
       <div className="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-14 items-start">
           {/* Kolom Kiri: Eyebrow, Judul, Deskripsi, dan Foto Bukti Kerusakan */}
-          <div className="lg:col-span-5 flex flex-col">
+          <ScrollReveal className="lg:col-span-5 flex flex-col">
             {/* Eyebrow */}
             <div className="inline-flex items-center gap-3">
               <span className="h-0.5 w-6 bg-teal-base rounded-full" />
@@ -76,15 +80,23 @@ export function ProblemSection() {
                 loading="lazy"
               />
             </div>
-          </div>
+          </ScrollReveal>
 
           {/* Kolom Kanan: 4 Kartu Masalah (Grid 2x2) */}
           <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-5">
-            {problemCards.map((card) => {
+            {problemCards.map((card, idx) => {
               const Icon = card.icon
               return (
-                <div
+                <motion.div
                   key={card.id}
+                  initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 20 }}
+                  whileInView={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-30px' }}
+                  transition={{
+                    duration: 0.45,
+                    delay: shouldReduceMotion ? 0 : idx * 0.08,
+                    ease: [0.21, 0.47, 0.32, 0.98]
+                  }}
                   className="flex flex-col rounded-2xl border border-slate-200/90 bg-white p-6 shadow-2xs transition-shadow hover:shadow-md"
                 >
                   <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-teal-50 text-teal-base">
@@ -109,7 +121,7 @@ export function ProblemSection() {
                   <p className="mt-2 text-sm leading-relaxed text-ink-600">
                     {card.description}
                   </p>
-                </div>
+                </motion.div>
               )
             })}
           </div>

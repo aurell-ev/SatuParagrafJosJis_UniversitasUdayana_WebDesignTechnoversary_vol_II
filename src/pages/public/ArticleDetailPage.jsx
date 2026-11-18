@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useParams, Link, Navigate } from 'react-router-dom'
+import { motion, useReducedMotion } from 'motion/react'
 import {
   LuArrowLeft,
   LuArrowRight,
@@ -19,6 +20,7 @@ import {
   LuList
 } from 'react-icons/lu'
 import { useData } from '../../context/useAppContext'
+import { ScrollReveal } from '../../components/common/ScrollReveal'
 
 /**
  * 6 Jenis Kerusakan Karang data spesifik sesuai Figma Desktop/Artikel Detail (node 1153:2742)
@@ -93,6 +95,7 @@ const REPORTING_TIPS = [
  * Mengacu pada desain Figma Desktop/Artikel Detail (node 1153:2742)
  */
 export function ArticleDetailPage() {
+  const shouldReduceMotion = useReducedMotion()
   const { slug } = useParams()
   const { articles } = useData()
   const [isSaved, setIsSaved] = useState(false)
@@ -126,101 +129,112 @@ export function ArticleDetailPage() {
       {/* 1. KEPALA ARTIKEL (Figma node 1153:2357) */}
       <section className="bg-white border-b border-slate-200 pt-8 pb-12">
         <div className="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-8">
-          {/* Breadcrumb Navigasi */}
-          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs sm:text-sm text-slate-500">
-            <Link
-              to="/"
-              className="hover:text-teal-base transition-colors focus-visible:outline-2 focus-visible:outline-teal-base rounded-xs"
-            >
-              Beranda
-            </Link>
-            <span className="text-slate-300">/</span>
-            <Link
-              to="/artikel"
-              className="hover:text-teal-base transition-colors focus-visible:outline-2 focus-visible:outline-teal-base rounded-xs"
-            >
-              Artikel
-            </Link>
-            <span className="text-slate-300">/</span>
-            <span className="font-semibold text-slate-800 line-clamp-1">{article.category}</span>
-          </nav>
+          <motion.div
+            initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 16 }}
+            animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+            transition={{ duration: 0.45, ease: [0.21, 0.47, 0.32, 0.98] }}
+          >
+            {/* Breadcrumb Navigasi */}
+            <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs sm:text-sm text-slate-500">
+              <Link
+                to="/"
+                className="hover:text-teal-base transition-colors focus-visible:outline-2 focus-visible:outline-teal-base rounded-xs"
+              >
+                Beranda
+              </Link>
+              <span className="text-slate-300">/</span>
+              <Link
+                to="/artikel"
+                className="hover:text-teal-base transition-colors focus-visible:outline-2 focus-visible:outline-teal-base rounded-xs"
+              >
+                Artikel
+              </Link>
+              <span className="text-slate-300">/</span>
+              <span className="font-semibold text-slate-800 line-clamp-1">{article.category}</span>
+            </nav>
 
-          {/* Badge Kategori */}
-          <div className="mt-6">
-            <span className="inline-flex items-center rounded-full bg-teal-50 px-3 py-1 text-xs font-semibold text-teal-base border border-teal-100">
-              {article.category}
-            </span>
-          </div>
+            {/* Badge Kategori */}
+            <div className="mt-6">
+              <span className="inline-flex items-center rounded-full bg-teal-50 px-3 py-1 text-xs font-semibold text-teal-base border border-teal-100">
+                {article.category}
+              </span>
+            </div>
 
-          {/* Judul Artikel */}
-          <h1 className="mt-4 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl lg:text-[42px] leading-tight max-w-4xl">
-            {article.title}
-          </h1>
+            {/* Judul Artikel */}
+            <h1 className="mt-4 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl lg:text-[42px] leading-tight max-w-4xl">
+              {article.title}
+            </h1>
 
-          {/* Ringkasan / Lead Subtitle */}
-          <p className="mt-4 text-base sm:text-lg lg:text-xl text-slate-600 leading-relaxed max-w-4xl">
-            {article.excerpt}
-          </p>
+            {/* Ringkasan / Lead Subtitle */}
+            <p className="mt-4 text-base sm:text-lg lg:text-xl text-slate-600 leading-relaxed max-w-4xl">
+              {article.excerpt}
+            </p>
 
-          {/* Garis Pembatas Halus */}
-          <div className="mt-8 border-t border-slate-200 pt-6 flex flex-wrap items-center justify-between gap-4">
-            {/* Info Penulis & Tanggal */}
-            <div className="flex items-center gap-3">
-              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-teal-100 text-teal-base font-bold text-sm ring-2 ring-white">
-                TE
-              </div>
-              <div>
-                <p className="text-sm font-bold text-slate-900">{article.author || 'Tim Edukasi PulihKarang'}</p>
-                <div className="flex items-center gap-2 text-xs text-slate-500 mt-0.5">
-                  <div className="flex items-center gap-1">
-                    <LuCalendar className="h-3.5 w-3.5 text-slate-400" />
-                    <span>{article.publishedAt ? '10 November 2026' : '10 November 2026'}</span>
-                  </div>
-                  <span>·</span>
-                  <div className="flex items-center gap-1">
-                    <LuClock className="h-3.5 w-3.5 text-slate-400" />
-                    <span>{article.readTime || '6 menit baca'}</span>
+            {/* Garis Pembatas Halus */}
+            <div className="mt-8 border-t border-slate-200 pt-6 flex flex-wrap items-center justify-between gap-4">
+              {/* Info Penulis & Tanggal */}
+              <div className="flex items-center gap-3">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-teal-100 text-teal-base font-bold text-sm ring-2 ring-white">
+                  TE
+                </div>
+                <div>
+                  <p className="text-sm font-bold text-slate-900">{article.author || 'Tim Edukasi PulihKarang'}</p>
+                  <div className="flex items-center gap-2 text-xs text-slate-500 mt-0.5">
+                    <div className="flex items-center gap-1">
+                      <LuCalendar className="h-3.5 w-3.5 text-slate-400" />
+                      <span>{article.publishedAt ? '10 November 2026' : '10 November 2026'}</span>
+                    </div>
+                    <span>·</span>
+                    <div className="flex items-center gap-1">
+                      <LuClock className="h-3.5 w-3.5 text-slate-400" />
+                      <span>{article.readTime || '6 menit baca'}</span>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
 
-            {/* Tombol Interaksi: Simpan & Bagikan */}
-            <div className="flex items-center gap-3">
-              <button
-                type="button"
-                onClick={() => setIsSaved(!isSaved)}
-                className={`inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-xs sm:text-sm font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-teal-base ${
-                  isSaved
-                    ? 'bg-teal-50 text-teal-base border border-teal-200'
-                    : 'bg-white text-slate-700 border border-slate-200 hover:bg-slate-50'
-                }`}
-                aria-label="Simpan artikel"
-              >
-                <LuBookmark className={`h-4 w-4 ${isSaved ? 'fill-current text-teal-base' : 'text-slate-500'}`} />
-                <span>{isSaved ? 'Tersimpan' : 'Simpan'}</span>
-              </button>
+              {/* Tombol Interaksi: Simpan & Bagikan */}
+              <div className="flex items-center gap-3">
+                <button
+                  type="button"
+                  onClick={() => setIsSaved(!isSaved)}
+                  className={`inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-xs sm:text-sm font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-teal-base ${
+                    isSaved
+                      ? 'bg-teal-50 text-teal-base border border-teal-200'
+                      : 'bg-white text-slate-700 border border-slate-200 hover:bg-slate-50'
+                  }`}
+                  aria-label="Simpan artikel"
+                >
+                  <LuBookmark className={`h-4 w-4 ${isSaved ? 'fill-current text-teal-base' : 'text-slate-500'}`} />
+                  <span>{isSaved ? 'Tersimpan' : 'Simpan'}</span>
+                </button>
 
-              <button
-                type="button"
-                onClick={handleShare}
-                className="relative inline-flex items-center gap-1.5 rounded-full bg-white px-4 py-2 text-xs sm:text-sm font-semibold text-slate-700 border border-slate-200 hover:bg-slate-50 transition-colors focus-visible:outline-2 focus-visible:outline-teal-base"
-                aria-label="Bagikan artikel"
-              >
-                <LuShare2 className="h-4 w-4 text-slate-500" />
-                <span>{copied ? 'Tautan Disalin!' : 'Bagikan'}</span>
-              </button>
+                <button
+                  type="button"
+                  onClick={handleShare}
+                  className="relative inline-flex items-center gap-1.5 rounded-full bg-white px-4 py-2 text-xs sm:text-sm font-semibold text-slate-700 border border-slate-200 hover:bg-slate-50 transition-colors focus-visible:outline-2 focus-visible:outline-teal-base"
+                  aria-label="Bagikan artikel"
+                >
+                  <LuShare2 className="h-4 w-4 text-slate-500" />
+                  <span>{copied ? 'Tautan Disalin!' : 'Bagikan'}</span>
+                </button>
+              </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Foto Sampul Utama */}
-          <div className="mt-8 overflow-hidden rounded-2xl border border-slate-200 bg-slate-100 shadow-2xs">
+          <motion.div
+            initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.98 }}
+            animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5, delay: shouldReduceMotion ? 0 : 0.15, ease: [0.21, 0.47, 0.32, 0.98] }}
+            className="mt-8 overflow-hidden rounded-2xl border border-slate-200 bg-slate-100 shadow-2xs"
+          >
             <img
               src={article.imageUrl}
               alt={article.title}
               className="w-full max-h-[520px] object-cover"
             />
-          </div>
+          </motion.div>
           <p className="mt-3 text-xs sm:text-sm text-slate-500 italic text-center sm:text-left">
             Terumbu karang dengan tanda pemutihan sebagian di perairan dangkal. Foto: Tim Edukasi PulihKarang / CC-BY
           </p>
@@ -254,11 +268,19 @@ export function ArticleDetailPage() {
                     </p>
 
                     <div className="mt-6 space-y-6">
-                      {DAMAGE_TYPES.map((item) => {
+                      {DAMAGE_TYPES.map((item, idx) => {
                         const IconComponent = item.icon
                         return (
-                          <div
+                          <motion.div
                             key={item.id}
+                            initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 16 }}
+                            whileInView={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+                            viewport={{ once: true, margin: '-25px' }}
+                            transition={{
+                              duration: 0.4,
+                              delay: shouldReduceMotion ? 0 : idx * 0.08,
+                              ease: [0.21, 0.47, 0.32, 0.98]
+                            }}
                             className="rounded-2xl border border-slate-200 bg-white p-6 shadow-2xs transition-shadow hover:shadow-xs"
                           >
                             <div className="flex items-center gap-3">
@@ -280,28 +302,30 @@ export function ArticleDetailPage() {
                                 <strong className="text-teal-base font-semibold">Tindak lanjut lapangan:</strong> {item.action}
                               </p>
                             </div>
-                          </div>
+                          </motion.div>
                         )
                       })}
                     </div>
                   </div>
 
                   {/* Callout Box: Dugaan bukan Diagnosis (Figma node 1153:2464) */}
-                  <div className="mt-10 rounded-2xl border border-teal-200 bg-teal-50/70 p-6 sm:p-7">
-                    <div className="flex items-start gap-3.5">
-                      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-teal-base text-white">
-                        <LuInfo className="h-5 w-5" />
-                      </div>
-                      <div>
-                        <h4 className="text-base sm:text-lg font-bold text-teal-950">
-                          Laporanmu adalah dugaan, bukan diagnosis
-                        </h4>
-                        <p className="mt-1.5 text-sm sm:text-base text-teal-900/90 leading-relaxed">
-                          Kamu tidak perlu menjadi biolog laut untuk melapor. Cukup pilih kategori yang paling mendekati apa yang kamu lihat di perairan. Tim verifikator daerah kami yang akan memvalidasi dan mengonfirmasi kondisi lapangan sebenarnya.
-                        </p>
+                  <ScrollReveal className="mt-10">
+                    <div className="rounded-2xl border border-teal-200 bg-teal-50/70 p-6 sm:p-7">
+                      <div className="flex items-start gap-3.5">
+                        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-teal-base text-white">
+                          <LuInfo className="h-5 w-5" />
+                        </div>
+                        <div>
+                          <h4 className="text-base sm:text-lg font-bold text-teal-950">
+                            Laporanmu adalah dugaan, bukan diagnosis
+                          </h4>
+                          <p className="mt-1.5 text-sm sm:text-base text-teal-900/90 leading-relaxed">
+                            Kamu tidak perlu menjadi biolog laut untuk melapor. Cukup pilih kategori yang paling mendekati apa yang kamu lihat di perairan. Tim verifikator daerah kami yang akan memvalidasi dan mengonfirmasi kondisi lapangan sebenarnya.
+                          </p>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  </ScrollReveal>
 
                   {/* Section 2: Cara Melapor yang Baik */}
                   <div id="cara-melapor" className="mt-12 scroll-mt-28">
@@ -314,12 +338,23 @@ export function ArticleDetailPage() {
 
                     <ul className="mt-5 space-y-3.5 text-sm sm:text-base text-slate-700">
                       {REPORTING_TIPS.map((tip, idx) => (
-                        <li key={idx} className="flex items-start gap-3">
+                        <motion.li
+                          key={idx}
+                          initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, x: -10 }}
+                          whileInView={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, x: 0 }}
+                          viewport={{ once: true, margin: '-20px' }}
+                          transition={{
+                            duration: 0.35,
+                            delay: shouldReduceMotion ? 0 : idx * 0.06,
+                            ease: [0.21, 0.47, 0.32, 0.98]
+                          }}
+                          className="flex items-start gap-3"
+                        >
                           <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-teal-100 text-teal-base mt-0.5">
                             <LuCheck className="h-3.5 w-3.5 stroke-[3]" />
                           </div>
                           <span className="leading-relaxed">{tip}</span>
-                        </li>
+                        </motion.li>
                       ))}
                     </ul>
                   </div>
@@ -476,7 +511,7 @@ export function ArticleDetailPage() {
       {relatedArticles.length > 0 && (
         <section className="border-t border-slate-200 bg-white py-16 lg:py-20">
           <div className="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-8">
-            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
+            <ScrollReveal className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
               <div>
                 <span className="text-xs font-bold uppercase tracking-wider text-teal-base">
                   BACA JUGA
@@ -492,39 +527,52 @@ export function ArticleDetailPage() {
                 <span>Semua artikel</span>
                 <LuArrowRight className="h-4 w-4" />
               </Link>
-            </div>
+            </ScrollReveal>
 
             <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-              {relatedArticles.map((rel) => (
-                <Link
+              {relatedArticles.map((rel, idx) => (
+                <motion.div
                   key={rel.slug}
-                  to={`/artikel/${rel.slug}`}
-                  className="group flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xs hover:shadow-md transition-shadow focus-visible:outline-2 focus-visible:outline-teal-base"
+                  initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 16 }}
+                  whileInView={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-20px' }}
+                  transition={{
+                    duration: 0.4,
+                    delay: shouldReduceMotion ? 0 : idx * 0.1,
+                    ease: [0.21, 0.47, 0.32, 0.98]
+                  }}
+                  className="flex"
                 >
-                  <div className="h-48 w-full overflow-hidden bg-slate-100">
-                    <img
-                      src={rel.imageUrl}
-                      alt={rel.title}
-                      className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
-                  </div>
-                  <div className="flex flex-1 flex-col p-5">
-                    <div className="flex items-center justify-between text-xs text-slate-500">
-                      <span className="font-semibold text-teal-base">{rel.category}</span>
-                      <span>{rel.readTime}</span>
+                  <Link
+                    to={`/artikel/${rel.slug}`}
+                    className="group flex flex-col w-full overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xs hover:shadow-md transition-shadow focus-visible:outline-2 focus-visible:outline-teal-base"
+                  >
+                    <div className="h-48 w-full overflow-hidden bg-slate-100">
+                      <img
+                        src={rel.imageUrl}
+                        alt={rel.title}
+                        className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        loading="lazy"
+                      />
                     </div>
-                    <h4 className="mt-2.5 text-base font-bold text-slate-900 group-hover:text-teal-base transition-colors line-clamp-2">
-                      {rel.title}
-                    </h4>
-                    <p className="mt-2 text-xs text-slate-500 line-clamp-2 leading-relaxed">
-                      {rel.excerpt}
-                    </p>
-                    <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-teal-base">
-                      <span>Baca selengkapnya</span>
-                      <LuArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" />
+                    <div className="flex flex-1 flex-col p-5">
+                      <div className="flex items-center justify-between text-xs text-slate-500">
+                        <span className="font-semibold text-teal-base">{rel.category}</span>
+                        <span>{rel.readTime}</span>
+                      </div>
+                      <h4 className="mt-2.5 text-base font-bold text-slate-900 group-hover:text-teal-base transition-colors line-clamp-2">
+                        {rel.title}
+                      </h4>
+                      <p className="mt-2 text-xs text-slate-500 line-clamp-2 leading-relaxed">
+                        {rel.excerpt}
+                      </p>
+                      <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-teal-base">
+                        <span>Baca selengkapnya</span>
+                        <LuArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" />
+                      </div>
                     </div>
-                  </div>
-                </Link>
+                  </Link>
+                </motion.div>
               ))}
             </div>
           </div>

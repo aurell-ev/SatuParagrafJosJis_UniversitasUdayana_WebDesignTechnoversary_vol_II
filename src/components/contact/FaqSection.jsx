@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { FiPlus, FiX, FiHelpCircle, FiArrowRight } from 'react-icons/fi'
+import { motion, AnimatePresence, useReducedMotion } from 'motion/react'
+import { FiPlus, FiHelpCircle, FiArrowRight } from 'react-icons/fi'
+import { ScrollReveal } from '../common/ScrollReveal'
 
 const FAQ_ITEMS = [
   {
@@ -37,6 +39,7 @@ const FAQ_ITEMS = [
 
 export function FaqSection() {
   const [openIdx, setOpenIdx] = useState(0)
+  const shouldReduceMotion = useReducedMotion()
 
   const toggleItem = (idx) => {
     setOpenIdx((prev) => (prev === idx ? -1 : idx))
@@ -45,7 +48,7 @@ export function FaqSection() {
   return (
     <section className="space-y-8">
       {/* Section Header */}
-      <div className="text-center space-y-2">
+      <ScrollReveal className="text-center space-y-2">
         <div className="inline-flex items-center justify-center gap-2">
           <span className="h-[2px] w-6 rounded-full bg-teal-500" />
           <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-teal-500">
@@ -55,16 +58,28 @@ export function FaqSection() {
         <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-teal-500">
           Pertanyaan yang sering diajukan
         </h2>
-      </div>
+      </ScrollReveal>
 
-      {/* Accordion List */}
+      {/* Accordion List dengan Motion Entrance & Smooth Expand */}
       <div className="max-w-4xl mx-auto space-y-3.5 px-5">
         {FAQ_ITEMS.map((item, idx) => {
           const isOpen = openIdx === idx
           return (
-            <div
+            <motion.div
               key={idx}
-              className="rounded-2xl border border-ink-200/80 bg-surface-card overflow-hidden shadow-2xs transition-all duration-150"
+              initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 16 }}
+              whileInView={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-20px' }}
+              transition={{
+                duration: 0.35,
+                delay: shouldReduceMotion ? 0 : idx * 0.08,
+                ease: [0.21, 0.47, 0.32, 0.98]
+              }}
+              className={`rounded-2xl border transition-all duration-200 overflow-hidden shadow-2xs ${
+                isOpen
+                  ? 'border-teal-300 bg-surface-card ring-2 ring-teal-100/70 shadow-xs'
+                  : 'border-ink-200/80 bg-surface-card hover:border-ink-300'
+              }`}
             >
               <button
                 type="button"
@@ -72,33 +87,52 @@ export function FaqSection() {
                 className="w-full flex items-center justify-between gap-4 p-5 sm:p-6 text-left cursor-pointer outline-hidden focus-visible:bg-teal-50/50"
                 aria-expanded={isOpen}
               >
-                <span className="text-sm sm:text-base font-bold text-ink-900">
+                <span className={`text-sm sm:text-base font-bold transition-colors ${
+                  isOpen ? 'text-teal-base' : 'text-ink-900'
+                }`}>
                   {item.question}
                 </span>
-                <span
-                  className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full transition-colors ${isOpen
-                    ? 'bg-teal-base text-white'
-                    : 'bg-ink-100 text-ink-600 hover:bg-ink-200'
-                    }`}
+                <motion.span
+                  animate={{ rotate: isOpen ? 45 : 0 }}
+                  transition={{ duration: shouldReduceMotion ? 0 : 0.2 }}
+                  className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full transition-colors ${
+                    isOpen
+                      ? 'bg-teal-base text-white'
+                      : 'bg-ink-100 text-ink-600 hover:bg-ink-200'
+                  }`}
                 >
-                  {isOpen ? <FiX className="h-4 w-4" /> : <FiPlus className="h-4 w-4" />}
-                </span>
+                  <FiPlus className="h-4 w-4" />
+                </motion.span>
               </button>
 
-              {isOpen && (
-                <div className="px-4 pb-4 sm:px-5 sm:pb-5 pt-0 animate-in fade-in duration-150">
-                  <p className="text-xs sm:text-sm leading-relaxed text-ink-600">
-                    {item.answer}
-                  </p>
-                </div>
-              )}
-            </div>
+              <AnimatePresence initial={false}>
+                {isOpen && (
+                  <motion.div
+                    key="content"
+                    initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, height: 0 }}
+                    animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, height: 'auto' }}
+                    exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, height: 0 }}
+                    transition={{
+                      duration: shouldReduceMotion ? 0 : 0.25,
+                      ease: [0.21, 0.47, 0.32, 0.98]
+                    }}
+                    className="overflow-hidden"
+                  >
+                    <div className="px-5 pb-5 sm:px-6 sm:pb-6 pt-0">
+                      <p className="text-xs sm:text-sm leading-relaxed text-ink-600 border-t border-ink-100 pt-3.5">
+                        {item.answer}
+                      </p>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.div>
           )
         })}
       </div>
 
       {/* Bottom Help Banner */}
-      <div className="max-w-4xl mx-auto pb-12 sm:pb-20 px-5">
+      <ScrollReveal className="max-w-4xl mx-auto pb-12 sm:pb-20 px-5">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 rounded-2xl bg-teal-50 border border-teal-100/80 p-4 sm:px-6 sm:py-4">
           <div className="flex items-center gap-3 text-sm text-teal-900 w-full sm:w-auto">
             <FiHelpCircle className="h-5 w-5 shrink-0 text-teal-base" />
@@ -114,7 +148,7 @@ export function FaqSection() {
             <FiArrowRight className="h-4 w-4" />
           </Link>
         </div>
-      </div>
+      </ScrollReveal>
     </section>
   )
 }

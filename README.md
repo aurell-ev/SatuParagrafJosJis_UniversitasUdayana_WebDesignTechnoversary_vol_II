@@ -1,113 +1,118 @@
 # PulihKarang
 
-> Website pelaporan kerusakan dan pemantauan pemulihan terumbu karang di Indonesia.
-> Karya untuk **Web Design Competition Techno Versary Vol. II** dengan tema *"EcoDigital For Environment"*.
+> Platform pelaporan kerusakan dan pemantauan pemulihan terumbu karang berbasis sains terbuka di Indonesia.
+> Karya tim **Satu Paragraf JosJis** untuk **Web Design Competition Techno Versary Vol. II** dengan tema *"EcoDigital For Environment"*.
+
+---
 
 ## Deskripsi Website
 
-Banyak kerusakan terumbu karang tidak pernah dilaporkan, dan banyak kegiatan restorasi berhenti di tahap "sudah tanam" tanpa mengukur berapa karang yang benar-benar bertahan hidup. **PulihKarang** menghubungkan warga, tim restorasi daerah, dan publik dalam satu alur:
+Banyak kerusakan terumbu karang tidak pernah dilaporkan, dan banyak kegiatan restorasi berhenti di tahap "sudah tanam" tanpa mengukur berapa karang yang benar-benar bertahan hidup (*survival rate*). **PulihKarang** menghubungkan partisipasi publik dengan pengelola daerah dalam satu alur terpadu:
 
-1. **Lapor**: warga melaporkan kerusakan karang lewat foto, titik lokasi, dan jenis kerusakan (boleh anonim).
-2. **Verifikasi**: tim daerah mengecek laporan di lapangan (valid, tidak valid, atau duplikat).
-3. **Pulihkan**: tim mencatat penanaman, perawatan, dan pemeriksaan berkala.
-4. **Pantau**: publik melihat perkembangan pemulihan, termasuk persentase karang yang masih hidup.
+1. **Lapor**: Warga, penyelam, atau wisatawan melaporkan kerusakan karang lewat foto, koordinat perairan, dan jenis kerusakan (boleh anonim, tanpa wajib login).
+2. **Verifikasi**: Pengelola daerah memeriksa kesesuaian laporan (valid, tolak, atau deteksi laporan duplikat).
+3. **Pulihkan**: Pengelola mengalihkan laporan valid ke agenda pemulihan serta mencatat sensus berkala.
+4. **Pantau**: Publik memantau perkembangan pemulihan berbasis data sains terbuka (*survival rate* hidup vs umur tanam), dengan koordinat GPS presisi tetap dirahasiakan demi keamanan karang.
+
+---
 
 ### Fitur Utama
-- Form lapor kerusakan tanpa login, dengan penanda laporan yang mungkin duplikat
-- Halaman perkembangan pemulihan per daerah (lokasi persis disamarkan)
-- Dashboard tim daerah: verifikasi laporan, catatan tanam, perawatan, dan pemeriksaan
-- Pendaftaran relawan tim per daerah
-- Artikel edukasi dan galeri dokumentasi
 
-### Halaman
-| Halaman | Rute |
-|---|---|
-| Home | `/` |
-| About | `/about` |
-| Artikel | `/artikel` |
-| Galeri | `/galeri` |
-| Lapor Kerusakan | `/lapor` |
-| Perkembangan | `/perkembangan` |
-| Gabung Tim | `/gabung` |
-| Contact | `/contact` |
-| Dashboard Tim (simulasi login) | `/tim` |
+- **Pelaporan Kerusakan Cepat**: Upload foto, peta interaktif, deteksi radius duplikat (<100m), dan kode lacak tiket unik (`/lapor` & `/lapor/terkirim`).
+- **Dashboard Transparansi Publik**: Peta sebaran kawasan konservasi Bali, filter status tumbuh, grafik kelangsungan hidup (*growth history*), dan komparasi *before-after* (`/perkembangan` & `/perkembangan/:id`).
+- **Portal Khusus Pengelola Daerah (`/pengelola`)**:
+  - **Persetujuan Relawan**: Inbox pendaftaran relawan baru dari publik (`/gabung`), filter status, dan aksi persetujuan cepat.
+  - **Manajemen Laporan**: Audit laporan kerusakan warga, deteksi duplikat, verifikasi valid, dan alihkan ke pemulihan.
+  - **Update Perkembangan Karang**: Modal pencatatan sensus berkala (*hidup, mati, hilang, belum diamati*) dengan kalkulasi otomatis *survival rate* yang tersinkronisasi instan ke publik.
+  - **Transparansi & Protokol Data**: Penegakan perlindungan koordinat presisi terumbu karang dan audit sumber data independen.
+- **Edukasi & Dokumentasi**: Artikel panduan transplantasi karang (`/artikel`) dan galeri interaktif komparasi pemulihan (`/galeri`).
+- **Kontak & Cek Status**: Cek status tiket laporan langsung dan sekretariat pengelola daerah (`/contact`).
 
-> **Catatan:** Seluruh data di website ini adalah **data contoh** untuk keperluan demo lomba. Laporan dan login disimulasikan menggunakan `localStorage` di browser.
+---
+
+### Daftar Halaman & Rute
+
+| Halaman | Rute | Akses Pengguna |
+|---|---|---|
+| Beranda | `/` | Publik (Tanpa Login) |
+| Tentang Kami | `/about` | Publik (Tanpa Login) |
+| Artikel Edukasi | `/artikel` & `/artikel/:slug` | Publik (Tanpa Login) |
+| Galeri Pemulihan | `/galeri` | Publik (Tanpa Login) |
+| Laporkan Kerusakan | `/lapor` & `/lapor/terkirim` | Publik (Tanpa Login) |
+| Perkembangan Karang | `/perkembangan` & `/perkembangan/:id` | Publik (Tanpa Login) |
+| Gabung Tim Relawan | `/gabung` | Publik (Tanpa Login) |
+| Kontak & FAQ | `/contact` | Publik (Tanpa Login) |
+| Masuk Pengelola | `/masuk` | Khusus Pengelola Daerah |
+| Portal Pengelola Daerah | `/pengelola` | Khusus Pengelola Daerah |
+
+> **Catatan Demo Lomba:** Sistem beroperasi secara *Frontend-Only (No Backend)*. Seluruh pembaruan data (laporan baru, persetujuan relawan, update sensus karang) tersimpan persisten secara reaktif di `localStorage` peramban.
+
+---
 
 ## Teknologi
-- [React](https://react.dev/) + [Vite](https://vite.dev/)
-- [Tailwind CSS](https://tailwindcss.com/) v4
-- [React Router](https://reactrouter.com/)
-- [React Icons](https://react-icons.github.io/react-icons/)
 
-Seluruh library yang digunakan gratis dan open-source. Tidak menggunakan template atau komponen berbayar.
+- **Framework**: [React 19](https://react.dev/) + [Vite](https://vite.dev/)
+- **Styling**: [Tailwind CSS v4](https://tailwindcss.com/) dengan Design System Tokens (`--teal-*`, `--coral-*`, `--ink-*`, `--surface`)
+- **Routing**: [React Router DOM v7](https://reactrouter.com/)
+- **Peta Interaktif**: [Leaflet](https://leafletjs.com/) + OpenStreetMap
+- **Ikon**: [React Icons](https://react-icons.github.io/react-icons/) (Lucide Icons)
+- **Aset Gambar**: Cloudinary CDN dengan optimasi format & kualitas otomatis (`f_auto,q_auto`)
 
-## Petunjuk Instalasi
+*Seluruh library gratis & open-source, bebas template berbayar, dan memenuhi standar aksesibilitas WCAG AA.*
+
+---
+
+## Petunjuk Instalasi & Menjalankan
 
 ### Prasyarat
-- [Node.js](https://nodejs.org/) versi LTS (cek dengan `node -v`)
-- npm (sudah termasuk dalam Node.js)
+- [Node.js](https://nodejs.org/) versi LTS (v18+)
+- npm (bawaan Node.js)
 - Git
 
 ### Langkah Instalasi
-1. Clone repository ini:
-   ```bash
-   git clone https://github.com/USERNAME/webdesign_SatuParagrafJosJis_technoversary_vol.II.git
-   ```
-2. Masuk ke folder project:
-   ```bash
-   cd webdesign_SatuParagrafJosJis_technoversary_vol.II
-   ```
-3. Install dependencies:
-   ```bash
-   npm install
-   ```
-
-## Cara Menjalankan Project
-
-### Mode development
 ```bash
+# 1. Clone repositori
+git clone https://github.com/USERNAME/webdesign_SatuParagrafJosJis_technoversary_vol.II.git
+
+# 2. Masuk ke direktori proyek
+cd webdesign_SatuParagrafJosJis_technoversary_vol.II
+
+# 3. Pasang dependensi
+npm install
+
+# 4. Jalankan server lokal
 npm run dev
 ```
-Buka alamat yang muncul di terminal, biasanya `http://localhost:5173`.
+Buka alamat yang tampil di terminal: `http://localhost:5173`.
 
-### Build untuk produksi
+### Build Produksi
 ```bash
 npm run build
 npm run preview
 ```
 
-### Akun demo tim daerah
-| Peran | Email | Kata sandi |
-|---|---|---|
-| Pengelola daerah | `pengelola@demo.pulihkarang` | `demo123` |
-| Anggota tim | `anggota@demo.pulihkarang` | `demo123` |
+---
 
-## Struktur Folder
-```
-webdesign_namaTim_technoversary_vol.II/
-├── public/            # gambar dan aset statis
-├── src/
-│   ├── components/    # komponen UI (Navbar, Footer, Card, dll.)
-│   ├── pages/         # halaman website
-│   ├── data/          # data contoh (JSON)
-│   ├── App.jsx        # routing
-│   ├── main.jsx
-│   └── index.css      # Tailwind
-├── index.html
-├── package.json
-├── vite.config.js
-└── README.md
-```
+## Akun Demo Pengelola Daerah
 
-## Nama Tim dan Anggota
+Untuk pengujian dewan juri, telah disediakan tombol pengisian otomatis satu klik (*"Isi Akun Pengelola Daerah"*) pada halaman `/masuk`:
 
-**Nama Tim:** Satu Paragraf JosJis
-| No | Nama | Peran |
-|---|---|---|
-| 1 | _Aurell Evangeline Taolin_ | Ketua |
-| 2 | _I Wayan Deasa Putra_ | _Front-end Developer_ |
-| 3 | _Ida Bagus Gede Ngurah Kemenuh_ | _Front-end Developer_ |
+| Peran | Email | Kata Sandi | Halaman Akses |
+|---|---|---|---|
+| **Pengelola Daerah** (Admin Bali) | `pengelola.bali@pulihkarang.id` | `karanglestari` | `/pengelola` |
 
 ---
-Dibuat untuk Web Design Competition Techno Versary Vol. II, HIMA-TI FKOM Universitas Kuningan, 2026.
+
+## Tim Pengembang
+
+**Nama Tim:** Satu Paragraf JosJis  
+**Asal Instansi:** Universitas Udayana
+
+| No | Nama | Peran |
+|:---:|---|---|
+| 1 | **Aurell Evangeline Taolin** | Ketua Tim & UI/UX Designer |
+| 2 | **I Wayan Deasa Putra** | Front-end Developer |
+| 3 | **Ida Bagus Gede Ngurah Kemenuh** | Front-end Developer |
+
+---
+*Dibuat untuk Web Design Competition Techno Versary Vol. II, HIMA-TI FKOM Universitas Kuningan, 2026.*

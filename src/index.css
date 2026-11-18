@@ -1,1 +1,106 @@
 @import "tailwindcss";
+@import "leaflet/dist/leaflet.css";
+
+@theme {
+  /* Font Family */
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+
+  /* Primary Palette (Teal Karang / Ocean Deep) - extracted from Figma PulihKarang Design System */
+  --color-teal-50: #edf7f9;
+  --color-teal-100: #d5ecf1;
+  --color-teal-200: #afd9e3;
+  --color-teal-300: #159bb6;
+  --color-teal-400: #157c91;
+  --color-teal-500: #0f5c6e;
+  --color-teal-600: #0d586a;
+  --color-teal-700: #0a4352;
+  --color-teal-800: #07303b;
+  --color-teal-900: #041c23;
+
+  /* Brand Base Shortcuts */
+  --color-teal-base: #0f5c6e;
+  --color-teal-hover: #0a4352;
+  --color-teal-light: #ecfeff;
+  --color-teal-accent: #167990;
+
+  /* Secondary Cyan (Badge, Line Eyebrow, Wordmark) */
+  --color-secondary: #0891b2;
+  --color-secondary-500: #06b6d4;
+
+  /* Accent / Coral (CTA Lapor, Peringatan Bahaya) */
+  --color-coral-50: #fff5f3;
+  --color-coral-100: #ffe6e2;
+  --color-coral-200: #fecdc5;
+  --color-coral-300: #fba494;
+  --color-coral-400: #f1644d;
+  --color-coral-500: #e85d3f;
+  --color-coral-600: #c9472b;
+  --color-coral-700: #a7351d;
+  --color-coral-800: #862916;
+  --color-coral-900: #6a2112;
+
+  --color-coral-base: #e85d3f;
+  --color-coral-hover: #c9472b;
+
+  /* Neutral & Ink (Text, Headings, Backgrounds) */
+  --color-ink-950: #020827;
+  --color-ink-900: #0f172a;
+  --color-ink-800: #1e293b;
+  --color-ink-700: #334155;
+  --color-ink-600: #475569;
+  --color-ink-500: #64748b;
+  --color-ink-400: #94a3b8;
+  --color-ink-300: #cbd5e1;
+  --color-ink-200: #e2e8f0;
+  --color-ink-100: #f1f5f9;
+  --color-ink-50: #f8fafc;
+
+  /* Surface & Background */
+  --color-surface: #f6faf9;
+  --color-surface-card: #ffffff;
+
+  /* State / Status Colors */
+  --color-state-success: #27ae60;
+  --color-state-success-bg: #ecfdf5;
+  --color-state-success-border: #a7f3d0;
+  --color-state-success-text: #047857;
+
+  --color-state-warning: #e2b93b;
+  --color-state-warning-bg: #fffbeb;
+  --color-state-warning-border: #fde68a;
+  --color-state-warning-text: #b45309;
+
+  --color-state-error: #eb5757;
+  --color-state-error-bg: #fff1f2;
+  --color-state-error-border: #fecdd3;
+  --color-state-error-text: #be123c;
+
+  --color-state-info: #2f80ed;
+  --color-state-info-bg: #f0f9ff;
+  --color-state-info-border: #bae6fd;
+  --color-state-info-text: #0369a1;
+
+  /* Primary Blue Palette (ADS & SD scale 50-950) */
+  --color-primary-50: #f0f2ff;
+  --color-primary-100: #d1d5fb;
+  --color-primary-200: #a5aef7;
+  --color-primary-300: #7286f3;
+  --color-primary-400: #395fed;
+  --color-primary-500: #1e40af;
+  --color-primary-600: #173492;
+  --color-primary-700: #102772;
+  --color-primary-800: #091c57;
+  --color-primary-900: #040f39;
+  --color-primary-950: #020827;
+}
+
+/* Base custom styles & variables */
+:root {
+  --font-family: var(--font-sans);
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-surface);
+  color: var(--color-ink-900);
+}

@@ -1,8 +1,12 @@
+import { motion, useReducedMotion } from 'motion/react'
+
 /**
  * Section 1: Page Hero (Halaman Artikel)
  * Sesuai desain Figma node 1152:2259 (Page Hero)
  */
 export function ArticleHeroSection() {
+  const shouldReduceMotion = useReducedMotion()
+
   return (
     <section className="relative overflow-hidden bg-teal-950 py-16 sm:py-20 lg:py-24">
       {/* Background Image dengan Cloudinary f_auto,q_auto */}
@@ -17,7 +21,12 @@ export function ArticleHeroSection() {
 
       {/* Konten Hero */}
       <div className="relative mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-8">
-        <div className="max-w-3xl">
+        <motion.div
+          initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 16 }}
+          animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, ease: [0.21, 0.47, 0.32, 0.98] }}
+          className="max-w-3xl"
+        >
           {/* Eyebrow */}
           <div className="inline-flex items-center gap-2">
             <span className="h-0.5 w-6 rounded-full bg-cyan-400" />
@@ -35,7 +44,7 @@ export function ArticleHeroSection() {
           <p className="mt-4 text-base leading-relaxed text-teal-100/90 sm:text-lg">
             Panduan singkat tentang jenis kerusakan terumbu karang, cara memotret dan melapor, serta bagaimana pemulihan diukur.
           </p>
-        </div>
+        </motion.div>
       </div>
     </section>
   )

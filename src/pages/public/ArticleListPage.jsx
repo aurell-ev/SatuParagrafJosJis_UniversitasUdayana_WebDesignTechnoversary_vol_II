@@ -5,6 +5,7 @@ import { ArticleToolbar } from '../../components/article/ArticleToolbar'
 import { ArticleFeaturedSection } from '../../components/article/ArticleFeaturedSection'
 import { ArticleListSection } from '../../components/article/ArticleListSection'
 import { CallToAction } from '../../components/common/CallToAction'
+import { ScrollReveal } from '../../components/common/ScrollReveal'
 
 /**
  * Halaman Publik: Daftar Artikel & Edukasi (/artikel)
@@ -72,18 +73,20 @@ export function ArticleListPage() {
       {/* 2. Container Konten Utama (Figma node 1152:2511) */}
       <div className="mx-auto w-full max-w-[1200px] px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
         {/* Toolbar diletakkan di ATAS Artikel Unggulan (Figma node 1152:2298) */}
-        <ArticleToolbar
-          selectedCategory={selectedCategory}
-          onSelectCategory={setSelectedCategory}
-          searchQuery={searchQuery}
-          onSearchChange={setSearchQuery}
-        />
+        <ScrollReveal>
+          <ArticleToolbar
+            selectedCategory={selectedCategory}
+            onSelectCategory={setSelectedCategory}
+            searchQuery={searchQuery}
+            onSearchChange={setSearchQuery}
+          />
+        </ScrollReveal>
 
         {/* Artikel Unggulan (Hanya tampil jika cocok dengan filter) */}
         {isFeaturedMatched && (
-          <div className="mb-12">
+          <ScrollReveal className="mb-12">
             <ArticleFeaturedSection article={defaultFeatured} />
-          </div>
+          </ScrollReveal>
         )}
 
         {/* Daftar 6 Artikel Terbaru & Paginasi (Figma node 1152:2510 & 1152:2487) */}

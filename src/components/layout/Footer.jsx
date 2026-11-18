@@ -88,7 +88,7 @@ export function Footer() {
                      </li>
                      <li>
                         <Link
-                           to="/login"
+                           to="/masuk"
                            className="transition-colors duration-150 hover:text-white"
                         >
                            Masuk Tim Konservasi

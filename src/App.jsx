@@ -19,7 +19,7 @@ import { LoginPage } from './pages/public/LoginPage'
 
 function AppContent() {
   const location = useLocation()
-  const isAuthPage = location.pathname === '/login'
+  const isAuthPage = location.pathname === '/login' || location.pathname === '/masuk'
 
   return (
     <div className="flex min-h-screen flex-col bg-surface text-ink-900">
@@ -41,11 +41,15 @@ function AppContent() {
           <Route path="/lapor" element={<ReportPage />} />
           <Route path="/lapor/terkirim" element={<ReportSuccessPage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/masuk" element={<LoginPage />} />
         </Routes>
       </main>
 
       {/* Global Footer (Hidden on Auth standalone page) */}
       {!isAuthPage && <Footer />}
+
+      {/* Global Floating Scroll To Top Button */}
+      <ScrollToTopButton />
     </div>
   )
 }

@@ -22,7 +22,7 @@ export function Navbar() {
   const location = useLocation()
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-white/95 backdrop-blur-md border-b border-ink-200 shadow-xs">
+    <header className="sticky top-0 z-[1100] w-full bg-white/95 backdrop-blur-md border-b border-ink-200 shadow-xs">
       <div className="mx-auto flex h-[78px] max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Brand Logo */}
         <Link to="/" className="outline-hidden focus-visible:ring-2 focus-visible:ring-teal-base rounded-lg">

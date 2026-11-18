@@ -67,10 +67,11 @@ export function GalleryGrid({
         </div>
       ) : (
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {items.slice(0, visibleCount).map((item) => (
+          {items.slice(0, visibleCount).map((item, idx) => (
             <GalleryCard
               key={item.id}
               item={item}
+              index={idx}
               onClick={onOpenModal}
             />
           ))}

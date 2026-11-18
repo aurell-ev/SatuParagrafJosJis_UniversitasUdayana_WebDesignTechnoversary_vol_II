@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { motion, useReducedMotion } from 'motion/react'
 import { 
   LuMapPin, 
   LuBadgeCheck, 
@@ -12,6 +13,7 @@ import {
 } from 'react-icons/lu'
 
 export function ProgressDetailHeader({ location }) {
+  const shouldReduceMotion = useReducedMotion()
   const [copied, setCopied] = useState(false)
 
   const handleShare = async () => {
@@ -75,7 +77,10 @@ export function ProgressDetailHeader({ location }) {
   const StatusIcon = statusConfig.icon
 
   return (
-    <div 
+    <motion.div 
+      initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: -10 }}
+      animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+      transition={{ duration: 0.4, ease: [0.21, 0.47, 0.32, 0.98] }}
       className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pb-2 border-b border-slate-200/80"
       data-node-id="1155:4037"
       data-name="Kepala"
@@ -157,6 +162,6 @@ export function ProgressDetailHeader({ location }) {
           <LuArrowRight className="h-4 w-4 text-white shrink-0" />
         </Link>
       </div>
-    </div>
+    </motion.div>
   )
 }

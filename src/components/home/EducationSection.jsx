@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom'
+import { motion, useReducedMotion } from 'motion/react'
 import { LuArrowRight, LuClock } from 'react-icons/lu'
 import { useData } from '../../context/useAppContext'
+import { ScrollReveal } from '../common/ScrollReveal'
 
 /**
  * Section 7: Edukasi
@@ -8,12 +10,13 @@ import { useData } from '../../context/useAppContext'
  */
 export function EducationSection() {
   const { articles } = useData()
+  const shouldReduceMotion = useReducedMotion()
 
   return (
     <section className="border-t border-slate-200/80 bg-slate-50 py-16 sm:py-20 lg:py-24">
       <div className="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-8">
         {/* Header Bagian Edukasi (Align: Kiri, Tampilkan Deskripsi: False) */}
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+        <ScrollReveal className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
           <div className="max-w-2xl">
             <div className="inline-flex items-center gap-2">
               <span className="h-0.5 w-6 rounded-full bg-teal-base" />
@@ -37,13 +40,21 @@ export function EducationSection() {
               <LuArrowRight className="h-4 w-4" />
             </Link>
           </div>
-        </div>
+        </ScrollReveal>
 
         {/* Grid 3 Kartu Artikel (384x469px, r=16) */}
         <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {articles.slice(0, 3).map((article) => (
-            <article
+          {articles.slice(0, 3).map((article, idx) => (
+            <motion.article
               key={article.slug}
+              initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 20 }}
+              whileInView={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-30px' }}
+              transition={{
+                duration: 0.45,
+                delay: shouldReduceMotion ? 0 : idx * 0.1,
+                ease: [0.21, 0.47, 0.32, 0.98]
+              }}
               className="flex flex-col overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-2xs transition-shadow hover:shadow-md"
             >
               {/* Foto Artikel */}
@@ -95,7 +106,7 @@ export function EducationSection() {
                   </Link>
                 </div>
               </div>
-            </article>
+            </motion.article>
           ))}
         </div>
       </div>

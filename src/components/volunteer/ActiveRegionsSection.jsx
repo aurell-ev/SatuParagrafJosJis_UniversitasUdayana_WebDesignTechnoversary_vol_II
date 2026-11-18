@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { motion, useReducedMotion } from 'motion/react'
 import { LuUsers, LuMapPin, LuCheck, LuArrowUpRight } from 'react-icons/lu'
 
 const OPEN_REGIONS = [
@@ -41,6 +42,8 @@ const OPEN_REGIONS = [
 ]
 
 export function ActiveRegionsSection({ onSelectRegion }) {
+  const shouldReduceMotion = useReducedMotion()
+
   const handleCardClick = (regionId) => {
     if (onSelectRegion) {
       onSelectRegion(regionId)
@@ -74,10 +77,18 @@ export function ActiveRegionsSection({ onSelectRegion }) {
 
         {/* 4 Cards Grid: 1 col on mobile, 2 on sm/md, 4 on lg */}
         <div className="mt-6 sm:mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-          {OPEN_REGIONS.map((region) => (
-            <div
+          {OPEN_REGIONS.map((region, idx) => (
+            <motion.div
               key={region.id}
               onClick={() => handleCardClick(region.id)}
+              initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 16 }}
+              whileInView={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-20px' }}
+              transition={{
+                duration: 0.4,
+                delay: shouldReduceMotion ? 0 : idx * 0.1,
+                ease: [0.21, 0.47, 0.32, 0.98]
+              }}
               role="button"
               tabIndex={0}
               onKeyDown={(e) => {
@@ -86,7 +97,7 @@ export function ActiveRegionsSection({ onSelectRegion }) {
                   handleCardClick(region.id)
                 }
               }}
-              className="group flex flex-col overflow-hidden rounded-2xl border border-ink-200/90 bg-surface-card shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1.5 cursor-pointer outline-hidden focus-visible:ring-2 focus-visible:ring-teal-base"
+              className="group flex flex-col overflow-hidden rounded-2xl border border-ink-200/90 bg-surface-card shadow-md hover:shadow-xl transition-shadow duration-300 cursor-pointer outline-hidden focus-visible:ring-2 focus-visible:ring-teal-base"
             >
               {/* Image Banner: aspect-[16/9] on mobile for better compactness, aspect-[16/10] on sm+ */}
               <div className="relative aspect-[16/9] sm:aspect-[16/10] w-full overflow-hidden bg-slate-100">
@@ -130,7 +141,7 @@ export function ActiveRegionsSection({ onSelectRegion }) {
                   </span>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

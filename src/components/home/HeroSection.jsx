@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { motion, useReducedMotion } from 'motion/react'
 import {
   FiCamera,
   FiArrowRight,
@@ -13,12 +14,19 @@ import {
  * Sesuai desain Figma node 1150:1501
  */
 export function HeroSection() {
+  const shouldReduceMotion = useReducedMotion()
+
   return (
     <section className="relative overflow-hidden bg-white py-12 sm:py-16 lg:py-20">
       <div className="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-14">
           {/* Kolom Kiri: Teks Hero & Tombol Aksi (Teks Hero 600px) */}
-          <div className="lg:col-span-7 flex flex-col justify-center">
+          <motion.div
+            initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 18 }}
+            animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+            transition={{ duration: 0.55, ease: [0.21, 0.47, 0.32, 0.98] }}
+            className="lg:col-span-7 flex flex-col justify-center"
+          >
             {/* Judul Utama (60px / Weight 800 / Line Height 66px / Letter Spacing -1.2px) */}
             <h1 className="text-3xl font-extrabold tracking-tight text-teal-base sm:text-4xl md:text-5xl lg:text-[54px] lg:leading-[1.12] lg:tracking-[-1.2px]">
               Laporkan kerusakan karang.{' '}
@@ -68,7 +76,7 @@ export function HeroSection() {
                 <span>Titik tanam dirahasiakan</span>
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Kolom Kanan: Foto Hero & Kartu Melayang (Foto Hero 560x600) */}
           <div className="lg:col-span-5 relative flex justify-center lg:justify-end">
@@ -80,12 +88,19 @@ export function HeroSection() {
                   alt="Restorasi Terumbu Karang PulihKarang"
                   className="h-full w-full object-cover object-center"
                   loading="eager"
+                  fetchPriority="high"
+                  decoding="async"
                 />
                 <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-teal-950/35 via-transparent to-transparent" />
               </div>
 
               {/* Kartu Melayang (280x135px, offset -40px di desktop) */}
-              <div className="absolute bottom-6 left-4 right-4 sm:bottom-10 sm:left-6 sm:right-auto lg:-left-8 sm:w-[280px] rounded-2xl border border-slate-200/80 bg-white p-4 shadow-xl backdrop-blur-md">
+              <motion.div
+                initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 16, scale: 0.96 }}
+                animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 }}
+                transition={{ duration: 0.5, delay: 0.25, ease: 'easeOut' }}
+                className="absolute bottom-6 left-4 right-4 sm:bottom-10 sm:left-6 sm:right-auto lg:-left-8 sm:w-[280px] rounded-2xl border border-slate-200/80 bg-white p-4 shadow-xl backdrop-blur-md"
+              >
                 <div className="flex items-center gap-3">
                   <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600">
                     <FiActivity className="h-5 w-5" />
@@ -101,16 +116,19 @@ export function HeroSection() {
                 </div>
 
                 <div className="mt-3 h-2 w-full overflow-hidden rounded-full bg-slate-100">
-                  <div
-                    className="h-full rounded-full bg-emerald-600 transition-all duration-500"
-                    style={{ width: '68%' }}
+                  <motion.div
+                    initial={shouldReduceMotion ? { scaleX: 1 } : { scaleX: 0 }}
+                    animate={{ scaleX: 1 }}
+                    transition={{ duration: 0.7, delay: 0.45, ease: 'easeOut' }}
+                    style={{ originX: 0, width: '68%' }}
+                    className="h-full rounded-full bg-emerald-600"
                   />
                 </div>
 
                 <p className="mt-2 text-xs text-slate-400 font-normal">
                   286 dari 420 fragmen tercatat hidup
                 </p>
-              </div>
+              </motion.div>
             </div>
           </div>
         </div>

@@ -1,4 +1,7 @@
+import { motion, useReducedMotion } from 'motion/react'
+
 export function ProgressDetailFragments({ location }) {
+  const shouldReduceMotion = useReducedMotion()
   const total = location?.totalPlanted || 420
   const alive = location?.aliveCount ?? 286
   const dead = location?.deadCount ?? 72
@@ -66,10 +69,13 @@ export function ProgressDetailFragments({ location }) {
       {/* Horizontal Stacked Bar */}
       <div className="h-4 w-full rounded-full bg-slate-100 flex overflow-hidden shadow-inner">
         {items.map((it) => (
-          <div
+          <motion.div
             key={it.id}
-            style={{ width: `${it.pct}%` }}
-            className={`${it.color} h-full transition-all duration-500 first:rounded-l-full last:rounded-r-full hover:opacity-90 relative group`}
+            initial={shouldReduceMotion ? { width: `${it.pct}%` } : { width: 0 }}
+            whileInView={{ width: `${it.pct}%` }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, ease: [0.21, 0.47, 0.32, 0.98] }}
+            className={`${it.color} h-full first:rounded-l-full last:rounded-r-full hover:opacity-90 relative group`}
             title={`${it.label}: ${it.count} fragmen (${it.pct}%)`}
           />
         ))}
@@ -77,9 +83,17 @@ export function ProgressDetailFragments({ location }) {
 
       {/* 4 Kartu Legenda Rincian */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 pt-1">
-        {items.map((it) => (
-          <div
+        {items.map((it, idx) => (
+          <motion.div
             key={it.id}
+            initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 12 }}
+            whileInView={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-20px' }}
+            transition={{
+              duration: 0.35,
+              delay: shouldReduceMotion ? 0 : 0.2 + idx * 0.08,
+              ease: [0.21, 0.47, 0.32, 0.98]
+            }}
             className="p-3.5 sm:p-4 rounded-2xl border border-slate-100 bg-slate-50/60 flex flex-col gap-1.5 transition-colors hover:bg-slate-50"
           >
             <div className="flex items-center gap-2">
@@ -101,7 +115,7 @@ export function ProgressDetailFragments({ location }) {
             <span className="text-[11px] font-semibold text-slate-500">
               {it.pct}% dari total
             </span>
-          </div>
+          </motion.div>
         ))}
       </div>
     </div>

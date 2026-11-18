@@ -3,6 +3,7 @@ import { VolunteerHero } from '../../components/volunteer/VolunteerHero'
 import { VolunteerInfo } from '../../components/volunteer/VolunteerInfo'
 import { VolunteerForm } from '../../components/volunteer/VolunteerForm'
 import { ActiveRegionsSection } from '../../components/volunteer/ActiveRegionsSection'
+import { ScrollReveal } from '../../components/common/ScrollReveal'
 
 export function VolunteerPage() {
   const [currentStep, setCurrentStep] = useState(1)
@@ -31,19 +32,21 @@ export function VolunteerPage() {
 
       {/* 2. Main 2-Column Section */}
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-10 items-start">
-          <div className="lg:col-span-5">
-            <VolunteerInfo currentStep={currentStep} />
-          </div>
+        <ScrollReveal>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-10 items-start">
+            <div className="lg:col-span-5">
+              <VolunteerInfo currentStep={currentStep} />
+            </div>
 
-          <div ref={formRef} className="lg:col-span-7 scroll-mt-24">
-            <VolunteerForm
-              onStepChange={setCurrentStep}
-              selectedRegion={selectedRegion}
-              onRegionChange={setSelectedRegion}
-            />
+            <div ref={formRef} className="lg:col-span-7 scroll-mt-24">
+              <VolunteerForm
+                onStepChange={setCurrentStep}
+                selectedRegion={selectedRegion}
+                onRegionChange={setSelectedRegion}
+              />
+            </div>
           </div>
-        </div>
+        </ScrollReveal>
       </div>
 
       <ActiveRegionsSection onSelectRegion={handleSelectRegion} />

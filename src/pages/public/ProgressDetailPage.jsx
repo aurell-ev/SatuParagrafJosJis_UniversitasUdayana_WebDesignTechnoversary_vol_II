@@ -11,6 +11,7 @@ import { ProgressDetailFragments } from '../../components/progress/detail/Progre
 import { ProgressDetailBeforeAfter } from '../../components/progress/detail/ProgressDetailBeforeAfter'
 import { ProgressDetailSidebar } from '../../components/progress/detail/ProgressDetailSidebar'
 import { CtaSection } from '../../components/home/CtaSection'
+import { ScrollReveal } from '../../components/common/ScrollReveal'
 
 export function ProgressDetailPage() {
   const { id } = useParams()
@@ -60,7 +61,9 @@ export function ProgressDetailPage() {
             <ProgressDetailFragments location={location} />
 
             {/* C. Komparasi Foto Sebelum & Sesudah */}
-            <ProgressDetailBeforeAfter location={location} />
+            <ScrollReveal>
+              <ProgressDetailBeforeAfter location={location} />
+            </ScrollReveal>
           </div>
 
           {/* Kolom Kanan Sidebar (col-span-4 / 392px) */}

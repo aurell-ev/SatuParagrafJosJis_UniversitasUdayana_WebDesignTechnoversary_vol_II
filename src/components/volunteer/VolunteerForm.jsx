@@ -1,5 +1,14 @@
 import { useState } from 'react'
-import { LuMail, LuPhone, LuMapPin, LuSend, LuCircleCheck, LuCircleAlert, LuCheck } from 'react-icons/lu'
+import {
+  LuMail,
+  LuPhone,
+  LuMapPin,
+  LuSend,
+  LuCircleCheck,
+  LuCircleAlert,
+  LuCheck
+} from 'react-icons/lu'
+import { CustomSelect } from '../common/CustomSelect'
 
 const SKILL_OPTIONS = [
   { id: 'menyelam', label: 'Menyelam (berlisensi)' },
@@ -13,10 +22,10 @@ const SKILL_OPTIONS = [
 const TIME_AVAILABILITY = ['Akhir pekan', 'Hari kerja', 'Fleksibel']
 
 const REGION_OPTIONS = [
-  { value: 'denpasar', label: 'Denpasar', manager: 'Pengelola Tim Daerah Denpasar' },
-  { value: 'klungkung', label: 'Klungkung', manager: 'Pengelola Tim Daerah Klungkung' },
-  { value: 'buleleng', label: 'Buleleng', manager: 'Pengelola Tim Daerah Buleleng' },
-  { value: 'karangasem', label: 'Karangasem', manager: 'Pengelola Tim Daerah Karangasem' }
+  { value: 'denpasar', label: 'Denpasar', description: 'Pengelola Tim Daerah Denpasar', manager: 'Pengelola Tim Daerah Denpasar' },
+  { value: 'klungkung', label: 'Klungkung', description: 'Pengelola Tim Daerah Klungkung', manager: 'Pengelola Tim Daerah Klungkung' },
+  { value: 'buleleng', label: 'Buleleng', description: 'Pengelola Tim Daerah Buleleng', manager: 'Pengelola Tim Daerah Buleleng' },
+  { value: 'karangasem', label: 'Karangasem', description: 'Pengelola Tim Daerah Karangasem', manager: 'Pengelola Tim Daerah Karangasem' }
 ]
 
 export function VolunteerForm({ onStepChange, selectedRegion, onRegionChange }) {
@@ -274,29 +283,16 @@ export function VolunteerForm({ onStepChange, selectedRegion, onRegionChange }) 
               <label htmlFor="region" className="block text-xs font-semibold text-ink-700 mb-1.5">
                 Daerah tujuan <span className="text-coral-base">*</span>
               </label>
-              <div className="relative">
-                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-ink-400">
-                  <LuMapPin className="h-4 w-4" />
-                </div>
-                <select
-                  id="region"
-                  name="region"
-                  value={formData.region}
-                  onChange={handleTextChange}
-                  className="w-full appearance-none rounded-xl border border-ink-200 bg-white pl-10 pr-8 py-2.5 text-sm text-ink-900 focus:border-teal-base focus:outline-hidden focus:ring-2 focus:ring-teal-base/20 transition-all cursor-pointer"
-                >
-                  {REGION_OPTIONS.map((reg) => (
-                    <option key={reg.value} value={reg.value}>
-                      {reg.label}
-                    </option>
-                  ))}
-                </select>
-                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3.5 text-ink-400">
-                  <svg className="h-4 w-4 fill-current" viewBox="0 0 20 20">
-                    <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
-                  </svg>
-                </div>
-              </div>
+              <CustomSelect
+                id="region"
+                name="region"
+                value={formData.region}
+                onChange={handleTextChange}
+                options={REGION_OPTIONS}
+                icon={LuMapPin}
+                buttonClassName="font-semibold"
+                aria-label="Daerah tujuan relawan"
+              />
               <p className="mt-1 text-[11px] text-ink-500">
                 Ditinjau oleh {currentRegion?.manager}
               </p>

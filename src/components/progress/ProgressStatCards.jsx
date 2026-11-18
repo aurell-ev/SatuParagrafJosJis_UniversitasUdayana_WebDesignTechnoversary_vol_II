@@ -1,6 +1,9 @@
+import { motion, useReducedMotion } from 'motion/react'
 import { LuMapPin, LuSprout, LuActivity, LuBadgeCheck } from 'react-icons/lu'
 
 export function ProgressStatCards({ stats }) {
+  const shouldReduceMotion = useReducedMotion()
+
   const cards = [
     {
       value: stats?.totalLocations || 36,
@@ -34,8 +37,16 @@ export function ProgressStatCards({ stats }) {
         {cards.map((card, idx) => {
           const Icon = card.icon
           return (
-            <div
+            <motion.div
               key={idx}
+              initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 16 }}
+              whileInView={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-20px' }}
+              transition={{
+                duration: 0.4,
+                delay: shouldReduceMotion ? 0 : idx * 0.1,
+                ease: [0.21, 0.47, 0.32, 0.98]
+              }}
               className="bg-white border border-teal-200 rounded-2xl p-6 flex flex-col gap-4 items-start shadow-xs hover:shadow-md transition-shadow"
               data-node-id="1155:3226"
               data-name="Stat Card"
@@ -57,7 +68,7 @@ export function ProgressStatCards({ stats }) {
                   {card.sublabel}
                 </span>
               </div>
-            </div>
+            </motion.div>
           )
         })}
       </div>

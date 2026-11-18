@@ -81,8 +81,8 @@ export function ProgressRegionGroup({
 
             {/* Grid 3 Kartu (Figma node 1155:3513) */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
-              {items.map((loc) => (
-                <ProgressLocationCard key={loc.id} location={loc} />
+              {items.map((loc, idx) => (
+                <ProgressLocationCard key={loc.id} location={loc} index={idx} />
               ))}
             </div>
           </div>

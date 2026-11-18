@@ -7,6 +7,7 @@ import { ProgressOverview } from '../../components/progress/ProgressOverview'
 import { ProgressToolbar } from '../../components/progress/ProgressToolbar'
 import { ProgressRegionGroup } from '../../components/progress/ProgressRegionGroup'
 import { CtaSection } from '../../components/home/CtaSection'
+import { ScrollReveal } from '../../components/common/ScrollReveal'
 
 export function ProgressPage() {
   const { restorationSites } = useData()
@@ -57,7 +58,7 @@ export function ProgressPage() {
       <ProgressHero />
 
       {/* 2. Daftar Lokasi Main Section Container (Figma node 1155:3817 / 1155:3816 - w: 1200px) */}
-      <main className="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-8 py-12 flex flex-col gap-10">
+      <div className="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-8 py-12 flex flex-col gap-10">
         {/* Seksi Angka: 4 Stat Cards (Figma node 1155:3266) */}
         <ProgressStatCards stats={OVERVIEW_STATS} />
 
@@ -70,12 +71,14 @@ export function ProgressPage() {
         />
 
         {/* Seksi Toolbar: Status Chips & Search Input (Figma node 1155:3360) */}
-        <ProgressToolbar
-          activeStatus={activeStatus}
-          onStatusChange={setActiveStatus}
-          searchQuery={searchQuery}
-          onSearchChange={setSearchQuery}
-        />
+        <ScrollReveal>
+          <ProgressToolbar
+            activeStatus={activeStatus}
+            onStatusChange={setActiveStatus}
+            searchQuery={searchQuery}
+            onSearchChange={setSearchQuery}
+          />
+        </ScrollReveal>
 
         {/* Seksi Daftar Lokasi Dikelompokkan per Daerah (Figma node 1155:3514 dkk) */}
         <ProgressRegionGroup
@@ -83,7 +86,7 @@ export function ProgressPage() {
           selectedRegion={selectedRegion}
           onSelectRegion={setSelectedRegion}
         />
-      </main>
+      </div>
 
       {/* 3. CTA Banner (Figma node 1155:3818) */}
       <CtaSection />

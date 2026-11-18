@@ -1,3 +1,4 @@
+import { motion, useReducedMotion } from 'motion/react'
 import { FiMail, FiMessageCircle, FiMapPin } from 'react-icons/fi'
 
 const CONTACT_INFO = [
@@ -25,6 +26,8 @@ const CONTACT_INFO = [
 ]
 
 export function ContactInfoCards() {
+  const shouldReduceMotion = useReducedMotion()
+
   return (
     <div className="space-y-4">
       {/* 3 Cards Grid */}
@@ -50,21 +53,37 @@ export function ContactInfoCards() {
             </div>
           )
 
+          const motionProps = {
+            initial: shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 16 },
+            whileInView: shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 },
+            viewport: { once: true, margin: '-20px' },
+            transition: {
+              duration: 0.4,
+              delay: shouldReduceMotion ? 0 : idx * 0.1,
+              ease: [0.21, 0.47, 0.32, 0.98]
+            }
+          }
+
           if (item.href) {
             return (
-              <a
+              <motion.a
                 key={idx}
                 href={item.href}
                 target={item.href.startsWith('http') ? '_blank' : undefined}
                 rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
                 className="block outline-hidden focus-visible:ring-2 focus-visible:ring-teal-base rounded-2xl"
+                {...motionProps}
               >
                 {content}
-              </a>
+              </motion.a>
             )
           }
 
-          return <div key={idx}>{content}</div>
+          return (
+            <motion.div key={idx} {...motionProps}>
+              {content}
+            </motion.div>
+          )
         })}
       </div>
     </div>

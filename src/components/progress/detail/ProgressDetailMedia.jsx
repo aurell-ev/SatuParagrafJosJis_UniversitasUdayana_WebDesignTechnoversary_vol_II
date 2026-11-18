@@ -1,8 +1,10 @@
 import { useEffect, useRef } from 'react'
+import { motion, useReducedMotion } from 'motion/react'
 import L from 'leaflet'
 import { LuLock } from 'react-icons/lu'
 
 export function ProgressDetailMedia({ location }) {
+  const shouldReduceMotion = useReducedMotion()
   const mapContainerRef = useRef(null)
   const mapInstanceRef = useRef(null)
 
@@ -66,7 +68,12 @@ export function ProgressDetailMedia({ location }) {
       data-node-id="1155:4051"
     >
       {/* Sisi Kiri: Foto Utama (784px / col-span-8) */}
-      <div className="lg:col-span-8 relative h-[320px] sm:h-[380px] lg:h-[400px] rounded-3xl overflow-hidden bg-slate-900 shadow-xs border border-slate-200">
+      <motion.div
+        initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, x: -16 }}
+        animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, x: 0 }}
+        transition={{ duration: 0.45, ease: [0.21, 0.47, 0.32, 0.98] }}
+        className="lg:col-span-8 relative h-[320px] sm:h-[380px] lg:h-[400px] rounded-3xl overflow-hidden bg-slate-900 shadow-xs border border-slate-200"
+      >
         <img
           src={photoUrl}
           alt={`Kondisi terumbu karang ${location?.name || 'lokasi'}`}
@@ -91,10 +98,15 @@ export function ProgressDetailMedia({ location }) {
             {location?.initialCondition || 'Dokumentasi pemantauan kesehatan karang berkala.'}
           </p>
         </div>
-      </div>
+      </motion.div>
 
       {/* Sisi Kanan: Peta Area Disamarkan + Catatan (392px / col-span-4) */}
-      <div className="lg:col-span-4 flex flex-col gap-4">
+      <motion.div
+        initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, x: 16 }}
+        animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, x: 0 }}
+        transition={{ duration: 0.45, delay: shouldReduceMotion ? 0 : 0.1, ease: [0.21, 0.47, 0.32, 0.98] }}
+        className="lg:col-span-4 flex flex-col gap-4"
+      >
         {/* Peta Mini Area */}
         <div className="relative h-[240px] sm:h-[260px] rounded-3xl overflow-hidden border border-slate-200 shadow-xs bg-slate-100">
           <div ref={mapContainerRef} className="w-full h-full z-0" />
@@ -119,7 +131,7 @@ export function ProgressDetailMedia({ location }) {
             </p>
           </div>
         </div>
-      </div>
+      </motion.div>
     </div>
   )
 }

@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react'
 import { Link } from 'react-router-dom'
+import { motion, useReducedMotion } from 'motion/react'
 import { LuClock, LuArrowRight } from 'react-icons/lu'
 import { Pagination } from '../common/Pagination'
 
@@ -10,6 +11,7 @@ const ITEMS_PER_PAGE = 6
  * Sesuai desain Figma node 1152:2510, 1152:2487, 1152:2507
  */
 export function ArticleListSection({ articles, onResetFilter }) {
+  const shouldReduceMotion = useReducedMotion()
   const [currentPage, setCurrentPage] = useState(1)
 
   // Total halaman (default 8 halaman sesuai desain Figma node 1152:2507)
@@ -58,9 +60,17 @@ export function ArticleListSection({ articles, onResetFilter }) {
         </div>
       ) : (
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {paginatedArticles.map((article) => (
-            <article
+          {paginatedArticles.map((article, idx) => (
+            <motion.article
               key={article.slug}
+              initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 16 }}
+              whileInView={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-25px' }}
+              transition={{
+                duration: 0.4,
+                delay: shouldReduceMotion ? 0 : (idx % 6) * 0.08,
+                ease: [0.21, 0.47, 0.32, 0.98]
+              }}
               className="group flex flex-col overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-2xs transition-shadow duration-200 hover:shadow-md"
             >
               {/* Gambar Artikel (382x216px) */}
@@ -111,7 +121,7 @@ export function ArticleListSection({ articles, onResetFilter }) {
                   </Link>
                 </div>
               </div>
-            </article>
+            </motion.article>
           ))}
         </div>
       )}

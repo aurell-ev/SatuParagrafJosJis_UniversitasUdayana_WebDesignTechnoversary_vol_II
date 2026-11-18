@@ -1,6 +1,10 @@
+import { motion, useReducedMotion } from 'motion/react'
 import { LuCamera, LuScanSearch, LuSprout, LuEye } from 'react-icons/lu'
+import { ScrollReveal } from '../common/ScrollReveal'
 
 export function WorkflowStepsSection() {
+  const shouldReduceMotion = useReducedMotion()
+
   const steps = [
     {
       number: '01',
@@ -40,7 +44,7 @@ export function WorkflowStepsSection() {
     <section className="bg-surface-card py-16 sm:py-20 lg:py-24">
       <div className="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-8">
         {/* Header Rata Tengah */}
-        <div className="mx-auto max-w-[720px] text-center">
+        <ScrollReveal className="mx-auto max-w-[720px] text-center">
           <div className="inline-flex items-center justify-center gap-2">
             <span className="h-[2px] w-6 rounded-full bg-teal-base" />
             <span className="text-xs sm:text-sm font-bold uppercase tracking-[1.12px] text-teal-base">
@@ -56,15 +60,23 @@ export function WorkflowStepsSection() {
             Warga melapor, tim daerah menindaklanjuti, publik memantau. Tiap
             langkah punya status yang bisa dicek.
           </p>
-        </div>
+        </ScrollReveal>
 
-        {/* 4 Kolom Langkah */}
+        {/* 4 Kolom Langkah dengan Motion Stagger */}
         <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {steps.map((step) => {
+          {steps.map((step, idx) => {
             const Icon = step.icon
             return (
-              <div
+              <motion.div
                 key={step.number}
+                initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 20 }}
+                whileInView={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-25px' }}
+                transition={{
+                  duration: 0.45,
+                  delay: shouldReduceMotion ? 0 : idx * 0.1,
+                  ease: [0.21, 0.47, 0.32, 0.98]
+                }}
                 className="flex flex-col justify-between rounded-3xl border border-ink-200 bg-surface-card p-6 sm:p-7 shadow-2xs transition-shadow hover:shadow-md"
               >
                 <div>
@@ -89,7 +101,7 @@ export function WorkflowStepsSection() {
                     {step.description}
                   </p>
                 </div>
-              </div>
+              </motion.div>
             )
           })}
         </div>

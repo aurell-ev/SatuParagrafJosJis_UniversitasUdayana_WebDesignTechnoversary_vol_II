@@ -1,3 +1,4 @@
+import { motion, useReducedMotion } from 'motion/react'
 import { BaliLeafletMap } from './BaliLeafletMap'
 
 export function ProgressOverview({
@@ -6,6 +7,8 @@ export function ProgressOverview({
   selectedRegion = null,
   onSelectRegion
 }) {
+  const shouldReduceMotion = useReducedMotion()
+
   const regionStats = [
     {
       name: 'Denpasar',
@@ -60,12 +63,20 @@ export function ProgressOverview({
 
           {/* Daftar 4 Daerah (Scrollable Container, Lega & Rapi) */}
           <div className="mt-4 flex-1 overflow-y-auto max-h-[360px] lg:max-h-[385px] pr-1.5 space-y-3 scrollbar-thin scrollbar-thumb-slate-200 hover:scrollbar-thumb-slate-300">
-            {regionStats.map((reg) => {
+            {regionStats.map((reg, idx) => {
               const isSelected = selectedRegion && selectedRegion.toLowerCase() === reg.name.toLowerCase()
               return (
-                <div
+                <motion.div
                   key={reg.name}
                   onClick={() => onSelectRegion(isSelected ? null : reg.name)}
+                  initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, x: 16 }}
+                  whileInView={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, x: 0 }}
+                  viewport={{ once: true, margin: '-20px' }}
+                  transition={{
+                    duration: 0.35,
+                    delay: shouldReduceMotion ? 0 : idx * 0.08,
+                    ease: [0.21, 0.47, 0.32, 0.98]
+                  }}
                   className={`p-4 rounded-2xl border transition-all duration-200 cursor-pointer ${
                     isSelected
                       ? 'bg-teal-50/90 border-teal-400 ring-2 ring-teal-200 shadow-xs'
@@ -96,12 +107,19 @@ export function ProgressOverview({
 
                   {/* Progress Bar (Figma node 1155:3302) */}
                   <div className="bg-slate-100 h-2.5 rounded-full w-full mt-3 overflow-hidden">
-                    <div
-                      className="bg-secondary-500 h-2.5 rounded-full transition-all duration-500"
-                      style={{ width: `${reg.survivalRate}%` }}
+                    <motion.div
+                      className="bg-secondary-500 h-2.5 rounded-full"
+                      initial={shouldReduceMotion ? { width: `${reg.survivalRate}%` } : { width: 0 }}
+                      whileInView={{ width: `${reg.survivalRate}%` }}
+                      viewport={{ once: true }}
+                      transition={{
+                        duration: 0.6,
+                        delay: shouldReduceMotion ? 0 : 0.15 + idx * 0.08,
+                        ease: 'easeOut'
+                      }}
                     />
                   </div>
-                </div>
+                </motion.div>
               )
             })}
           </div>

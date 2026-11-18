@@ -1,6 +1,9 @@
+import { motion, useReducedMotion } from 'motion/react'
 import { LuShieldCheck, LuBadgeCheck } from 'react-icons/lu'
 
-export function GalleryCard({ item, onClick }) {
+export function GalleryCard({ item, index = 0, onClick }) {
+  const shouldReduceMotion = useReducedMotion()
+
   if (!item) return null
 
   const isIndependentAudited =
@@ -8,9 +11,17 @@ export function GalleryCard({ item, onClick }) {
     item.auditedBy?.toLowerCase().includes('independen')
 
   return (
-    <article
+    <motion.article
       onClick={() => onClick && onClick(item)}
-      className="group flex flex-col overflow-hidden rounded-2xl border border-ink-200 bg-surface-card shadow-2xs hover:shadow-md transition-all duration-200 cursor-pointer outline-hidden focus-visible:ring-2 focus-visible:ring-teal-base"
+      initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 16 }}
+      whileInView={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-25px' }}
+      transition={{
+        duration: 0.4,
+        delay: shouldReduceMotion ? 0 : (index % 6) * 0.08,
+        ease: [0.21, 0.47, 0.32, 0.98]
+      }}
+      className="group flex flex-col overflow-hidden rounded-2xl border border-ink-200 bg-surface-card shadow-2xs hover:shadow-md transition-shadow duration-200 cursor-pointer outline-hidden focus-visible:ring-2 focus-visible:ring-teal-base"
       tabIndex={0}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
@@ -27,6 +38,7 @@ export function GalleryCard({ item, onClick }) {
             src={item.beforePhoto.url}
             alt={`Kondisi sebelum di ${item.title}`}
             className="size-full object-cover transition-transform duration-300 group-hover:scale-105"
+            loading="lazy"
           />
           <div className="absolute bottom-3 left-3 z-10">
             <span className="inline-block rounded-full bg-ink-900/80 px-2 py-0.5 text-xs font-semibold text-white backdrop-blur-xs">
@@ -41,6 +53,7 @@ export function GalleryCard({ item, onClick }) {
             src={item.afterPhoto.url}
             alt={`Kondisi sesudah di ${item.title}`}
             className="size-full object-cover transition-transform duration-300 group-hover:scale-105"
+            loading="lazy"
           />
           <div className="absolute bottom-3 right-3 z-10">
             <span className="inline-block rounded-full bg-ink-900/80 px-2 py-0.5 text-xs font-semibold text-white backdrop-blur-xs">
@@ -75,6 +88,6 @@ export function GalleryCard({ item, onClick }) {
           )}
         </div>
       </div>
-    </article>
+    </motion.article>
   )
 }
